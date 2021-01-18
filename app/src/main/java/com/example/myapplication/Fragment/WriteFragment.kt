@@ -1,10 +1,11 @@
+
+package com.example.myapplication.Fragment
+
 /**
  *  하단 탭에서 Write 선택시 보여지는 Fragment
  *
  *  레시피를 입력받아서 서버로 전송해준다.
  */
-
-package com.example.myapplication.Fragment
 
 import android.app.Activity
 import android.content.Intent
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.R
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
