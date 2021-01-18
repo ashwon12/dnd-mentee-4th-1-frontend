@@ -4,25 +4,21 @@
  *  게시글을 서버에서 받아서 리싸이클러뷰에 뿌려준다.
  */
 
-package com.example.myapplication.Fragment
+package com.example.myapplication.navigation.timeline
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.RecyclerAdapter
-import com.example.myapplication.RecyclerData
-import kotlinx.android.synthetic.main.fragment_list.*
 
-class ListFragment : Fragment() {
+class TimelineFragment : Fragment() {
 
     private lateinit var v : View
-    private var list = ArrayList<RecyclerData>()
-    private lateinit var myAdapter: RecyclerAdapter
+    private var list = ArrayList<TimelineDTO>()
+    private lateinit var myAdapter: TimelineRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,11 +33,11 @@ class ListFragment : Fragment() {
      */
     fun callRecycler(){
         list.clear()
-        list.add(RecyclerData("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
-        list.add(RecyclerData("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
-        list.add(RecyclerData("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
+        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
+        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
+        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
 
-        myAdapter = RecyclerAdapter(list)
+        myAdapter = TimelineRecyclerAdapter(list)
         myAdapter.notifyDataSetChanged()
 
         var rv_list = v.findViewById(R.id.rv_list) as RecyclerView

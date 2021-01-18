@@ -1,18 +1,18 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.myapplication.Fragment.HomeFragment
-import com.example.myapplication.Fragment.ListFragment
-import com.example.myapplication.Fragment.WriteFragment
+import com.example.myapplication.navigation.timeline.TimelineFragment
+import com.example.myapplication.navigation.upload.UploadFragment
+import com.example.myapplication.navigation.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
-    private val listFragment by lazy { ListFragment() }
-    private val writeFragment by lazy { WriteFragment() }
+    private val listFragment by lazy { TimelineFragment() }
+    private val writeFragment by lazy { UploadFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
