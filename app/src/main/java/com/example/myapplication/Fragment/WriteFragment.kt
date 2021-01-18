@@ -10,19 +10,16 @@ package com.example.myapplication.Fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.R
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.RecipeAdapter
 import com.example.myapplication.RecipeData
-import kotlinx.android.synthetic.main.fragment_write.*
-import java.lang.Exception
 
 class WriteFragment : Fragment() {
 
