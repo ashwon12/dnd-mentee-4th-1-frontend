@@ -1,5 +1,5 @@
 
-package com.example.myapplication.Fragment
+package com.example.myapplication.navigation.upload
 
 /**
  *  하단 탭에서 Write 선택시 보여지는 Fragment
@@ -18,18 +18,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.RecipeAdapter
-import com.example.myapplication.RecipeData
 
-class WriteFragment : Fragment() {
+class UploadFragment : Fragment() {
 
     private var count = 1
     private val REQUEST_GET_IMAGE = 105
     private var positionMain = 0
-    private var list =  ArrayList<RecipeData>()
+    private var list =  ArrayList<UploadRecipeDTO>()
     private lateinit var v: View
-    private lateinit var adapter: RecipeAdapter
-    private lateinit var itemMain: RecipeData
+    private lateinit var adapter: UploadRecipeAdapter
+    private lateinit var itemMain: UploadRecipeDTO
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,7 +37,7 @@ class WriteFragment : Fragment() {
         var btn_recipe_del = v.findViewById(R.id.btn_recipe_del) as Button
         var btn_submit = v.findViewById(R.id.btn_submit) as Button
 
-        list.add(RecipeData("1번", null, ""))
+        list.add(UploadRecipeDTO("1번", null, ""))
 
         callRecycler()
 
@@ -47,7 +45,7 @@ class WriteFragment : Fragment() {
          *  '요리 순서 추가' 버튼 이벤트
          */
         btn_recipe_add.setOnClickListener {
-            list.add(RecipeData(Integer.toString(count + 1) + "번", null, ""))
+            list.add(UploadRecipeDTO(Integer.toString(count + 1) + "번", null, ""))
             count++;
             adapter.notifyDataSetChanged()
         }
@@ -93,7 +91,7 @@ class WriteFragment : Fragment() {
     fun callRecycler(){
         var rv_recipe_list = v.findViewById(R.id.rv_recipe_list) as RecyclerView
 
-        adapter = RecipeAdapter(v.context, list) { position, item ->
+        adapter = UploadRecipeAdapter(v.context, list) { position, item ->
             positionMain = position
             itemMain = item
 
