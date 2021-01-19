@@ -7,8 +7,8 @@ import retrofit2.http.Query
 interface RecipeApi {
 
     @GET("v1/search/timeline.json")
-    fun getTimeliness(
-        @Query("query") query: String
+    fun getTimelines(
+        @Query("id") id: String
     ):Call<RecipeDTO.TimelineResponse>
 
 }

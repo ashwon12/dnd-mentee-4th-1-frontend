@@ -5,6 +5,7 @@ package com.example.myapplication.data.api
 
 class RecipeDTO{
     data class Timeline(
+        val id : String,
         val title : String,
         val subTitle : String,
         val images: List<Recipe>? = null
