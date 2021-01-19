@@ -7,13 +7,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class TimelineRecyclerViewHolder(v : View) : RecyclerView.ViewHolder(v) {
 
     private val title = v.findViewById<TextView>(R.id.tv_title)
     private val subtitle = v.findViewById<TextView>(R.id.tv_subtitle)
 
-    fun bind(data : TimelineDTO){
+
+    fun bind(data : RecipeDTO.Timeline){
         title.text = data.title
         subtitle.text = data.subTitle
     }

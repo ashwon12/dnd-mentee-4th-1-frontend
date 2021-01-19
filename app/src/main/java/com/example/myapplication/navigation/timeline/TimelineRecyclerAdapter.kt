@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class TimelineRecyclerAdapter(private val items: ArrayList<TimelineDTO>) :
+class TimelineRecyclerAdapter(private val items: ArrayList<RecipeDTO.Timeline>) :
     RecyclerView.Adapter<TimelineRecyclerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineRecyclerViewHolder {

@@ -13,11 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class TimelineFragment : Fragment() {
 
     private lateinit var v : View
-    private var list = ArrayList<TimelineDTO>()
+  
+    private var list = ArrayList<RecipeDTO.Timeline>()
+  
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
     override fun onCreateView(
@@ -33,9 +36,9 @@ class TimelineFragment : Fragment() {
      */
     fun callRecycler(){
         list.clear()
-        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
-        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
-        list.add(TimelineDTO("여기는 제목이에요~~","여기는 subTitle이에요~~~"))
+        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
+        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
+        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
 
         myAdapter = TimelineRecyclerAdapter(list)
         myAdapter.notifyDataSetChanged()

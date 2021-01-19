@@ -12,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 /**
  *  기존의 어댑터에서 '갤러리' 버튼 클릭 시 itemClick 이벤트가 생기게 추가하였습니다.
  */
-class UploadRecipeAdapter(private val context: Context, private val recipeList: ArrayList<UploadRecipeDTO>, val itemClick:(Int, UploadRecipeDTO) -> Unit) :
+class UploadRecipeAdapter(private val context: Context, private val recipeList: ArrayList<RecipeDTO.Recipe>, val itemClick:(Int, RecipeDTO.Recipe) -> Unit) :
+
     RecyclerView.Adapter<UploadRecipeAdapter.RecipeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -50,7 +52,9 @@ class UploadRecipeAdapter(private val context: Context, private val recipeList: 
         private val recipePhoto: ImageView = itemView.iv_photo
         private val recipeButton: Button = itemView.btn_gallery
 
-        fun bind(data: UploadRecipeDTO) {
+
+        fun bind(data: RecipeDTO.Recipe) {
+
             recipeNumber.text = data.number
 
             if(data.image != "") {
