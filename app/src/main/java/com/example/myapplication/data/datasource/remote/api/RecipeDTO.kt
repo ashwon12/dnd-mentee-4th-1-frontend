@@ -1,7 +1,7 @@
 /**
  *  데이터 초기화 클래스
  */
-package com.example.myapplication.data.api
+package com.example.myapplication.data.datasource.remote.api
 
 class RecipeDTO{
     data class Timeline(
