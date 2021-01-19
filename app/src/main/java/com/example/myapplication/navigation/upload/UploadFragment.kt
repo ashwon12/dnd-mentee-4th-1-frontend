@@ -20,17 +20,21 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 
+
 class UploadFragment : Fragment() {
 
     private var count = 1
     private val REQUEST_GET_IMAGE = 105
     private var positionMain = 0
+  
     private var list = ArrayList<RecipeDTO.Recipe>()
+  
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
     private lateinit var repository: Repository
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,6 +46,7 @@ class UploadFragment : Fragment() {
 
         list.add(RecipeDTO.Recipe("1번", null, ""))
 
+
         callRecycler()
 
         /**
@@ -49,6 +54,7 @@ class UploadFragment : Fragment() {
          */
         btn_recipe_add.setOnClickListener {
             list.add(RecipeDTO.Recipe(Integer.toString(count + 1) + "번", null, ""))
+
             count++;
             adapter.notifyDataSetChanged()
         }
@@ -103,6 +109,7 @@ class UploadFragment : Fragment() {
      *  리사이클러 뷰 생성 및 갤러리 버튼 클릭 시 갤러리 호출하는 함수
      */
     fun callRecycler() {
+
         var rv_recipe_list = v.findViewById(R.id.rv_recipe_list) as RecyclerView
 
         adapter = UploadRecipeAdapter(v.context, list) { position, item ->

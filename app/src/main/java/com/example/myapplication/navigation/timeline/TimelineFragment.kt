@@ -18,7 +18,9 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 class TimelineFragment : Fragment() {
 
     private lateinit var v : View
+  
     private var list = ArrayList<RecipeDTO.Timeline>()
+  
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
     override fun onCreateView(

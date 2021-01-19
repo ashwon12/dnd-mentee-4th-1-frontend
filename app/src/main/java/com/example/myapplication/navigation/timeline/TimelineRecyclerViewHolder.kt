@@ -14,6 +14,7 @@ class TimelineRecyclerViewHolder(v : View) : RecyclerView.ViewHolder(v) {
     private val title = v.findViewById<TextView>(R.id.tv_title)
     private val subtitle = v.findViewById<TextView>(R.id.tv_subtitle)
 
+
     fun bind(data : RecipeDTO.Timeline){
         title.text = data.title
         subtitle.text = data.subTitle
