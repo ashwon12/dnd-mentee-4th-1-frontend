@@ -1,15 +1,19 @@
 package com.example.myapplication.data.repository
 
-import com.example.myapplication.data.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.RemoteDataSourceImpl
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class RecipeRepositoryImpl : RecipeRepository(
+class RecipeRepositoryImpl : Repository {
 
-){
-    override fun getTimelineList(
-        query: String,
+    private val remoteMovieDataSourceImp = RemoteDataSourceImpl()
+
+    override fun getAllTimelineList(
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        TODO("Not yet implemented")
+        remoteMovieDataSourceImp.getAllTimelinesFromRemote(
+            success,
+            fail
+        )
     }
 }
