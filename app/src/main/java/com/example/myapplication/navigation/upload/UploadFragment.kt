@@ -18,16 +18,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.data.api.RecipeDTO
 
 class UploadFragment : Fragment() {
 
     private var count = 1
     private val REQUEST_GET_IMAGE = 105
     private var positionMain = 0
-    private var list =  ArrayList<UploadRecipeDTO>()
+    private var list =  ArrayList<RecipeDTO.Recipe>()
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
-    private lateinit var itemMain: UploadRecipeDTO
+    private lateinit var itemMain: RecipeDTO.Recipe
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,7 +38,7 @@ class UploadFragment : Fragment() {
         var btn_recipe_del = v.findViewById(R.id.btn_recipe_del) as Button
         var btn_submit = v.findViewById(R.id.btn_submit) as Button
 
-        list.add(UploadRecipeDTO("1번", null, ""))
+        list.add(RecipeDTO.Recipe("1번", null, ""))
 
         callRecycler()
 
@@ -45,7 +46,7 @@ class UploadFragment : Fragment() {
          *  '요리 순서 추가' 버튼 이벤트
          */
         btn_recipe_add.setOnClickListener {
-            list.add(UploadRecipeDTO(Integer.toString(count + 1) + "번", null, ""))
+            list.add(RecipeDTO.Recipe(Integer.toString(count + 1) + "번", null, ""))
             count++;
             adapter.notifyDataSetChanged()
         }
