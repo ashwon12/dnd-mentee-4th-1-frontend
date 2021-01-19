@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 /**

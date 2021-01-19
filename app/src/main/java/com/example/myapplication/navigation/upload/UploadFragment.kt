@@ -1,4 +1,3 @@
-
 package com.example.myapplication.navigation.upload
 
 /**
@@ -18,17 +17,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 
 class UploadFragment : Fragment() {
 
     private var count = 1
     private val REQUEST_GET_IMAGE = 105
     private var positionMain = 0
-    private var list =  ArrayList<RecipeDTO.Recipe>()
+    private var list = ArrayList<RecipeDTO.Recipe>()
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
+
+    private lateinit var repository: Repository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,7 +65,18 @@ class UploadFragment : Fragment() {
         /**
          *  '전송' 버튼 이벤트
          */
-        btn_submit.setOnClickListener { }
+        btn_submit.setOnClickListener {
+            repository.getAllTimelineList(
+                success = {
+                    it.items.run {
+                        TODO("데이터 가져오기 성공했을 때")
+                    }
+                },
+                fail = {
+                    TODO("실패했을 때")
+                }
+            )
+        }
 
         return v
     }
@@ -89,7 +102,7 @@ class UploadFragment : Fragment() {
     /**
      *  리사이클러 뷰 생성 및 갤러리 버튼 클릭 시 갤러리 호출하는 함수
      */
-    fun callRecycler(){
+    fun callRecycler() {
         var rv_recipe_list = v.findViewById(R.id.rv_recipe_list) as RecyclerView
 
         adapter = UploadRecipeAdapter(v.context, list) { position, item ->
