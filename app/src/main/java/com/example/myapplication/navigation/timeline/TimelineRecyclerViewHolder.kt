@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class TimelineRecyclerViewHolder(v : View) : RecyclerView.ViewHolder(v) {
 
