@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.data.repository.RepositoryImpl
 
 class UploadFragment : Fragment() {
 
@@ -35,7 +36,7 @@ class UploadFragment : Fragment() {
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
-    private lateinit var repository: Repository
+    private val repository = RepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -74,7 +75,7 @@ class UploadFragment : Fragment() {
         /**
          *  '전송' 버튼 이벤트
          */
-        TODO("성호님 이 부분에 제가 만든 postInfoList  안에다가 " +
+/*        TODO("성호님 이 부분에 제가 만든 postInfoList  안에다가 " +
                 "timelineId" +
                 "title" +
                 "subTitle" +
@@ -82,7 +83,7 @@ class UploadFragment : Fragment() {
                 "comment배열" +
 
                 "넣어주세요."
-        )
+        )*/
 
 
         btn_submit.setOnClickListener {
