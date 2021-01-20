@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="예) 김치를 꺼내고 스팸 썰기"
         android:textSize="18dp"
-
+        android:inputType="textMultiLine"
         />
 
     <ImageView
