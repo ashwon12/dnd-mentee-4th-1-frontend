@@ -9,6 +9,7 @@ package com.example.myapplication.navigation.upload
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,21 +21,17 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 
-
 class UploadFragment : Fragment() {
 
     private var count = 1
     private val REQUEST_GET_IMAGE = 105
     private var positionMain = 0
-  
     private var list = ArrayList<RecipeDTO.Recipe>()
-  
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
     private lateinit var repository: Repository
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,8 +41,8 @@ class UploadFragment : Fragment() {
         var btn_recipe_del = v.findViewById(R.id.btn_recipe_del) as Button
         var btn_submit = v.findViewById(R.id.btn_submit) as Button
 
-        list.add(RecipeDTO.Recipe("1번", null, ""))
-
+        list.clear()
+        count = 0
 
         callRecycler()
 
@@ -53,19 +50,18 @@ class UploadFragment : Fragment() {
          *  '요리 순서 추가' 버튼 이벤트
          */
         btn_recipe_add.setOnClickListener {
-            list.add(RecipeDTO.Recipe(Integer.toString(count + 1) + "번", null, ""))
-
-            count++;
-            adapter.notifyDataSetChanged()
+            addItem(adapter.itemCount, RecipeDTO.Recipe(Integer.toString(adapter.itemCount + 1) + "번", "", ""))
+            count++
         }
 
         /**
          *  '요리 순서 삭제' 버튼 이벤트
          */
         btn_recipe_del.setOnClickListener {
-            list.removeAt(count - 1)
-            count--;
-            adapter.notifyDataSetChanged()
+            if(adapter.itemCount > 0) {
+                removeItem(adapter.itemCount - 1 )
+                count--
+            }
         }
 
         /**
@@ -98,6 +94,7 @@ class UploadFragment : Fragment() {
                         var uri = data?.data
                         list[positionMain].image = uri.toString()
                         adapter.notifyDataSetChanged()
+                        showItem()
                     } catch (e: Exception) {
                     }
             }
@@ -109,7 +106,6 @@ class UploadFragment : Fragment() {
      *  리사이클러 뷰 생성 및 갤러리 버튼 클릭 시 갤러리 호출하는 함수
      */
     fun callRecycler() {
-
         var rv_recipe_list = v.findViewById(R.id.rv_recipe_list) as RecyclerView
 
         adapter = UploadRecipeAdapter(v.context, list) { position, item ->
@@ -124,5 +120,21 @@ class UploadFragment : Fragment() {
         rv_recipe_list.adapter = adapter
         rv_recipe_list.layoutManager = LinearLayoutManager(v.context)
 
+    }
+
+    fun addItem(position: Int, data: RecipeDTO.Recipe) {
+        list.add(position, data)
+        adapter.notifyItemInserted(position)
+    }
+
+    fun removeItem(position: Int) {
+        list.removeAt(position)
+        adapter.notifyItemRemoved(position)
+    }
+
+    fun showItem(){
+        for(i in 0..10){
+            Log.d("log", "${i} 번째 ,number : "+list.get(i).number +"comment :" + list.get(i).comment.toString() +  "image : " +list.get(i).image.toString())
+        }
     }
 }
