@@ -39,8 +39,10 @@ class TimelineFragment : Fragment() {
      */
     fun callRecycler(){
         list.clear()
+        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~",
+            listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
+        ))
 /*        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
-        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
         list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))*/
         /**
          * API 통신 확인을 위해 추가
@@ -56,8 +58,6 @@ class TimelineFragment : Fragment() {
 
             }
         )
-
-
         myAdapter = TimelineRecyclerAdapter(list)
         myAdapter.notifyDataSetChanged()
 
