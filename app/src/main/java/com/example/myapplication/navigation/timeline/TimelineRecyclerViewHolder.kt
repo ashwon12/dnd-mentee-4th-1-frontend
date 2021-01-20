@@ -8,9 +8,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
@@ -39,11 +41,19 @@ class TimelineRecyclerViewHolder(v : View,
 
         //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
         btn_delete.setOnClickListener{
-            Log.d("btn_delete","${adapterPosition}")
+            Toast.makeText(
+                App.instance,
+                "id ${data.id}번의 삭제 버튼 클릭 ",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         btn_modify.setOnClickListener{
-            Log.d("btn_remove","${adapterPosition}")
+            Toast.makeText(
+                App.instance,
+                "id ${data.id}번의 수정 버튼 클릭 ",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
