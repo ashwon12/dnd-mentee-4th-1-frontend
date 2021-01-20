@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.RepositoryImpl
 
 class TimelineFragment : Fragment() {
 
@@ -22,6 +23,8 @@ class TimelineFragment : Fragment() {
     private var list = ArrayList<RecipeDTO.Timeline>()
   
     private lateinit var myAdapter: TimelineRecyclerAdapter
+
+    private val repository = RepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,9 +39,24 @@ class TimelineFragment : Fragment() {
      */
     fun callRecycler(){
         list.clear()
+/*        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
         list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
-        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
-        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
+        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))*/
+        /**
+         * API 통신 확인을 위해 추가
+         *              - 함도영
+         * */
+        repository.getAllTimelineList(
+            success = {
+                it.items.run {
+                    list.addAll(it.items)
+                }
+            },
+            fail = {
+
+            }
+        )
+
 
         myAdapter = TimelineRecyclerAdapter(list)
         myAdapter.notifyDataSetChanged()
