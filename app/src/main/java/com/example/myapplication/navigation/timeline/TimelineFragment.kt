@@ -52,8 +52,8 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
                 listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
                 ,
                 null,
-                "여기는 title",
-                "여기는 subtitle!"
+                "여기는 부제목",
+                "여기는 제목!"
             )
         )
 
@@ -66,8 +66,8 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
                 listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
                 ,
                 null,
-                "여기는 title",
-                "여기는 subtitle!"
+                "여기는 subtitle",
+                "여기는 title!"
             )
         )
 
