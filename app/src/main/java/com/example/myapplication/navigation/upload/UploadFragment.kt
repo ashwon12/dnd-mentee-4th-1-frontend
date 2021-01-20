@@ -20,18 +20,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.data.repository.RepositoryImpl
 
 class UploadFragment : Fragment() {
 
-    private var count = 1
     private val REQUEST_GET_IMAGE = 105
+
+    private var count = 1
     private var positionMain = 0
+
+    private var postInfoList = ArrayList<RecipeDTO.Timeline>()
     private var list = ArrayList<RecipeDTO.Recipe>()
+
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
-    private lateinit var repository: Repository
+    private val repository = RepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,7 +55,10 @@ class UploadFragment : Fragment() {
          *  '요리 순서 추가' 버튼 이벤트
          */
         btn_recipe_add.setOnClickListener {
-            addItem(adapter.itemCount, RecipeDTO.Recipe(Integer.toString(adapter.itemCount + 1) + "번", "", ""))
+            addItem(
+                adapter.itemCount,
+                RecipeDTO.Recipe(Integer.toString(adapter.itemCount + 1) + "번", "", "")
+            )
             count++
         }
 
@@ -58,8 +66,8 @@ class UploadFragment : Fragment() {
          *  '요리 순서 삭제' 버튼 이벤트
          */
         btn_recipe_del.setOnClickListener {
-            if(adapter.itemCount > 0) {
-                removeItem(adapter.itemCount - 1 )
+            if (adapter.itemCount > 0) {
+                removeItem(adapter.itemCount - 1)
                 count--
             }
         }
@@ -67,17 +75,26 @@ class UploadFragment : Fragment() {
         /**
          *  '전송' 버튼 이벤트
          */
+/*        TODO("성호님 이 부분에 제가 만든 postInfoList  안에다가 " +
+                "timelineId" +
+                "title" +
+                "subTitle" +
+                "imageUrl배열" +
+                "comment배열" +
+
+                "넣어주세요."
+        )*/
+
+
         btn_submit.setOnClickListener {
-            repository.getAllTimelineList(
+            repository.postTimeline(
+                postInfoList,
                 success = {
-                    it.items.run {
-                        TODO("데이터 가져오기 성공했을 때")
-                    }
-                },
-                fail = {
-                    TODO("실패했을 때")
+
                 }
-            )
+            ) {
+
+            }
         }
 
         return v
@@ -132,9 +149,14 @@ class UploadFragment : Fragment() {
         adapter.notifyItemRemoved(position)
     }
 
-    fun showItem(){
-        for(i in 0..10){
-            Log.d("log", "${i} 번째 ,number : "+list.get(i).number +"comment :" + list.get(i).comment.toString() +  "image : " +list.get(i).image.toString())
+    fun showItem() {
+        for (i in 0..10) {
+            Log.d(
+                "log",
+                "${i} 번째 ,number : " + list.get(i).number + "comment :" + list.get(i).comment.toString() + "image : " + list.get(
+                    i
+                ).image.toString()
+            )
         }
     }
 }

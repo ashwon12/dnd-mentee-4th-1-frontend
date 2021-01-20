@@ -7,4 +7,9 @@ interface Repository {
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     )
+    fun postTimeline(
+        postInfo: ArrayList<RecipeDTO.Timeline>,
+        success: (RecipeDTO.TimelineResponse) -> Unit,
+        fail: (Throwable) -> Unit
+    )
 }
