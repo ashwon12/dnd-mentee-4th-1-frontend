@@ -5,10 +5,10 @@ package com.example.myapplication.data.datasource.remote.api
 
 class RecipeDTO{
     data class Timeline(
-        val id : String,
-        val title : String,
-        val subTitle : String,
-        val images: List<Recipe>? = null
+        val id: String,
+        val title: String,
+        val subTitle: String,
+        val imageUrl: List<String>
     )
 
     data class Recipe(
