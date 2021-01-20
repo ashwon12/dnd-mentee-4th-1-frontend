@@ -3,7 +3,6 @@
  */
 package com.example.myapplication.navigation.timeline
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -12,9 +11,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
-import com.example.myapplication.MainActivity
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 
 class TimelineRecyclerViewHolder(v : View,
                                  recyclerInterface: TimelineRecyclerInterface) : RecyclerView.ViewHolder(v),
@@ -34,7 +32,7 @@ class TimelineRecyclerViewHolder(v : View,
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data : RecipeDTO.Timeline){
+    fun bind(data : PostItem.PostItems){
         title.text = data.title
         subtitle.text = data.subTitle
         Glide.with(App.instance).load(data.imageUrl[0]).into(image);

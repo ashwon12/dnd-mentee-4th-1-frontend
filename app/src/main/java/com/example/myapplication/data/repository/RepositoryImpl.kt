@@ -1,14 +1,14 @@
 package com.example.myapplication.data.repository
 
 import com.example.myapplication.data.datasource.remote.RemoteDataSourceImpl
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 
 class RepositoryImpl : Repository {
 
     private val remoteMovieDataSourceImp = RemoteDataSourceImpl()
 
     override fun getAllTimelineList(
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImp.getAllTimelinesFromRemote(
@@ -18,8 +18,8 @@ class RepositoryImpl : Repository {
     }
 
     override fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.Timeline>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        postInfo: ArrayList<PostItem.PostItems>,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImp.postTimeline(

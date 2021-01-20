@@ -1,16 +1,16 @@
 package com.example.myapplication.data.datasource.remote
 
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 
 interface RemoteDataSource {
     fun getAllTimelinesFromRemote(
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     )
 
     fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.Timeline>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        postInfo: ArrayList<PostItem.PostItems>,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     )
 }

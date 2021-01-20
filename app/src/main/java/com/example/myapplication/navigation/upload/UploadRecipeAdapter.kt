@@ -13,10 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 
 /**
@@ -24,8 +23,8 @@ import kotlinx.android.synthetic.main.recipe_list_item.view.*
  */
 class UploadRecipeAdapter(
     private val context: Context,
-    private val recipeList: ArrayList<RecipeDTO.Recipe>,
-    val itemClick: (Int, RecipeDTO.Recipe) -> Unit
+    private val recipeList: ArrayList<PostItem.Recipe>,
+    val itemClick: (Int, PostItem.Recipe) -> Unit
 ) :
     RecyclerView.Adapter<UploadRecipeAdapter.RecipeViewHolder>() {
 
@@ -70,7 +69,7 @@ class UploadRecipeAdapter(
         private val recipePhoto: ImageView = itemView.iv_photo
         private val recipeButton: Button = itemView.btn_gallery
 
-        fun bind(data: RecipeDTO.Recipe) {
+        fun bind(data: PostItem.Recipe) {
             recipeNumber.text = data.number
 
             if (data.image != "") {
