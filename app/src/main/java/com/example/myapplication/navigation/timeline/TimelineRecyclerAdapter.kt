@@ -8,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 
-class TimelineRecyclerAdapter(private val items: ArrayList<RecipeDTO.Timeline>) :
+class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
     RecyclerView.Adapter<TimelineRecyclerViewHolder>() {
 
-    /**
-     *  TimelineRecyclerAdapter 안에 보여지는 Timeline들 update
-     * */
-    fun updateTimelineList(timelines: List<RecipeDTO.Timeline>) {
-        this.items.clear()
-        this.items.addAll(timelines)
-        notifyDataSetChanged()
+    private var myInterface: TimelineRecyclerInterface? = null
+
+    private var items = ArrayList<PostItem.PostItems>()
+
+    //생성자
+    init {
+        this.myInterface = myInterface
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineRecyclerViewHolder {
@@ -27,13 +27,20 @@ class TimelineRecyclerAdapter(private val items: ArrayList<RecipeDTO.Timeline>) 
             R.layout.list_item,
             parent, false
         )
-        return TimelineRecyclerViewHolder(view)
+        return TimelineRecyclerViewHolder(view, this.myInterface!!)
     }
 
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: TimelineRecyclerViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(this.items[position])
+    }
+
+    /**
+     *  TimelineRecyclerAdapter 안에 보여지는 Timeline들 update
+     * */
+    fun updateTimelineList(timelines: List<PostItem.PostItems>) {
+        this.items.addAll(timelines)
     }
 
 }

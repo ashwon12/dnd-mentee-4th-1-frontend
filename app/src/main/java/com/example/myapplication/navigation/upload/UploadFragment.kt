@@ -18,8 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.data.datasource.remote.api.PostItem
 import com.example.myapplication.data.repository.RepositoryImpl
 
 class UploadFragment : Fragment() {
@@ -29,12 +28,12 @@ class UploadFragment : Fragment() {
     private var count = 1
     private var positionMain = 0
 
-    private var postInfoList = ArrayList<RecipeDTO.Timeline>()
-    private var list = ArrayList<RecipeDTO.Recipe>()
+    private var postInfoList = ArrayList<PostItem.PostItems>()
+    private var list = ArrayList<PostItem.Recipe>()
 
     private lateinit var v: View
     private lateinit var adapter: UploadRecipeAdapter
-    private lateinit var itemMain: RecipeDTO.Recipe
+    private lateinit var itemMain: PostItem.Recipe
 
     private val repository = RepositoryImpl()
 
@@ -57,7 +56,7 @@ class UploadFragment : Fragment() {
         btn_recipe_add.setOnClickListener {
             addItem(
                 adapter.itemCount,
-                RecipeDTO.Recipe(Integer.toString(adapter.itemCount + 1) + "번", "", "")
+                PostItem.Recipe(Integer.toString(adapter.itemCount + 1) + "번", "", "")
             )
             count++
         }
@@ -139,7 +138,7 @@ class UploadFragment : Fragment() {
 
     }
 
-    fun addItem(position: Int, data: RecipeDTO.Recipe) {
+    fun addItem(position: Int, data: PostItem.Recipe) {
         list.add(position, data)
         adapter.notifyItemInserted(position)
     }

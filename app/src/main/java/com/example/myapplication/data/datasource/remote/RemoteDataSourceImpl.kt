@@ -3,7 +3,7 @@ package com.example.myapplication.data.datasource.remote
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.myapplication.data.datasource.remote.api.RecipeApi
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 import retrofit2.Call
 import retrofit2.Response
 
@@ -12,14 +12,14 @@ class RemoteDataSourceImpl : RemoteDataSource {
     private val recipeApi = RecipeApi.create()
 
     override fun getAllTimelinesFromRemote(
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         val callGetAllTimelines = recipeApi.getAllTimelines()
-        callGetAllTimelines.enqueue(object : retrofit2.Callback<RecipeDTO.TimelineResponse>{
+        callGetAllTimelines.enqueue(object : retrofit2.Callback<PostItem.TimelineResponse>{
             override fun onResponse(
-                call: Call<RecipeDTO.TimelineResponse>,
-                response: Response<RecipeDTO.TimelineResponse>
+                call: Call<PostItem.TimelineResponse>,
+                response: Response<PostItem.TimelineResponse>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -28,7 +28,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     }
                 }
             }
-            override fun onFailure(call: Call<RecipeDTO.TimelineResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PostItem.TimelineResponse>, t: Throwable) {
                 Log.d("/posts", "getAlltimelinesFromRemote 실패 : " + t)
             }
         })
@@ -36,8 +36,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
     override fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.Timeline>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
+        postInfo: ArrayList<PostItem.PostItems>,
+        success: (PostItem.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
 

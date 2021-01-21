@@ -7,28 +7,32 @@
 package com.example.myapplication.navigation.timeline
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.datasource.remote.api.PostItem
 import com.example.myapplication.data.repository.RepositoryImpl
 
-class TimelineFragment : Fragment() {
+class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
-    private lateinit var v : View
-  
-    private var list = ArrayList<RecipeDTO.Timeline>()
-  
+    private lateinit var v: View
+
+    private var list = ArrayList<PostItem.PostItems>()
+
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
     private val repository = RepositoryImpl()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        v =  inflater.inflate(R.layout.fragment_list, container,false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        v = inflater.inflate(R.layout.fragment_list, container, false)
 
         callRecycler()
         return v
@@ -37,11 +41,37 @@ class TimelineFragment : Fragment() {
     /**
      *  fragment 생성시 리사이클러 호출해주는 함수
      */
-    fun callRecycler(){
+    fun callRecycler() {
         list.clear()
-/*        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
-        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))
-        list.add(RecipeDTO.Timeline("1","여기는 제목이에요~~", "여기는 subTitle이에요~~~"))*/
+        list.add(
+            PostItem.PostItems(
+                null,
+                null,
+                null,
+                1,
+                listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
+                ,
+                null,
+                "여기는 부제목",
+                "여기는 제목!"
+            )
+        )
+
+        list.add(
+            PostItem.PostItems(
+                null,
+                null,
+                null,
+                2,
+                listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
+                ,
+                null,
+                "여기는 subtitle",
+                "여기는 title!"
+            )
+        )
+
+
         /**
          * API 통신 확인을 위해 추가
          *              - 함도영
@@ -56,13 +86,21 @@ class TimelineFragment : Fragment() {
 
             }
         )
-
-
-        myAdapter = TimelineRecyclerAdapter(list)
+        myAdapter = TimelineRecyclerAdapter(this)
+        myAdapter.updateTimelineList(list)
         myAdapter.notifyDataSetChanged()
 
         var rv_list = v.findViewById(R.id.rv_list) as RecyclerView
         rv_list.adapter = myAdapter
     }
 
+    override fun onItemClicked(position: Int) {
+        Log.d("로그", "TimeLinFragment - 클릭됨")
+        Toast.makeText(
+            App.instance,
+            "id : ${this.list[position].id}\n Title : ${this.list[position].title}\n subTitle: ${this.list[position].subTitle}",
+            Toast.LENGTH_SHORT
+        ).show()
+
+    }
 }

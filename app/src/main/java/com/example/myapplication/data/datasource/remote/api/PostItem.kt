@@ -3,12 +3,16 @@
  */
 package com.example.myapplication.data.datasource.remote.api
 
-class RecipeDTO{
-    data class Timeline(
-        val id : String,
-        val title : String,
-        val subTitle : String,
-        val images: List<Recipe>? = null
+class PostItem : ArrayList<PostItem>(){
+    data class PostItems(
+        val comment: List<String>?,
+        val cookingTime: Any?,
+        val cookingTool: Any?,
+        val id: Int,
+        val imageUrl: List<String>,
+        val likeCount: Int?,
+        val subTitle: String,
+        val title: String
     )
 
     data class Recipe(
@@ -19,7 +23,7 @@ class RecipeDTO{
 
     data class TimelineResponse(
         val display: Int,
-        val items: List<Timeline>,
+        val items: List<PostItems>,
         val lastBuildDate: String,
         val start: Int,
         val total: Int
