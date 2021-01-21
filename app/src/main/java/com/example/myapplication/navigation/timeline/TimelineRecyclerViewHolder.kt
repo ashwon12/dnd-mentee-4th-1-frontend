@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.PostItem
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class TimelineRecyclerViewHolder(v : View,
                                  recyclerInterface: TimelineRecyclerInterface) : RecyclerView.ViewHolder(v),
@@ -32,16 +32,16 @@ class TimelineRecyclerViewHolder(v : View,
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data : PostItem.PostItems){
-        title.text = data.title
-        subtitle.text = data.subTitle
-        Glide.with(App.instance).load(data.imageUrl[0]).into(image);
+    fun bind(data : RecipeDTO.PostItem){
+        title.text = data.get(0).title
+        subtitle.text = data.get(0).subTitle
+        Glide.with(App.instance).load(data.get(0).imageUrl).into(image);
 
         //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
         btn_delete.setOnClickListener{
             Toast.makeText(
                 App.instance,
-                "id ${data.id}번의 삭제 버튼 클릭 ",
+                "id ${data.get(0).id}번의 삭제 버튼 클릭 ",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -49,7 +49,7 @@ class TimelineRecyclerViewHolder(v : View,
         btn_modify.setOnClickListener{
             Toast.makeText(
                 App.instance,
-                "id ${data.id}번의 수정 버튼 클릭 ",
+                "id ${data.get(0).id}번의 수정 버튼 클릭 ",
                 Toast.LENGTH_SHORT
             ).show()
         }

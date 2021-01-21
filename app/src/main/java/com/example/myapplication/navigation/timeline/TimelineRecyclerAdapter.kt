@@ -8,14 +8,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.PostItem
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
     RecyclerView.Adapter<TimelineRecyclerViewHolder>() {
 
     private var myInterface: TimelineRecyclerInterface? = null
 
-    private var items = ArrayList<PostItem.PostItems>()
+    private var items = ArrayList<RecipeDTO.PostItem>()
 
     //생성자
     init {
@@ -39,7 +39,7 @@ class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
     /**
      *  TimelineRecyclerAdapter 안에 보여지는 Timeline들 update
      * */
-    fun updateTimelineList(timelines: List<PostItem.PostItems>) {
+    fun updateTimelineList(timelines: List<RecipeDTO.PostItem>) {
         this.items.addAll(timelines)
     }
 
