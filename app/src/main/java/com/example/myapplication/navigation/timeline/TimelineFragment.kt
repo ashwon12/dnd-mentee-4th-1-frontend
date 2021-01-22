@@ -57,6 +57,8 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
                     Log.d("it_list", listOf(it).toString())
                     Log.d("it_get(0)", it[0].toString())
 
+                    list.add(it)
+
                     myAdapter.updateTimelineList(it)
                     myAdapter.notifyDataSetChanged()
                     rv_list.adapter = myAdapter
@@ -72,7 +74,7 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
         Log.d("로그", "TimeLinFragment - 클릭됨")
         Toast.makeText(
             App.instance,
-            "상세 값 : ${this.list[position]}",
+            "상세 값 : ${this.list[0][position]}",
             Toast.LENGTH_SHORT
         ).show()
     }

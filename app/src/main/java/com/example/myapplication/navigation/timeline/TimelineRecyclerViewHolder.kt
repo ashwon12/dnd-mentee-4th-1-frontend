@@ -36,11 +36,12 @@ class TimelineRecyclerViewHolder(v : View,
     fun bind(data : RecipeDTO.PostItems) {
         title.text = data.title
         subtitle.text = data.subTitle
-        //Log.d("이미지뷰", "data.imageUrl : ${data.imageUrl?.get(0)}")
+
+        /* TODO : 왜 imgUrl index가 0?
         data.imageUrl?.let {
             val oneUrl = it[0]
-            Glide.with(App.instance).load(oneUrl).into(image);
-        }
+            Glide.with(App.instance).load(oneUrl).placeholder(R.drawable.ic_no_image).into(image);
+        }*/
 
         //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
         btn_delete.setOnClickListener {
