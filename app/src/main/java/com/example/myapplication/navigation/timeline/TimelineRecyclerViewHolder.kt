@@ -3,6 +3,7 @@
  */
 package com.example.myapplication.navigation.timeline
 
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -32,13 +33,17 @@ class TimelineRecyclerViewHolder(v : View,
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data : RecipeDTO.PostItems){
+    fun bind(data : RecipeDTO.PostItems) {
         title.text = data.title
         subtitle.text = data.subTitle
-        Glide.with(App.instance).load(data.imageUrl).into(image);
+        //Log.d("이미지뷰", "data.imageUrl : ${data.imageUrl?.get(0)}")
+        data.imageUrl?.let {
+            val oneUrl = it[0]
+            Glide.with(App.instance).load(oneUrl).into(image);
+        }
 
         //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
-        btn_delete.setOnClickListener{
+        btn_delete.setOnClickListener {
             Toast.makeText(
                 App.instance,
                 "id ${data.id}번의 삭제 버튼 클릭 ",
@@ -46,7 +51,7 @@ class TimelineRecyclerViewHolder(v : View,
             ).show()
         }
 
-        btn_modify.setOnClickListener{
+        btn_modify.setOnClickListener {
             Toast.makeText(
                 App.instance,
                 "id ${data.id}번의 수정 버튼 클릭 ",
@@ -57,6 +62,7 @@ class TimelineRecyclerViewHolder(v : View,
 
     override fun onClick(p0: View?) {
         this.myInterface?.onItemClicked(adapterPosition)
+
     }
 }
 
