@@ -5,7 +5,7 @@ package com.example.myapplication.data.datasource.remote.api
 
 class RecipeDTO {
 
-    class PostItem : ArrayList<TimelineResponse>()
+    class PostItem : ArrayList<PostItems>()
 
     data class PostItems(
         val comment: List<String>,

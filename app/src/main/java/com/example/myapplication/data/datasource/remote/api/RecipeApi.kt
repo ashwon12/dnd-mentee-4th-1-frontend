@@ -23,7 +23,7 @@ interface RecipeApi {
         @Field("subTitle") subTitle: String,
         @Field("imageUrl") imageUrls: List<String>,
         @Field("comment") comments:List<String>
-    ): Call<RecipeDTO.TimelineResponse>
+    ): Call<RecipeDTO.PostItem>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"

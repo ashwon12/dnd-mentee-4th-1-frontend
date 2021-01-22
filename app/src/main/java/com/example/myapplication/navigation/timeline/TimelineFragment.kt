@@ -28,9 +28,7 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
     private val repository = RepositoryImpl()
-
-    private var list2 = ArrayList<RecipeDTO.PostItem>()
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -45,33 +43,9 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
      */
     fun callRecycler() {
         list.clear()
-        /*
-        list.add(
-            RecipeDTO.TimelineResponse(
-                null,
-                null,
-                null,
-                1,
-                null,
-                null,
-                "여기는 부제목",
-                "여기는 제목!"
-            )
-        )
+        myAdapter = TimelineRecyclerAdapter(this)
+        var rv_list = v.findViewById(R.id.rv_list) as RecyclerView
 
-        list.add(
-            RecipeDTO.TimelineResponse(
-                null,
-                null,
-                null,
-                2,
-                null,
-                null,
-                "여기는 subtitle",
-                "여기는 title!"
-            )
-        )
-         */
         /**
          * API 통신 확인을 위해 추가
          *              - 함도영
@@ -80,28 +54,26 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
             success = {
                 it.run {
                     Log.d("it", it.toString())
-                    // list.addAll()
+                    Log.d("it_list", listOf(it).toString())
+                    Log.d("it_get(0)", it[0].toString())
+
+                    myAdapter.updateTimelineList(it)
+                    myAdapter.notifyDataSetChanged()
+                    rv_list.adapter = myAdapter
                 }
             },
             fail = {
                 Log.d("fail", "failfailfail")
             }
         )
-        myAdapter = TimelineRecyclerAdapter(this)
-        myAdapter.updateTimelineList(list)
-        myAdapter.notifyDataSetChanged()
-
-        var rv_list = v.findViewById(R.id.rv_list) as RecyclerView
-        rv_list.adapter = myAdapter
     }
 
     override fun onItemClicked(position: Int) {
         Log.d("로그", "TimeLinFragment - 클릭됨")
-//        Toast.makeText(
-//            App.instance,
-//            "id : ${this.list[position].id}\n Title : ${this.list[position].title}\n subTitle: ${this.list[position].subTitle}",
-//            Toast.LENGTH_SHORT
-//        ).show()
-
+        Toast.makeText(
+            App.instance,
+            "상세 값 : ${this.list[position]}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
