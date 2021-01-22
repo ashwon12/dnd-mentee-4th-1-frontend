@@ -7,28 +7,28 @@
     android:layout_marginBottom="5dp"
     android:background="#CDDC39"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:weightSum="9">
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
         tools:layout_gravity="center_vertical"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-
+        android:layout_weight="6"
         android:orientation="vertical"
-        android:padding="5dp"
-        >
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="여긴 title이 들어올 자리!"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -36,17 +36,16 @@
         <TextView
             android:id="@+id/tv_subtitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:text="여긴 subTitle이 들어올 예정"
-             />
+            android:layout_height="wrap_content"
+            android:text="여긴 subTitle이 들어올 예정" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right|end"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <Button
