@@ -3,7 +3,6 @@
  */
 package com.example.myapplication.navigation.timeline
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -15,17 +14,18 @@ import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class TimelineRecyclerViewHolder(v : View,
-                                 recyclerInterface: TimelineRecyclerInterface) : RecyclerView.ViewHolder(v),
-                                View.OnClickListener
-{
+class TimelineRecyclerViewHolder(
+    v: View,
+    recyclerInterface: TimelineRecyclerInterface
+) : RecyclerView.ViewHolder(v),
+    View.OnClickListener {
     private val title = v.findViewById<TextView>(R.id.tv_title)
     private val subtitle = v.findViewById<TextView>(R.id.tv_subtitle)
     private val image = v.findViewById<ImageView>(R.id.iv_image)
     private val btn_delete = v.findViewById<Button>(R.id.btn_delete)
     private val btn_modify = v.findViewById<Button>(R.id.btn_modify)
 
-    private var myInterface : TimelineRecyclerInterface? = null
+    private var myInterface: TimelineRecyclerInterface? = null
 
     //기본 생성자
     init {
@@ -33,15 +33,19 @@ class TimelineRecyclerViewHolder(v : View,
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data : RecipeDTO.PostItems) {
+    fun bind(data: RecipeDTO.PostItems) {
         title.text = data.title
         subtitle.text = data.subTitle
 
-        /* TODO : 왜 imgUrl index가 0?
+        /*TODO : 왜 imgUrl index가 0?
+        *  아래 사진이 안불러와지고 실행 안됨*/
         data.imageUrl?.let {
-            val oneUrl = it[0]
-            Glide.with(App.instance).load(oneUrl).placeholder(R.drawable.ic_no_image).into(image);
-        }*/
+            val oneUrl = it//it[0] -> it으로 수정해서 일단 오류 수정했습니다. 근데 실행은 안되네요ㅠㅠ
+            Glide.with(App.instance)
+                .load(oneUrl)
+                .placeholder(R.drawable.ic_no_image)
+                .into(image);
+        }
 
         //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
         btn_delete.setOnClickListener {

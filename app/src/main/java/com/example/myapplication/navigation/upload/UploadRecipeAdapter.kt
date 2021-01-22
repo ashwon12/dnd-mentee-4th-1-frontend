@@ -80,11 +80,11 @@ class UploadRecipeAdapter(
             recipeNumber.text = data.number
 
             if (data.image != "") {
-                Glide.with(itemView)
+                Glide.with(itemView.context) //.with(itemView) -> itemView.context
                     .load(data.image)
                     .into(recipePhoto)
             } else {
-                Glide.with(itemView)
+                Glide.with(itemView.context) //.with(itemView) -> itemView.context
                     .load(R.drawable.gallery)
                     .into(recipePhoto)
             }
