@@ -16,18 +16,20 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.PostItem
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.RepositoryImpl
 
 class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
     private lateinit var v: View
 
-    private var list = ArrayList<PostItem.PostItems>()
+    private var list = ArrayList<RecipeDTO.PostItem>()
 
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
     private val repository = RepositoryImpl()
+
+    private var list2 = ArrayList<RecipeDTO.PostItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,14 +45,14 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
      */
     fun callRecycler() {
         list.clear()
+        /*
         list.add(
-            PostItem.PostItems(
+            RecipeDTO.TimelineResponse(
                 null,
                 null,
                 null,
                 1,
-                listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
-                ,
+                null,
                 null,
                 "여기는 부제목",
                 "여기는 제목!"
@@ -58,32 +60,31 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
         )
 
         list.add(
-            PostItem.PostItems(
+            RecipeDTO.TimelineResponse(
                 null,
                 null,
                 null,
                 2,
-                listOf("https://image-notepet.akamaized.net/resize/620x-/seimage/20191114%2F6a4c967c5b14197dd5d2c47424ae8e82.jpg")
-                ,
+                null,
                 null,
                 "여기는 subtitle",
                 "여기는 title!"
             )
         )
-
-
+         */
         /**
          * API 통신 확인을 위해 추가
          *              - 함도영
          * */
         repository.getAllTimelineList(
             success = {
-                it.items.run {
-                    list.addAll(it.items)
+                it.run {
+                    Log.d("it", it.toString())
+                    // list.addAll()
                 }
             },
             fail = {
-
+                Log.d("fail", "failfailfail")
             }
         )
         myAdapter = TimelineRecyclerAdapter(this)
@@ -96,11 +97,11 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
     override fun onItemClicked(position: Int) {
         Log.d("로그", "TimeLinFragment - 클릭됨")
-        Toast.makeText(
-            App.instance,
-            "id : ${this.list[position].id}\n Title : ${this.list[position].title}\n subTitle: ${this.list[position].subTitle}",
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            App.instance,
+//            "id : ${this.list[position].id}\n Title : ${this.list[position].title}\n subTitle: ${this.list[position].subTitle}",
+//            Toast.LENGTH_SHORT
+//        ).show()
 
     }
 }

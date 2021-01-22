@@ -13,7 +13,7 @@ interface RecipeApi {
     @GET("/posts")
     fun getAllTimelines(
         @Query("id") id: String? = null
-    ): Call<PostItem.TimelineResponse>
+    ): Call<RecipeDTO.PostItem>
 
     @FormUrlEncoded
     @POST("/posts")
@@ -23,7 +23,7 @@ interface RecipeApi {
         @Field("subTitle") subTitle: String,
         @Field("imageUrl") imageUrls: List<String>,
         @Field("comment") comments:List<String>
-    ): Call<PostItem.TimelineResponse>
+    ): Call<RecipeDTO.TimelineResponse>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
