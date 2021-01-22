@@ -8,14 +8,14 @@ class RecipeDTO {
     class PostItem : ArrayList<PostItems>()
 
     data class PostItems(
-        val comment: List<String>,
-        val cookingTime: Any,
-        val cookingTool: Any,
-        val id: Int,
-        val imageUrl: List<String>,
-        val likeCount: Int,
-        val subTitle: String,
-        val title: String
+        val comment: List<String>?,
+        val cookingTime: Any?,
+        val cookingTool: Any?,
+        val id: Int?,
+        val imageUrl: List<String>?,
+        val likeCount: Int?,
+        val subTitle: String?,
+        val title: String?
     )
 
     data class Timeline(
