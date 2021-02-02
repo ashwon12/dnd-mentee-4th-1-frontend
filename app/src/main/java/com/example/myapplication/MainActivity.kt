@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
-    private val listFragment by lazy { TimelineFragment() }
+    private val feedFragment by lazy { TimelineFragment() }
     private val writeFragment by lazy { UploadFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,23 +26,33 @@ class MainActivity : AppCompatActivity() {
      *
      */
     private fun initBottomNavigation() {
+        bnv_home.background=null
+        bnv_home.menu.getItem(2).isEnabled = false
         bnv_home.run {
             setOnNavigationItemSelectedListener {
                 when(it.itemId){
                     R.id.home ->{
                         setFragment(homeFragment)
                     }
-                    R.id.list -> {
-                        setFragment(listFragment)
+                    R.id.feed -> {
+                        setFragment(feedFragment)
                     }
-                    R.id.write -> {
-                        setFragment(writeFragment)
+                    R.id.search->{
+
+                    }
+                    R.id.myPage->{
+
                     }
                 }
                 true
             }
             selectedItemId = R.id.home // 초기 프래그먼트
         }
+
+        fab_write.setOnClickListener {
+            setFragment(writeFragment)
+        }
+
     }
 
     /**
