@@ -5,9 +5,9 @@ package com.example.myapplication.data.datasource.remote.api
 
 class RecipeDTO {
 
-    class PostItem : ArrayList<PostItems>()
+    class PostItems : ArrayList<PostItem>()
 
-    data class PostItems(
+    data class PostItem(
         val comment: List<String>?,
         val cookingTime: Any?,
         val cookingTool: Any?,
@@ -40,5 +40,9 @@ class RecipeDTO {
         val likeCount: Int?,
         val subTitle: String?,
         val title: String?
+    )
+
+    data class RandomRecipes(
+        val imageUrls: List<String>?
     )
 }
