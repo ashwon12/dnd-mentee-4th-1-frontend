@@ -1,18 +1,18 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.navigation.timeline.TimelineFragment
-import com.example.myapplication.navigation.upload.UploadFragment
 import com.example.myapplication.navigation.home.HomeFragment
+import com.example.myapplication.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
     private val feedFragment by lazy { TimelineFragment() }
-    private val writeFragment by lazy { UploadFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         fab_write.setOnClickListener {
-            setFragment(writeFragment)
+            val intent = Intent(App.instance, UploadActivity::class.java)
+            startActivity(intent)
         }
 
     }
