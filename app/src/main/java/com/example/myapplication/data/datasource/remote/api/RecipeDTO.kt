@@ -26,9 +26,13 @@ class RecipeDTO {
     )
 
     data class Recipe(
-        val number: String,
+        var number: String,
         var comment: String?,
         var image: String?
+    )
+
+    data class Filter(
+        var filterName: String
     )
 
     data class TimelineResponse(

@@ -1,20 +1,23 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.navigation.home.HomeFragment
 import com.example.myapplication.navigation.search.SearchFragment
 import com.example.myapplication.navigation.timeline.TimelineFragment
-import com.example.myapplication.navigation.upload.UploadFragment
+import com.example.myapplication.navigation.home.HomeFragment
+import com.example.myapplication.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
     private val searchFragment by lazy { SearchFragment()}
-    private val listFragment by lazy { TimelineFragment() }
+    private val feedFragment by lazy { TimelineFragment() }
     private val writeFragment by lazy { UploadFragment() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity() {
      *
      */
     private fun initBottomNavigation() {
+        bnv_home.background=null
+        bnv_home.menu.getItem(2).isEnabled = false
         bnv_home.run {
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
@@ -37,17 +42,23 @@ class MainActivity : AppCompatActivity() {
                     R.id.search -> {
                         setFragment(searchFragment)
                     }
-                    R.id.list -> {
-                        setFragment(listFragment)
+                    R.id.feed -> {
+                        setFragment(feedFragment)
                     }
-                    R.id.write -> {
-                        setFragment(writeFragment)
+                    R.id.myPage->{
+
                     }
                 }
                 true
             }
             selectedItemId = R.id.home // 초기 프래그먼트
         }
+
+        fab_write.setOnClickListener {
+            val intent = Intent(App.instance, UploadActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     /**
