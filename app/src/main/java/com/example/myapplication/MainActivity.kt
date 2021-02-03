@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.navigation.timeline.TimelineFragment
 import com.example.myapplication.navigation.home.HomeFragment
+import com.example.myapplication.navigation.mypage.MyPageFragment
 import com.example.myapplication.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
     private val feedFragment by lazy { TimelineFragment() }
-
+    private val myPageFragment by lazy { MyPageFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     R.id.myPage->{
-
+                        setFragment(myPageFragment)
                     }
                 }
                 true
