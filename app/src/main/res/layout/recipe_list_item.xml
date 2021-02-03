@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:background="@drawable/bottom_border"
+    android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/bottom_border">
+    android:layout_marginTop="20dp">
 
     <TextView
         android:id="@+id/tv_number"
@@ -13,29 +14,34 @@
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:text="1."
-        android:textSize="18dp"
-
-        />
-
-    <EditText
-        android:id="@+id/et_comment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:background="@null"
-        android:hint="예) 김치를 꺼내고 스팸 썰기"
-        android:inputType="textMultiLine"
-        android:textSize="18dp" />
+        android:text="1단계"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/iv_photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_gravity="center"
-        android:scaleType="center"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/gallery" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="레시피 설명"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_recipe_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>
