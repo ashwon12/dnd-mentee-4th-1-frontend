@@ -7,6 +7,11 @@
     android:orientation="vertical"
     tools:context=".navigation.timeline.TimelineFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="피드 프래그먼트"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
@@ -15,5 +20,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
         tools:listitem="@layout/list_item" />
-
 </LinearLayout>
