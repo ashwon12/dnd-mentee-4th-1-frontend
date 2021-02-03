@@ -73,5 +73,6 @@ class UploadActivity : AppCompatActivity() {
         val intent = Intent(this, UploadActivity2::class.java)
         intent.putExtra("number", select_cut)
         startActivity(intent)
+        finish()
     }
 }

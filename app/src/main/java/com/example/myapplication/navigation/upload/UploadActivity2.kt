@@ -72,12 +72,14 @@ class UploadActivity2 : AppCompatActivity() {
     private fun clickPrevButton(){
         val intent = Intent(this, UploadActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun clickNextButton(){
         val intent = Intent(this, UploadActivity3::class.java)
         intent.putExtra("number", select_cut)
         startActivity(intent)
+        // finish()
     }
 }
 
