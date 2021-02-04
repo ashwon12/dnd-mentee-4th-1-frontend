@@ -26,6 +26,7 @@
         <activity android:name=".navigation.upload.UploadActivity" />
         <activity android:name=".navigation.upload.UploadActivity2" />
         <activity android:name=".navigation.upload.UploadActivity3" />
+        <activity android:name=".navigation.upload.UploadActivity4" />
     </application>
 
 </manifest>
