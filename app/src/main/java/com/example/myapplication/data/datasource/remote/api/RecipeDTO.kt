@@ -3,6 +3,8 @@
  */
 package com.example.myapplication.data.datasource.remote.api
 
+import java.io.Serializable
+
 class RecipeDTO {
 
     class PostItem : ArrayList<PostItems>()
@@ -26,14 +28,14 @@ class RecipeDTO {
     )
 
     data class Recipe(
-        var number: String,
+        var number: String?,
         var comment: String?,
         var image: String?
-    )
+    ) : Serializable
 
     data class Filter(
         var filterName: String
-    )
+    ) : Serializable
 
     data class TimelineResponse(
         val comment: ArrayList<String>?,
