@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.filter_list_item.view.*
-import java.io.Serializable
 
 class UploadPreviewFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
     RecyclerView.Adapter<UploadPreviewFilterAdapter.UploadPreviewFilterHolder>(){

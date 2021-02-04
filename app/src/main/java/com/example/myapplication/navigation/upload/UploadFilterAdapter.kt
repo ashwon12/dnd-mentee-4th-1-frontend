@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.filter_list_item.view.*
-import java.io.Serializable
 
 class UploadFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>, val saveList: ArrayList<String>) :
     RecyclerView.Adapter<UploadFilterAdapter.UploadFilterHolder>() {

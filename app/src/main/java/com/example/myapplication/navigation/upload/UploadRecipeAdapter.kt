@@ -1,9 +1,7 @@
 package com.example.myapplication.navigation.upload
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import java.io.Serializable
 
 class UploadRecipeAdapter(
     val recipeList: ArrayList<RecipeDTO.Recipe>,

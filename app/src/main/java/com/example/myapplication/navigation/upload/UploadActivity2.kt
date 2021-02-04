@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.activity_upload2.*
 
 class UploadActivity2 : AppCompatActivity() {
