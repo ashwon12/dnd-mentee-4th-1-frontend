@@ -5,12 +5,12 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 interface RemoteDataSource {
     fun getAllTimelinesFromRemote(
-        success: (RecipeDTO.PostItem) -> Unit,
+        success: (RecipeDTO.PostItems) -> Unit,
         fail: (Throwable) -> Unit
     )
 
     fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItems>,
+        postInfo: ArrayList<RecipeDTO.PostItem>,
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     )

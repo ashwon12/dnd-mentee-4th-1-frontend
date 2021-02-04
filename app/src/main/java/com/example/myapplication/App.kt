@@ -8,15 +8,17 @@ import android.app.Application
  * App.intance
  */
 
-class App: Application() {
-
-    companion object {
-        lateinit var instance : App
-            private set
-    }
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+        sharedPrefs = SharedPreferenceUtil(applicationContext)
+    }
+
+    companion object {
+        lateinit var instance: App
+            private set
+        lateinit var sharedPrefs: SharedPreferenceUtil
     }
 }

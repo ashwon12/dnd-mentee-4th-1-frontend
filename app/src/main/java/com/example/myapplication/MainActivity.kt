@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.myapplication.navigation.home.HomeFragment
+import com.example.myapplication.navigation.search.SearchFragment
 import com.example.myapplication.navigation.timeline.TimelineFragment
 import com.example.myapplication.navigation.home.HomeFragment
 import com.example.myapplication.navigation.upload.UploadActivity
@@ -12,7 +14,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
+    private val searchFragment by lazy { SearchFragment()}
     private val feedFragment by lazy { TimelineFragment() }
+    private val writeFragment by lazy { UploadFragment() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +35,15 @@ class MainActivity : AppCompatActivity() {
         bnv_home.menu.getItem(2).isEnabled = false
         bnv_home.run {
             setOnNavigationItemSelectedListener {
-                when(it.itemId){
-                    R.id.home ->{
+                when (it.itemId) {
+                    R.id.home -> {
                         setFragment(homeFragment)
+                    }
+                    R.id.search -> {
+                        setFragment(searchFragment)
                     }
                     R.id.feed -> {
                         setFragment(feedFragment)
-                    }
-                    R.id.search->{
-
                     }
                     R.id.myPage->{
 
@@ -61,7 +66,7 @@ class MainActivity : AppCompatActivity() {
      *
      * @param fragment: Fragment 전환될 프래그먼트
      */
-    private fun setFragment(fragment: Fragment){
+    private fun setFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fl_container, fragment)
