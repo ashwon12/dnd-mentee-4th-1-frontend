@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.upload
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,7 @@ class UploadActivity4 : AppCompatActivity() {
     private var thumbnail: Uri? = null
     private var filterList = ArrayList<RecipeDTO.Filter>()
     private lateinit var adapter: UploadPreviewRecipeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload4)
@@ -28,10 +30,12 @@ class UploadActivity4 : AppCompatActivity() {
 
         btn_submit.setOnClickListener {
             Toast.makeText(this, "서버 전송 미완성", Toast.LENGTH_SHORT).show()
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
     }
 
     private fun getItems() {
+
         if (intent.hasExtra("number")) {
             select_cut = intent.getIntExtra("number", 1)
             setPageCut()
@@ -41,10 +45,6 @@ class UploadActivity4 : AppCompatActivity() {
             setPageFilter()
             Log.d("savefilterList", saveFilterList.toString())
         }
-//        if (intent.hasExtra("originFilter")) {
-//            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
-//            Log.d("filterList", filterList.toString())
-//        }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")
             Log.d("thumbnail", thumbnail.toString())
@@ -95,5 +95,7 @@ class UploadActivity4 : AppCompatActivity() {
             Log.d("filter", filterList.toString())
         }
     }
+
+
 
 }

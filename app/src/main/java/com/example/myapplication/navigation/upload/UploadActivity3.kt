@@ -25,7 +25,6 @@ class UploadActivity3 : AppCompatActivity() {
 
     private var select_cut: Int = 0
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
-    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var saveFilterList = ArrayList<String>()
     private var saveMainFoodList = ArrayList<String>()
     private var saveSubFoodList = ArrayList<String>()
@@ -50,14 +49,12 @@ class UploadActivity3 : AppCompatActivity() {
             val intent = Intent(App.instance, UploadActivity4::class.java)
             intent.putExtra("number", select_cut)
             intent.putExtra("filter", saveFilterList)
-            intent.putExtra("originFilter", filterList)
             intent.putExtra("thumbnail", thumbnail)
             intent.putExtra("mainfood", saveMainFoodList)
             intent.putExtra("subfood", saveSubFoodList)
             intent.putExtra("recipeList", recipeList)
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
-            // finish()
-            // Toast.makeText(this, "서버 전송 부분 미완성", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,9 +81,6 @@ class UploadActivity3 : AppCompatActivity() {
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
-        }
-        if (intent.hasExtra("originFilter")) {
-            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
         }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")

@@ -24,6 +24,10 @@ class UploadActivity : AppCompatActivity() {
 
         filterAdd()
 
+        callAdapter()
+    }
+
+    private fun callAdapter() {
         rv_upload_filter.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_upload_filter.setHasFixedSize(true)
@@ -69,8 +73,7 @@ class UploadActivity : AppCompatActivity() {
         val intent = Intent(this, UploadActivity2::class.java)
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
-        intent.putExtra("originFilter", filterList)
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
-        finish()
     }
 }

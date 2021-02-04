@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_upload2.*
 
 class UploadActivity2 : AppCompatActivity() {
     private var select_cut: Int = 0
-    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var saveFilterList = ArrayList<String>()
     private val REQUEST_GALLERY_CODE = 100
     private var thumbnail: Uri? = null
@@ -53,9 +52,6 @@ class UploadActivity2 : AppCompatActivity() {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
         }
-        if(intent.hasExtra("originFilter")) {
-            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,7 +87,6 @@ class UploadActivity2 : AppCompatActivity() {
     private fun clickPrevButton() {
         val intent = Intent(this, UploadActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun clickNextButton() {
@@ -100,12 +95,11 @@ class UploadActivity2 : AppCompatActivity() {
         val intent = Intent(this, UploadActivity3::class.java)
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
-        intent.putExtra("originFilter", filterList)
         intent.putExtra("thumbnail", thumbnail)
         intent.putExtra("mainfood", saveMainFoodList)
         intent.putExtra("subfood", saveSubFoodList)
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
-        // finish()
     }
 
     private fun textWhatcher() {
