@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -24,6 +25,11 @@ class UploadActivity3 : AppCompatActivity() {
 
     private var select_cut: Int = 0
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
+    private var filterList = ArrayList<RecipeDTO.Filter>()
+    private var saveFilterList = ArrayList<String>()
+    private var saveMainFoodList = ArrayList<String>()
+    private var saveSubFoodList = ArrayList<String>()
+    private var thumbnail: Uri? = null
 
     private var positionMain = 0
 
@@ -41,7 +47,17 @@ class UploadActivity3 : AppCompatActivity() {
         makeRecyclerView()
 
         btn_preview.setOnClickListener {
-            Toast.makeText(this, "서버 전송 부분 미완성", Toast.LENGTH_SHORT).show()
+            val intent = Intent(App.instance, UploadActivity4::class.java)
+            intent.putExtra("number", select_cut)
+            intent.putExtra("filter", saveFilterList)
+            intent.putExtra("originFilter", filterList)
+            intent.putExtra("thumbnail", thumbnail)
+            intent.putExtra("mainfood", saveMainFoodList)
+            intent.putExtra("subfood", saveSubFoodList)
+            intent.putExtra("recipeList", recipeList)
+            startActivity(intent)
+            // finish()
+            // Toast.makeText(this, "서버 전송 부분 미완성", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -63,9 +79,26 @@ class UploadActivity3 : AppCompatActivity() {
     private fun getItems() {
         if (intent.hasExtra("number")) {
             select_cut = intent.getIntExtra("number", 1)
-            Toast.makeText(this, "yes : " + select_cut, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "no : " + select_cut, Toast.LENGTH_SHORT).show()
+            Log.d("number", select_cut.toString())
+        }
+        if (intent.hasExtra("filter")) {
+            saveFilterList = intent.getStringArrayListExtra("filter")!!
+            Log.d("savefilterList", saveFilterList.toString())
+        }
+        if (intent.hasExtra("originFilter")) {
+            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
+        }
+        if (intent.hasExtra("thumbnail")) {
+            thumbnail = intent.getParcelableExtra("thumbnail")
+            Log.d("thumbnail", thumbnail.toString())
+        }
+        if (intent.hasExtra("mainfood")) {
+            saveMainFoodList = intent.getStringArrayListExtra("mainfood")!!
+            Log.d("mainfood", saveMainFoodList.toString())
+        }
+        if (intent.hasExtra("subfood")) {
+            saveSubFoodList = intent.getStringArrayListExtra("subfood")!!
+            Log.d("subfood", saveSubFoodList.toString())
         }
     }
 
