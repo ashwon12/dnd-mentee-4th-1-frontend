@@ -1,9 +1,7 @@
 package com.example.myapplication.navigation.upload
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
@@ -11,8 +9,9 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
-    var select_cut: Int = 0
-    var filterList = arrayListOf<RecipeDTO.Filter>()
+    private var select_cut: Int = 0
+    private var filterList = ArrayList<RecipeDTO.Filter>()
+    private var saveFilterList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +24,16 @@ class UploadActivity : AppCompatActivity() {
 
         filterAdd()
 
-        rv_upload_filter.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_upload_filter.setHasFixedSize(true)
-
-        rv_upload_filter.adapter = UploadFilterAdpater(filterList)
+        callAdapter()
     }
 
+    private fun callAdapter() {
+        rv_upload_filter.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_upload_filter.setHasFixedSize(true)
+
+        rv_upload_filter.adapter = UploadFilterAdapter(filterList, saveFilterList)
+    }
 
     private fun filterAdd() {
         filterList.add(RecipeDTO.Filter("test1"))
@@ -42,8 +45,7 @@ class UploadActivity : AppCompatActivity() {
         filterList.add(RecipeDTO.Filter("test7"))
     }
 
-    private fun clickThreeCut(){
-        Toast.makeText(this, "click_three_cut", Toast.LENGTH_SHORT).show()
+    private fun clickThreeCut() {
         select_cut = 3
         iv_three_cut.setImageResource(R.drawable.ic_select_cut)
         iv_six_cut.setImageResource(R.drawable.ic_no_select_cut)
@@ -51,8 +53,7 @@ class UploadActivity : AppCompatActivity() {
         btn_upload_recipe_next1.isEnabled = true
     }
 
-    private fun clickSixCut(){
-        Toast.makeText(this, "click_six_cut", Toast.LENGTH_SHORT).show()
+    private fun clickSixCut() {
         select_cut = 6
         iv_three_cut.setImageResource(R.drawable.ic_no_select_cut)
         iv_six_cut.setImageResource(R.drawable.ic_select_cut)
@@ -60,8 +61,7 @@ class UploadActivity : AppCompatActivity() {
         btn_upload_recipe_next1.isEnabled = true
     }
 
-    private fun clickNineCut(){
-        Toast.makeText(this, "click_nine_cut", Toast.LENGTH_SHORT).show()
+    private fun clickNineCut() {
         select_cut = 9
         iv_three_cut.setImageResource(R.drawable.ic_no_select_cut)
         iv_six_cut.setImageResource(R.drawable.ic_no_select_cut)
@@ -69,9 +69,11 @@ class UploadActivity : AppCompatActivity() {
         btn_upload_recipe_next1.isEnabled = true
     }
 
-    private fun clickNextButton(){
+    private fun clickNextButton() {
         val intent = Intent(this, UploadActivity2::class.java)
         intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
 }

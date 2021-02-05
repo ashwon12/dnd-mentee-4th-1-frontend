@@ -1,9 +1,7 @@
 package com.example.myapplication.navigation.upload
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +18,12 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 class UploadRecipeAdapter(
     val recipeList: ArrayList<RecipeDTO.Recipe>,
     val itemClick: (Int, RecipeDTO.Recipe) -> Unit
-) : RecyclerView.Adapter<UploadRecipeAdapter.UploadRecipeHolder>() {
+) : RecyclerView.Adapter<UploadRecipeAdapter.UploadRecipeHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): UploadRecipeAdapter.UploadRecipeHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recipe_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.upload_recipe_list_item, parent, false)
         return UploadRecipeHolder(view)
     }
 
@@ -73,16 +71,13 @@ class UploadRecipeAdapter(
 
             comment.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    // Log.d("Beforeposition", adapterPosition.toString())
                 }
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    // Log.d("Onposition", adapterPosition.toString())
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
                     recipeList[adapterPosition].comment = p0.toString()
-                    // Log.d("Afterposition", adapterPosition.toString())
                 }
             })
         }

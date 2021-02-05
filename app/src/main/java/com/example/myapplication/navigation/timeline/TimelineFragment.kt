@@ -23,7 +23,7 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
     private lateinit var v: View
 
-    private var list = ArrayList<RecipeDTO.PostItems>()
+    private var list = ArrayList<RecipeDTO.PostItem>()
 
     private lateinit var myAdapter: TimelineRecyclerAdapter
 

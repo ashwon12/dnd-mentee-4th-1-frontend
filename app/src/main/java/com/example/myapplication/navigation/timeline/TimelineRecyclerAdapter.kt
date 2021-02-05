@@ -16,7 +16,7 @@ class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
 
     private var myInterface: TimelineRecyclerInterface? = null
 
-    private var items = ArrayList<RecipeDTO.PostItem>()
+    private var items = ArrayList<RecipeDTO.PostItems>()
 
     //생성자
     init {
@@ -41,7 +41,7 @@ class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
     /**
      *  TimelineRecyclerAdapter 안에 보여지는 Timeline들 update
      * */
-    fun updateTimelineList(timeLines: List<RecipeDTO.PostItem>) {
+    fun updateTimelineList(timeLines: List<RecipeDTO.PostItems>) {
         this.items.addAll(timeLines)
     }
 
