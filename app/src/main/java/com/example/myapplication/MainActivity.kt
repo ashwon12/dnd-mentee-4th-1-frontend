@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.myapplication.navigation.timeline.TimelineFragment
 import com.example.myapplication.navigation.home.HomeFragment
 import com.example.myapplication.navigation.mypage.MyPageFragment
+import com.example.myapplication.navigation.search.SearchFragment
 import com.example.myapplication.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private val homeFragment by lazy { HomeFragment() }
     private val feedFragment by lazy { TimelineFragment() }
+    private val searchFragment by lazy { SearchFragment() }
     private val myPageFragment by lazy { MyPageFragment() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                         setFragment(feedFragment)
                     }
                     R.id.search->{
-
+                        setFragment(searchFragment)
                     }
                     R.id.myPage->{
                         setFragment(myPageFragment)

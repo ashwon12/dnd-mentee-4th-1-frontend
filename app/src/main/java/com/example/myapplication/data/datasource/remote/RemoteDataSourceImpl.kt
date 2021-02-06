@@ -12,25 +12,25 @@ class RemoteDataSourceImpl : RemoteDataSource {
     private val recipeApi = RecipeApi.create()
 
     override fun getAllTimelinesFromRemote(
-        success: (RecipeDTO.PostItem) -> Unit,
+        success: (RecipeDTO.PostItems) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         val callGetAllTimelines = recipeApi.getAllTimelines()
-        callGetAllTimelines.enqueue(object : retrofit2.Callback<RecipeDTO.PostItem>{
+        callGetAllTimelines.enqueue(object : retrofit2.Callback<RecipeDTO.PostItems>{
             override fun onResponse(
-                call: Call<RecipeDTO.PostItem>,
-                response: Response<RecipeDTO.PostItem>
+                call: Call<RecipeDTO.PostItems>,
+                response: Response<RecipeDTO.PostItems>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         success(it)
-                        val result : RecipeDTO.PostItem? = response.body()
+                        val result : RecipeDTO.PostItems? = response.body()
                         Log.d(TAG, "성공 : ${response.raw()}")
                         Log.d("result", result?.get(0)?.title.toString())
                     }
                 }
             }
-            override fun onFailure(call: Call<RecipeDTO.PostItem>, t: Throwable) {
+            override fun onFailure(call: Call<RecipeDTO.PostItems>, t: Throwable) {
                 Log.d("/posts", "getAlltimelinesFromRemote 실패 : " + t)
             }
         })
@@ -38,7 +38,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
     override fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItems>,
+        postInfo: ArrayList<RecipeDTO.PostItem>,
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {

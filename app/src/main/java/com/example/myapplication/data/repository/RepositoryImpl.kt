@@ -8,7 +8,7 @@ class RepositoryImpl : Repository {
     private val remoteMovieDataSourceImp = RemoteDataSourceImpl()
 
     override fun getAllTimelineList(
-        success: (RecipeDTO.PostItem) -> Unit,
+        success: (RecipeDTO.PostItems) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImp.getAllTimelinesFromRemote(
@@ -18,7 +18,7 @@ class RepositoryImpl : Repository {
     }
 
     override fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItems>,
+        postInfo: ArrayList<RecipeDTO.PostItem>,
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
