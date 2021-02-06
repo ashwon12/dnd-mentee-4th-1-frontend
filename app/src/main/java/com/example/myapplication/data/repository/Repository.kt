@@ -12,4 +12,8 @@ interface Repository {
         success: (RecipeDTO.TimelineResponse) -> Unit,
         fail: (Throwable) -> Unit
     )
+
+    fun saveSearch(recipe : String)
+
+    fun getSavedSearchList() : List<String>
 }
