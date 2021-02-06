@@ -33,7 +33,7 @@ class TimelineRecyclerViewHolder(
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data: RecipeDTO.PostItems) {
+    fun bind(data: RecipeDTO.PostItem) {
         title.text = data.title
         subtitle.text = data.subTitle
 
