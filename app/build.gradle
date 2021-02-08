@@ -55,4 +55,7 @@ dependencies {
 
     //SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //SpannedGridLayoutManager
+    implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
 }
