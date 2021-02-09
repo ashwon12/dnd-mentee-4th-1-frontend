@@ -4,16 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.skyhope.materialtagview.enums.TagSeparator
 import com.skyhope.materialtagview.interfaces.TagItemListener
 import com.skyhope.materialtagview.model.TagModel
 import kotlinx.android.synthetic.main.activity_upload2.*
@@ -135,7 +130,7 @@ class UploadActivity2 : AppCompatActivity() {
         if(tagModel != null){
             for(i in tagModel.indices) {
                 if(tagModel[i].tagText.toString() != "") {
-                    mainFoodTagList.add(tagModel[i].tagText.toString())
+                    mainFoodTagList.add(tagModel[i].tagText.toString().replace(" ", ""))
                 }
             }
         }
@@ -143,11 +138,10 @@ class UploadActivity2 : AppCompatActivity() {
         if(tagModel2 != null) {
             for(i in tagModel2.indices) {
                 if(tagModel[i].tagText.toString() != "") {
-                    subFoodTagList.add(tagModel2[i].tagText.toString())
+                    subFoodTagList.add(tagModel2[i].tagText.toString().replace(" ", ""))
                 }
             }
         }
-
     }
 }
 
