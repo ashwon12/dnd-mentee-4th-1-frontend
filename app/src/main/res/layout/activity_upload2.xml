@@ -78,14 +78,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_text5"
-            app:tag_separator="COMMA_SEPARATOR"
-            app:tag_limit="20"
+            app:limit_error_text="더이상 재료를 추가할 수 없습니다."
             app:tag_background_color="@color/orange"
-            app:limit_error_text="더이상 재료를 추가할 수 없습니다."/>
+            app:tag_limit="20"
+            app:tag_separator="COMMA_SEPARATOR" />
 
         <TextView
             android:id="@+id/tv_text6"
@@ -104,14 +105,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_text6"
-            app:tag_separator="COMMA_SEPARATOR"
-            app:tag_limit="20"
+            app:limit_error_text="더이상 재료를 추가할 수 없습니다."
             app:tag_background_color="@color/orange"
-            app:limit_error_text="더이상 재료를 추가할 수 없습니다."/>
+            app:tag_limit="20"
+            app:tag_separator="COMMA_SEPARATOR" />
 
         <Button
             android:id="@+id/btn_upload_recipe_prev1"
