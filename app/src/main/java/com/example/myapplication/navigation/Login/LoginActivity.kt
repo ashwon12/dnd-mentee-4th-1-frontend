@@ -1,6 +1,7 @@
 package com.example.myapplication.navigation.Login
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_login_main.*
 
 
 class LoginActivity : AppCompatActivity() {
-    val RC_SIGN_IN = 0
+    private val RC_SIGN_IN = 0
     lateinit var mGoogleSignInClient : GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +51,17 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (token != null) {
                 Log.i("kakao", "로그인 성공 ${token.accessToken}")
-                val intent = Intent(App.instance, MainActivity::class.java)
+                var intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
-                // updateKaKaoLoginUi()
+                finish()
             }
         }
 
-        if(LoginClient.instance.isKakaoTalkLoginAvailable(App.instance)) {
-            LoginClient.instance.loginWithKakaoTalk(App.instance, callback = callback)
+        if(LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
+            LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
         } else {
-            LoginClient.instance.loginWithKakaoAccount(App.instance, callback = callback)
+            LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
 
         mGoogleSignInClient.revokeAccess()
@@ -101,8 +103,10 @@ class LoginActivity : AppCompatActivity() {
             // 구글 로그인 성공 
             Log.w("google", "signInResult:success code=" + account)
 
-            val intent = Intent(App.instance, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            finish()
 
         } catch (e: ApiException) {
             // 구글 로그인 실패
