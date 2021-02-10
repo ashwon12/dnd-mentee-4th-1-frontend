@@ -54,7 +54,7 @@ class UploadActivity3 : AppCompatActivity() {
             intent.putExtra("subfood", subFoodTagList)
             intent.putExtra("recipeList", recipeList)
             intent.putExtra("recipeTitle", recipeTitle)
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }
     }

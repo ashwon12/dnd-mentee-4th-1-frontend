@@ -78,7 +78,7 @@ class UploadActivity : AppCompatActivity() {
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
         intent.putExtra("recipeTitle", recipeTitle)
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
 

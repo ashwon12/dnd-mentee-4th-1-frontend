@@ -31,7 +31,7 @@ class UploadActivity4 : AppCompatActivity() {
 
         btn_submit.setOnClickListener {
             Toast.makeText(this, "서버 전송 미완성", Toast.LENGTH_SHORT).show()
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
     }
 
