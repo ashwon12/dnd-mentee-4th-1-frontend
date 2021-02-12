@@ -12,24 +12,29 @@
         android:orientation="vertical"
         android:weightSum="11">
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_top3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/indicator"
+                android:layout_centerInParent="true" />
 
             <me.relex.circleindicator.CircleIndicator3
                 android:id="@+id/indicator"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentBottom="true" />
+                android:layout_gravity="bottom"
+                android:background="@android:color/transparent"/>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/indicator"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
+
+        </FrameLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,14 +42,10 @@
             android:layout_weight="2">
         </LinearLayout>
 
-        <GridLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
 
     </LinearLayout>
 
