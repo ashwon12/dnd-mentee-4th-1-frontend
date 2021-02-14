@@ -1,5 +1,7 @@
 package com.example.myapplication.navigation.upload
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +23,17 @@ class UploadFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>, val saveL
         return filterList.size
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UploadFilterAdapter.UploadFilterHolder, position: Int) {
-        holder.name.setText(filterList[position].filterName)
+        holder.name.text = filterList[position].filterName
 
         holder.itemView.setOnClickListener {
             if(!saveList.contains(filterList[position].filterName)) {
                 saveList.add(filterList[position].filterName)
-                holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.select_border_layout)
+                holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#FF8C4B"))
             } else {
                 saveList.remove(filterList[position].filterName)
-                holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.no_select_border_layout)
+                holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#777777"))
             }
         }
     }
