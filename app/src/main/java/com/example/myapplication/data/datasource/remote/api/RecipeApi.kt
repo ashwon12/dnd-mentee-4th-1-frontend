@@ -18,7 +18,7 @@ interface RecipeApi {
     @GET("/recipes")
     fun getRandomRecipes(
 
-    ): Call<RecipeDTO.RandomRecipes>
+    ): Call<RecipeDTO.tempRandomRecipes>
 
 
 

@@ -41,7 +41,7 @@ class TimelineRecyclerViewHolder(
         *  아래 사진이 안불러와지고 실행 안됨*/
         data.imageUrl?.let {
             if(it.isNotEmpty()) {
-                val oneUrl = it[0]//it[0] -> it으로 수정해서 일단 오류 수정했습니다. 근데 실행은 안되네요ㅠㅠ
+                val oneUrl = it[0]
                 Glide.with(App.instance)
                     .load(oneUrl)
                     .placeholder(R.drawable.ic_no_image)

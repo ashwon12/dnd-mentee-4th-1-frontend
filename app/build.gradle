@@ -58,4 +58,10 @@ dependencies {
 
     //SpannedGridLayoutManager
     implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
+
+    //ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //Circle Indicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }
