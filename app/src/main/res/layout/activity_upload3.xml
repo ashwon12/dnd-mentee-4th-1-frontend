@@ -49,14 +49,30 @@
             app:layout_constraintTop_toBottomOf="@id/tv_text7" />
 
         <Button
-            android:id="@+id/btn_preview"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_upload_recipe_prev2"
+            android:layout_width="205dp"
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
-            android:text="미리보기"
+            android:backgroundTint="@color/LightGray"
+            android:text="이전"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_upload_recipe"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_recipe" />
+
+        <Button
+            android:id="@+id/btn_preview"
+            android:layout_width="206dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="@color/orange"
+            android:text="미리보기"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_recipe" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -117,20 +117,26 @@
 
         <Button
             android:id="@+id/btn_upload_recipe_prev1"
-            android:layout_width="209dp"
+            android:layout_width="205dp"
             android:layout_height="60dp"
             android:layout_marginTop="37dp"
+            android:backgroundTint="@color/LightGray"
             android:text="이전"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
 
         <Button
             android:id="@+id/btn_upload_recipe_next2"
-            android:layout_width="209dp"
+            android:layout_width="206dp"
             android:layout_height="60dp"
             android:layout_marginTop="37dp"
+            android:backgroundTint="@color/orange"
             android:text="다음"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
