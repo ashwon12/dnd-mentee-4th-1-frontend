@@ -39,20 +39,20 @@ class RemoteDataSource {
 
 
     fun getRandomRecipes(
-        success: (RecipeDTO.RandomRecipes) -> Unit,
+        success: (RecipeDTO.tempRandomRecipes) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         val callGetRandomRecipes = recipeApi.getRandomRecipes()
-        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.RandomRecipes>{
+        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.tempRandomRecipes>{
             override fun onResponse(
-                call: Call<RecipeDTO.RandomRecipes>,
-                response: Response<RecipeDTO.RandomRecipes>
+                call: Call<RecipeDTO.tempRandomRecipes>,
+                response: Response<RecipeDTO.tempRandomRecipes>
             ) {
                 response.body()?.let{
                     success(it)
                 }
             }
-            override fun onFailure(call: Call<RecipeDTO.RandomRecipes>, t: Throwable) {
+            override fun onFailure(call: Call<RecipeDTO.tempRandomRecipes>, t: Throwable) {
                 Log.e("/posts", "RandomRecipes 가져오기 실패 : " + t)
             }
         })

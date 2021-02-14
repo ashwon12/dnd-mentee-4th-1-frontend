@@ -28,7 +28,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     private lateinit var searchAdapter: SearchAdapter
 
-    private val tempList = ArrayList<RecipeDTO.PostItems>()
+    private val tempRandomRecipes = ArrayList<RecipeDTO.tempRandomRecipes>()
 
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
@@ -41,17 +41,29 @@ class SearchFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(0,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(1,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(2,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(3,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(4,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(5,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(6,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(7,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(8,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(9,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(10,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(11,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(12,"R.drawable.ic_home",null,null,null,null,null,null))
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))
+
+
         v = inflater.inflate(R.layout.fragment_search, container, false)
         setRecyclerView()
         setAutoCompleteTextView()
-
+        setSwipeRefreshLayout()
         pickRandomNumberOnRecommandTextView()
 
         return v
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setSwipeRefreshLayout()
     }
 
     /**   AutoCompleteTextView 설정   */
@@ -103,25 +115,21 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
         val sgLayoutManager = SpannedGridLayoutManager(
             orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
-            spans = 6
+            spans = 3
         )
         sgLayoutManager.itemOrderIsStable = true
 
         val rvRandomRecipe = v.findViewById<RecyclerView>(R.id.rv_random_recipe)
         rvRandomRecipe.layoutManager = sgLayoutManager
         rvRandomRecipe.adapter = searchAdapter
-        rvRandomRecipe.isNestedScrollingEnabled//주의
 
         sgLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup { position ->
-            when (position % 9) {
-                0, 6 -> {
-                    SpanSize(4, 4)
-                }
-                3 -> {
-                    SpanSize(3, 3)
+            when (position % 12) {
+                1,6 -> {
+                    SpanSize(2, 2)
                 }
                 else -> {
-                    SpanSize(2, 2)
+                    SpanSize(1, 1)
                 }
             }
         }
@@ -144,13 +152,13 @@ class SearchFragment : Fragment(), View.OnClickListener {
     /**  Repository에게 타임라인 목록 요청  */
     private fun requestRandomRecipes() {
         searchAdapter.randomRecipes.clear()
-        repository.getAllTimelineList(//TODO : getAllTimelinesList -> getRandomRecipes
+        repository.getRandomRecipes(//TODO : getAllTimelinesList -> getRandomRecipes
             success = {
                 it.run {
 
-                    tempList.add(it)
+                    tempRandomRecipes.add(it)
 
-                    searchAdapter.updateRandomRecipeList(it)
+                    searchAdapter.updateRandomRecipeList(tempRandomRecipes)
                     searchAdapter.notifyDataSetChanged()
                 }
             },
@@ -158,6 +166,8 @@ class SearchFragment : Fragment(), View.OnClickListener {
                 Log.d("fail", "failfailfail")
             }
         )
+        searchAdapter.updateRandomRecipeList(tempRandomRecipes)
+        searchAdapter.notifyDataSetChanged()
     }
 
     /** 키보드 숨기기 */

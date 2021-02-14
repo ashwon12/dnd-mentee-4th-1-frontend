@@ -13,12 +13,11 @@ class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val imageViewRandomRecipe: ImageView = itemView.iv_random_recipe
 
-    fun bindItem(data: RecipeDTO.PostItem) {
-        data.imageUrl?.let {
+    fun bindItem(data: RecipeDTO.tempRandomRecipes) {
+        data.thunmbnail?.let {
             if (it.isNotEmpty()) {
-                val oneUrl = it[0]
                 Glide.with(App.instance)
-                    .load(oneUrl)
+                    .load(data.thunmbnail)
                     .placeholder(R.drawable.ic_face)
                     .into(imageViewRandomRecipe);
             }
