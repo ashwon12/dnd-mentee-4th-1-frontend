@@ -42,8 +42,6 @@ class UploadActivity2 : AppCompatActivity() {
         btn_upload_recipe_next2.setOnClickListener {
             clickNextButton()
         }
-
-
     }
 
     private fun getItems() {

@@ -92,6 +92,7 @@ class UploadActivity4 : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_recipe_list.setHasFixedSize(true)
     }
+
     private fun addFilter() {
         for(i in saveFilterList.indices) {
             filterList.add(RecipeDTO.Filter(saveFilterList[i]))

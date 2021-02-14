@@ -45,20 +45,34 @@ class UploadActivity3 : AppCompatActivity() {
 
         makeRecyclerView()
 
+        btn_upload_recipe_prev2.setOnClickListener {
+            clickPrevButton()
+        }
         btn_preview.setOnClickListener {
-            val intent = Intent(App.instance, UploadActivity4::class.java)
-            intent.putExtra("number", select_cut)
-            intent.putExtra("filter", saveFilterList)
-            intent.putExtra("thumbnail", thumbnail)
-            intent.putExtra("mainfood", mainFoodTagList)
-            intent.putExtra("subfood", subFoodTagList)
-            intent.putExtra("recipeList", recipeList)
-            intent.putExtra("recipeTitle", recipeTitle)
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            startActivity(intent)
+            clickPreviewButton()
         }
     }
 
+    private fun clickPrevButton() {
+        val intent = Intent(this, UploadActivity2::class.java)
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("title", recipeTitle)
+        startActivity(intent)
+    }
+
+    private fun clickPreviewButton() {
+        val intent = Intent(App.instance, UploadActivity4::class.java)
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("thumbnail", thumbnail)
+        intent.putExtra("mainfood", mainFoodTagList)
+        intent.putExtra("subfood", subFoodTagList)
+        intent.putExtra("recipeList", recipeList)
+        intent.putExtra("recipeTitle", recipeTitle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+    }
     private fun makeRecyclerView() {
         when (select_cut) {
             3 -> for (i in 1..3) {
