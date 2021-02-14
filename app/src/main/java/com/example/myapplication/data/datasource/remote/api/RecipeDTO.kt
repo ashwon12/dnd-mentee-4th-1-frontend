@@ -59,4 +59,12 @@ class RecipeDTO {
         val title: String?
     )
 
+    data class Comment(
+        val id: String,
+        val profilePic: String?,
+        val nickname: String,
+        val date: String,
+        val comment: String?
+    )
+
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ncv_scroll"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".navigation.search.SearchFragment">
 
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="28dp"
                 android:background="#FFA500"
                 android:text="follow"
-                android:textColor="#EEEEEE"
+                android:textColor="#FF7051"
                 android:textSize="10dp" />
 
         </LinearLayout>
@@ -154,16 +154,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_error">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:textSize="20dp"
+                android:text="후 기"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_r"
+                android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_margin="4dp" />
+                android:layout_height="fill_parent"
+                android:layout_margin="4dp"
+                android:nestedScrollingEnabled="false"/>
 
         </LinearLayout>
-
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+
 

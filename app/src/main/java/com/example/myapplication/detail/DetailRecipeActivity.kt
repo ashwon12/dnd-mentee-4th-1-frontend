@@ -2,17 +2,23 @@ package com.example.myapplication.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_upload.*
 
 class DetailRecipeActivity : AppCompatActivity() {
 
     internal lateinit var viewPagerPic: ViewPager
     internal lateinit var viewPagerSteps: ViewPager2
     internal lateinit var tabLayout: TabLayout
+    internal lateinit var rvReviews: RecyclerView
+
+    private lateinit var commentAdapter: DetailCommentAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +28,7 @@ class DetailRecipeActivity : AppCompatActivity() {
         viewPagerPic = findViewById<ViewPager>(R.id.vp_recipes)
         viewPagerSteps = findViewById<ViewPager2>(R.id.vp_comments)
         tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+        rvReviews = findViewById<RecyclerView>(R.id.rv_comment)
 
         val adapterPic = DetailViewPagerPicsAdapter(this)
         adapterPic.addRecipeImage(R.drawable.ic_home)
@@ -47,6 +54,21 @@ class DetailRecipeActivity : AppCompatActivity() {
         viewPagerSteps.setPageTransformer { page, position ->
             page.translationY = position * -offsetPx
         }
+
+
+        commentAdapter = DetailCommentAdapter()
+        commentAdapter.addComment(RecipeDTO.Comment("1","R.drawable.ic_home","닉네임1","2020.02.12","존맛"))
+        commentAdapter.addComment(RecipeDTO.Comment("1","R.drawable.ic_home","닉네임2","2020.02.12","존맛"))
+        commentAdapter.addComment(RecipeDTO.Comment("1","R.drawable.ic_home","닉네임3","2020.02.12","존맛"))
+        commentAdapter.addComment(RecipeDTO.Comment("1","R.drawable.ic_home","닉네임4","2020.02.12","존맛"))
+        val rvComment = findViewById<RecyclerView>(R.id.rv_comment)
+        rvComment.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvComment.setHasFixedSize(true)
+        rvComment.adapter = commentAdapter
+
+
+
 
         viewPagerPic.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(// 페이지가 스크롤 되었을 때
