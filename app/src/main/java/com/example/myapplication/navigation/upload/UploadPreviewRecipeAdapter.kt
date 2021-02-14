@@ -37,7 +37,7 @@ class UploadPreviewRecipeAdapter(
         private val comment = itemView.findViewById<TextView>(R.id.tv_recipe_explain2) // 레시피 설명
 
         fun bind(data: RecipeDTO.Recipe) {
-            number.text = data.number + "번째"
+            number.text = data.number + "단계"
             comment.text = data.comment
 
             if (data.image != null) {
