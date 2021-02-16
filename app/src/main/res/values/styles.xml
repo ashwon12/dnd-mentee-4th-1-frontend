@@ -41,13 +41,13 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Body1">
+    <style name="FontBody1">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Body2">
+    <style name="FontBody2">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
