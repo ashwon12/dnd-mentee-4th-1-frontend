@@ -1,10 +1,10 @@
 package com.example.myapplication.navigation.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
@@ -35,7 +35,7 @@ class MultiViewAdapter(
             }
             3 -> {
                 view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.home_vp_item, parent, false)
+                    .inflate(R.layout.home_rv_item, parent, false)
                 ListViewHolder(view)
             }
             else -> throw RuntimeException("알 수 없는 뷰 타입 에러")
@@ -67,7 +67,10 @@ class MultiViewAdapter(
             }
 
             3 -> {
-                Log.d("view Type 3","haha")
+                Glide.with(App.instance)
+                    .load(Images[position])
+                    .placeholder(R.drawable.ic_no_image)
+                    .into((holder as ListViewHolder).recentImage)
             }
         }
     }
@@ -82,7 +85,9 @@ class MultiViewAdapter(
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        val recentImage : ImageView = itemView.findViewById(R.id.iv_recent_item)
+        val recentTitle : TextView = itemView.findViewById(R.id.tv_home_title)
+        val recentContent : TextView = itemView.findViewById(R.id.tv_home_content)
     }
 }
 

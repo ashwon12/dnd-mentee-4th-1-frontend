@@ -71,6 +71,10 @@ class HomeFragment : Fragment() {
     private fun setRecent() {
         recentImageList.clear()
 
+        recentImageList.add("https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG")
+        recentImageList.add("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile4.uf.tistory.com%2Fimage%2F99D4F9485C00048B0AA529")
+        recentImageList.add("https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C")
+
         rv_recent = v.findViewById(R.id.rv_recent)
         rv_recent.layoutManager = LinearLayoutManager(App.instance, RecyclerView.VERTICAL, false)
         rv_recent.adapter = MultiViewAdapter(3,recentImageList)
