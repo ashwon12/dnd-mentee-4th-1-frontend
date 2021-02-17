@@ -18,6 +18,12 @@ allprojects {
     repositories {
         google()
         jcenter()
+        
+        // 카카오 SDK 레포지토리 설정
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+
+        // 메인재료, 서브재료 해시태그 리스트
+        maven { url 'https://jitpack.io' }
     }
 }
 

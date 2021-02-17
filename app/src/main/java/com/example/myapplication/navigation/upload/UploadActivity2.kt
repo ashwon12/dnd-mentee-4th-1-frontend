@@ -4,31 +4,32 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.skyhope.materialtagview.interfaces.TagItemListener
+import com.skyhope.materialtagview.model.TagModel
 import kotlinx.android.synthetic.main.activity_upload2.*
 
 class UploadActivity2 : AppCompatActivity() {
     private var select_cut: Int = 0
+    private var recipeTitle: String? = null
     private var saveFilterList = ArrayList<String>()
     private val REQUEST_GALLERY_CODE = 100
     private var thumbnail: Uri? = null
-    private var saveMainFoodList = ArrayList<String>()
-    private var saveSubFoodList = ArrayList<String>()
-    private var mainFoodString: CharSequence? = null
-    private var subFoodString: CharSequence? = null
-
+    private lateinit var tagModel : MutableList<TagModel>
+    private lateinit var tagModel2 : MutableList<TagModel>
+    private var mainFoodTagList = ArrayList<String>()
+    private var subFoodTagList = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload2)
 
+        initMainFoodTagView()
+        initSubFoodTagView()
         getItems()
-        textWhatcher()
 
         iv_upload_gallery.setOnClickListener {
             pickFromGallery()
@@ -50,6 +51,10 @@ class UploadActivity2 : AppCompatActivity() {
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
+        }
+        if (intent.hasExtra("recipeTitle")) {
+            recipeTitle = intent.getStringExtra("recipeTitle")
+            Log.d("title", recipeTitle.toString())
         }
     }
 
@@ -89,50 +94,51 @@ class UploadActivity2 : AppCompatActivity() {
     }
 
     private fun clickNextButton() {
-        splitString()
+        makeTagList()
 
         val intent = Intent(this, UploadActivity3::class.java)
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
         intent.putExtra("thumbnail", thumbnail)
-        intent.putExtra("mainfood", saveMainFoodList)
-        intent.putExtra("subfood", saveSubFoodList)
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.putExtra("mainfood", mainFoodTagList)
+        intent.putExtra("subfood", subFoodTagList)
+        intent.putExtra("recipeTitle", recipeTitle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
         startActivity(intent)
     }
 
-    private fun textWhatcher() {
-        et_main_food.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                mainFoodString = p0.toString()
-            }
-        })
-
-        et_sub_food.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(p0: Editable?) {
-                subFoodString = p0
-            }
-        })
+    private fun initMainFoodTagView() {
+        val listener : TagItemListener? = null
+        tagView_mainfood.initTagListener(listener)
+        tagView_mainfood.setTagList()
+        tagView_mainfood.setHint("재료를 쓰고 ,를 입력하거나 아래 버튼 클릭")
+        tagModel = tagView_mainfood.selectedTags
     }
 
-    private fun splitString() {
-        if(saveMainFoodList.contains(",")){
-            saveMainFoodList = mainFoodString?.split(",") as ArrayList<String>
-        } else {
-            saveMainFoodList.add(mainFoodString.toString())
+    private fun initSubFoodTagView() {
+        val listener2 : TagItemListener? = null
+        tagView_subfood.initTagListener(listener2)
+        tagView_subfood.setTagList()
+        tagView_subfood.setHint("재료를 쓰고 ,를 입력하거나 아래 버튼 클릭")
+        tagModel2 = tagView_subfood.selectedTags
+    }
+
+    private fun makeTagList() {
+        if(tagModel != null){
+            for(i in tagModel.indices) {
+                if(tagModel[i].tagText.toString() != "") {
+                    mainFoodTagList.add(tagModel[i].tagText.toString().replace(" ", ""))
+                }
+            }
         }
-        if(saveSubFoodList.contains(",")){
-            saveSubFoodList = subFoodString?.split(",") as ArrayList<String>
-        } else {
-            saveSubFoodList.add(subFoodString.toString())
+
+        if(tagModel2 != null) {
+            for(i in tagModel2.indices) {
+                if(tagModel[i].tagText.toString() != "") {
+                    subFoodTagList.add(tagModel2[i].tagText.toString().replace(" ", ""))
+                }
+            }
         }
     }
 }

@@ -18,6 +18,8 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
+
+        <activity android:name=".navigation.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,4 +40,18 @@
             android:screenOrientation="portrait" />
     </application>
 
+
+        <!-- 카카오 리다이렉트 URI 가져오기 -->
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+                <data android:host="oauth"
+                    android:scheme="kakao7c0ae88d49666eca35738b64bba94021" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

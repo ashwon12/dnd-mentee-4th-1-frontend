@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.upload
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,8 @@ class UploadPreviewFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
 
     override fun onBindViewHolder(holder: UploadPreviewFilterAdapter.UploadPreviewFilterHolder, position: Int) {
         holder.name.setText(filterList[position].filterName)
-        holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.select_border_layout)
+        holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.no_select_border_layout)
+        holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#FF8C4B"))
     }
 
     class UploadPreviewFilterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
