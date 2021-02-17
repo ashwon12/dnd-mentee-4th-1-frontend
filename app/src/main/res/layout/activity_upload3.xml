@@ -25,19 +25,78 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_poster_subtitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="맛있는 레시피를 함께 공유해요"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_poster3"
+            app:layout_constraintStart_toStartOf="@id/iv_poster3"
+            app:layout_constraintTop_toBottomOf="@id/iv_poster3" />
+
+        <TextView
             android:id="@+id/tv_text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="34dp"
-            android:text="레시피 설명을 부탁드려요!"
+            android:text="단계별 요리 사진들 추가하기"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster3" />
+            app:layout_constraintTop_toBottomOf="@id/tv_poster_subtitle3" />
+
+        <TextView
+            android:id="@+id/tv_text17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="선택된 순서에 따라 단계 반영이 이뤄집니다."
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text7" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_upload_recipe"
+            android:id="@+id/rv_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text17" >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_text18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="단계별 설명하기"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_image" />
+
+        <TextView
+            android:id="@+id/tv_text19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="단계별로 최소 10자, 최대 100자를 적을 수 있어요."
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text18" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_upload_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -46,17 +105,33 @@
             android:nestedScrollingEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_text7" />
+            app:layout_constraintTop_toBottomOf="@id/tv_text19" />
+
+        <Button
+            android:id="@+id/btn_upload_recipe_prev2"
+            android:layout_width="205dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="@color/LightGray"
+            android:text="이전"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_comment" />
 
         <Button
             android:id="@+id/btn_preview"
-            android:layout_width="match_parent"
+            android:layout_width="206dp"
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
+            android:backgroundTint="@color/orange"
             android:text="미리보기"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_upload_recipe"
-            app:layout_constraintVertical_bias="1" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_comment" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
