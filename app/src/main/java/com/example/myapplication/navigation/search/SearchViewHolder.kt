@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import kotlinx.android.synthetic.main.list_random_recipe.view.*
+import kotlinx.android.synthetic.main.item_random_recipe.view.*
 
 class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

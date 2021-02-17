@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="1dp"
-        android:background="@android:color/holo_orange_light"
+        android:background="@drawable/item_random_recipe"
         android:transitionName="@string/transition_random_to_detail"/>
 
 </LinearLayout>

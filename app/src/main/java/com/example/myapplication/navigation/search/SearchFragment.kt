@@ -1,7 +1,11 @@
 package com.example.myapplication.navigation.search
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +14,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arasthel.spannedgridlayoutmanager.SpanSize
@@ -18,15 +24,17 @@ import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.result.ResultFragement
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SearchFragment : Fragment(), View.OnClickListener {
+class SearchFragment : Fragment() {
 
     private lateinit var v: View
-
+    private lateinit var autoCompleteTextView: View
     private lateinit var searchAdapter: SearchAdapter
+    private lateinit var autoTextview: AutoCompleteTextView
 
     private val tempRandomRecipes = ArrayList<RecipeDTO.tempRandomRecipes>()
 
@@ -56,14 +64,22 @@ class SearchFragment : Fragment(), View.OnClickListener {
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(12,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))
 
-
         v = inflater.inflate(R.layout.fragment_search, container, false)
+        autoCompleteTextView = inflater.inflate(R.layout.custom_auto_complete_item_line, container,false)
+
         setRecyclerView()
         setAutoCompleteTextView()
+        setButtonSearch()
         setSwipeRefreshLayout()
         pickRandomNumberOnRecommandTextView()
 
         return v
+    }
+
+    /** Fragment 생명주기 */
+    override fun onResume() {
+        autoTextview.setText("")
+        super.onResume()
     }
 
     /**   AutoCompleteTextView 설정   */
@@ -72,26 +88,26 @@ class SearchFragment : Fragment(), View.OnClickListener {
         searchAdapter.notifyDataSetChanged()
         searchHistoryArrayList = repository.getSavedSearchList()
 
-        val autoTextView = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe)
+        autoTextview = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe)
+        autoTextview.setText("",TextView.BufferType.EDITABLE)
         val adapter = ArrayAdapter<String>(
             v.context,
             R.layout.custom_auto_complete_item_line,
             R.id.tv_auto_complete_item,
             searchHistoryArrayList
         )
-        autoTextView.setAdapter(adapter)
+        autoTextview.setAdapter(adapter)
 
         // 키보드 입력 후 [Enter]클릭 리스너
-        autoTextView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        autoTextview.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                hideKeyboard(autoTextView)
+                hideKeyboard(autoTextview)
                 Toast.makeText(v.context, "그냥 엔터로 검색", Toast.LENGTH_SHORT).show()
 
                 // TODO : 목록에 없는 Text 검색 시, Data목록 사라지는 기능
                 //v.visibility = View.GONE
 
-                // 검색어 저장
-                repository.saveSearch(v.text.toString())
+                repository.saveSearch(v.text.toString()) // 검색어 저장
             }
             searchAdapter.notifyDataSetChanged()
             adapter.notifyDataSetChanged()//TODO : 방금 검색한 Text 바로 검색기록에 안뜸
@@ -99,14 +115,39 @@ class SearchFragment : Fragment(), View.OnClickListener {
         })
 
         // 자동완성목록 Item 클릭 리스너
-        autoTextView.onItemClickListener =
+        autoTextview.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                hideKeyboard(autoTextView)
+                hideKeyboard(autoTextview)
                 Toast.makeText(v.context, "Selected : $selectedItem", Toast.LENGTH_SHORT).show()
-                // 검색어 저장
-                repository.saveSearch(selectedItem)
+
+                repository.saveSearch(selectedItem)// 검색어 저장
             }
+
+        //검색기록 삭제 버튼
+        autoCompleteTextView.findViewById<Button>(R.id.btn_delete_search_history).setOnClickListener {
+            Toast.makeText(v.context, "fafasf", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setButtonSearch() {
+        val btnSearch = v.findViewById<Button>(R.id.btn_search)
+        btnSearch.setOnClickListener {
+
+            repository.saveSearch(autoTextview.text.toString())//검색어 저장
+            val bundle = Bundle()
+            bundle.putString("input_search",autoTextview.text.toString())
+
+            val activity = v.context as AppCompatActivity
+            val transaction = activity.supportFragmentManager.beginTransaction()
+            val resultFragment: Fragment = ResultFragement()
+            resultFragment.arguments = bundle
+
+            transaction.replace(R.id.fl_container, resultFragment)
+            transaction.addToBackStack(null)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.commit()
+        }
     }
 
     /**   RecyclerView 설정   */
@@ -163,7 +204,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
                 }
             },
             fail = {
-                Log.d("fail", "failfailfail")
+                Log.d("fail", "fail fail fail")
             }
         )
         searchAdapter.updateRandomRecipeList(tempRandomRecipes)
@@ -181,15 +222,11 @@ class SearchFragment : Fragment(), View.OnClickListener {
         val arr369 = arrayOf(3, 6, 9)
         val randomText = arr369.get(Random().nextInt(3))
 
+        val ssb = SpannableStringBuilder("오늘은\n$randomText" + "컷요리 어때요?")
+        ssb.setSpan( ForegroundColorSpan(Color.parseColor("#FF7051")), 3, 8, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
         tvRecommand = v.findViewById<TextView>(R.id.tv_recommand)
-        tvRecommand.text = "오늘은 $randomText" + "컷 요리 어때요?"
+        tvRecommand.text = ssb
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.btn_delete_search_history -> {
-                Toast.makeText(v.context, "onCick test", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 }
