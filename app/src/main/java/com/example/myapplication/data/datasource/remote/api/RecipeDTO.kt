@@ -31,6 +31,19 @@ class RecipeDTO {
         val wishCount: Int?
 //        val writer: User
     )
+
+    data class tempResultRecipes(
+        val id: Int?,
+        val thunmbnail: String?,
+        val title: String?,
+        val ingredient: ArrayList<String>?,
+        val subIngredient: ArrayList<String>?,
+        val theme: ArrayList<String>?,
+//        val steps: ArrayList<Image, Comment>,
+        val starCount: Double?,
+        val wishCount: Int?
+//        val writer: User
+    )
     data class Timeline(
         val id: String,
         val title: String,
