@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.App
 import com.example.myapplication.R
-import com.example.myapplication.data.repository.RepositoryImpl
+import com.example.myapplication.data.repository.Repository
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var rv_popular: RecyclerView
     private lateinit var rv_recent : RecyclerView
 
-    private val repository = RepositoryImpl()
+    private val repository = Repository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
