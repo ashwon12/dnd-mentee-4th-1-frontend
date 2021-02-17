@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.app.Application
+import com.kakao.sdk.common.KakaoSdk
 
 /**
  * instance를 반환하는 class
@@ -21,5 +22,7 @@ class App: Application() {
         instance = this
 
         sharedPrefs = SharedPreferenceUtil(applicationContext)
+
+        KakaoSdk.init(instance, "7c0ae88d49666eca35738b64bba94021")
     }
 }

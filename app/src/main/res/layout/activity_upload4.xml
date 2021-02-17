@@ -169,7 +169,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
+            android:backgroundTint="@color/orange"
             android:text="자랑하기"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_upload_recipe2"
             app:layout_constraintVertical_bias="1" />

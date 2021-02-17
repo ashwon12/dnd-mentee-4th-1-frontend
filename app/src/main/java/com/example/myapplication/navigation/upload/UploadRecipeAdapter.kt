@@ -53,7 +53,7 @@ class UploadRecipeAdapter(
         var comment = itemView.findViewById<EditText>(R.id.et_recipe_explain) // 레시피 설명
 
         fun bind(data: RecipeDTO.Recipe) {
-            number.text = data.number + "번째"
+            number.text = data.number + "단계"
 
             if (data.image != null) {
                 Glide.with(itemView.context)
