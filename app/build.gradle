@@ -65,10 +65,6 @@ dependencies {
     //SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    //ViewPager2
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation 'me.relex:circleindicator:2.1.4'
-
     //SpannedGridLayoutManager
     implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
 
