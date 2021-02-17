@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,12 +25,15 @@ class UploadActivity3 : AppCompatActivity() {
     }
 
     private var select_cut: Int = 0
+    private var number = 1
+    private var imageCount = 0
+    private var recipeTitle: String? = null
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
     private var saveFilterList = ArrayList<String>()
-    private var saveMainFoodList = ArrayList<String>()
-    private var saveSubFoodList = ArrayList<String>()
+    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var thumbnail: Uri? = null
-
+    private var mainFoodTagList = ArrayList<String>()
+    private var subFoodTagList = ArrayList<String>()
     private var positionMain = 0
 
     private lateinit var adapter: UploadRecipeAdapter
@@ -45,59 +49,81 @@ class UploadActivity3 : AppCompatActivity() {
 
         makeRecyclerView()
 
+        btn_upload_recipe_prev2.setOnClickListener {
+            clickPrevButton()
+        }
         btn_preview.setOnClickListener {
-            val intent = Intent(App.instance, UploadActivity4::class.java)
-            intent.putExtra("number", select_cut)
-            intent.putExtra("filter", saveFilterList)
-            intent.putExtra("thumbnail", thumbnail)
-            intent.putExtra("mainfood", saveMainFoodList)
-            intent.putExtra("subfood", saveSubFoodList)
-            intent.putExtra("recipeList", recipeList)
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            startActivity(intent)
+            clickPreviewButton()
         }
     }
 
+    private fun clickPrevButton() {
+        val intent = Intent(this, UploadActivity2::class.java)
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("originFilter", filterList)
+        intent.putExtra("title", recipeTitle)
+        intent.putExtra("recipeList", recipeList)
+        startActivity(intent)
+    }
+
+    private fun clickPreviewButton() {
+        val intent = Intent(App.instance, UploadActivity4::class.java)
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("originFilger", filterList)
+        intent.putExtra("thumbnail", thumbnail)
+        intent.putExtra("mainfood", mainFoodTagList)
+        intent.putExtra("subfood", subFoodTagList)
+        intent.putExtra("recipeList", recipeList)
+        intent.putExtra("recipeTitle", recipeTitle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+    }
+
     private fun makeRecyclerView() {
-        when (select_cut) {
-            3 -> for (i in 1..3) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            6 -> for (i in 1..6) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            9 -> for (i in 1..9) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            else -> null
+        recipeList.clear()
+        select_cut = 0
+
+        recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
+        number++
+    }
+
+    private fun addRecyclerView() {
+        if (number < 10) {
+            recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
+            number++
         }
     }
 
     private fun getItems() {
-        if (intent.hasExtra("number")) {
-            select_cut = intent.getIntExtra("number", 1)
-            Log.d("number", select_cut.toString())
-        }
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
+        }
+        if (intent.hasExtra("originFilter")) {
+            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
         }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")
             Log.d("thumbnail", thumbnail.toString())
         }
         if (intent.hasExtra("mainfood")) {
-            saveMainFoodList = intent.getStringArrayListExtra("mainfood")!!
-            Log.d("mainfood", saveMainFoodList.toString())
+            mainFoodTagList = intent.getStringArrayListExtra("mainfood")!!
+            Log.d("mainfood", mainFoodTagList.toString())
         }
         if (intent.hasExtra("subfood")) {
-            saveSubFoodList = intent.getStringArrayListExtra("subfood")!!
-            Log.d("subfood", saveSubFoodList.toString())
+            subFoodTagList = intent.getStringArrayListExtra("subfood")!!
+            Log.d("subfood", subFoodTagList.toString())
+        }
+        if (intent.hasExtra("recipeTitle")) {
+            recipeTitle = intent.getStringExtra("recipeTitle")
+            Log.d("title", recipeTitle.toString())
         }
     }
 
     private fun callRecycler() {
-        var rv_recipe_list = findViewById(R.id.rv_upload_recipe) as RecyclerView
+        var rv_recipe_list = findViewById(R.id.rv_upload_image) as RecyclerView
         adapter = UploadRecipeAdapter(recipeList) { position, item ->
             positionMain = position
             itemMain = item
@@ -107,25 +133,54 @@ class UploadActivity3 : AppCompatActivity() {
 
         rv_recipe_list.adapter = adapter
         rv_recipe_list.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_recipe_list.setHasFixedSize(true)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GET_IMAGE) {
+        if (requestCode == REQUEST_GET_IMAGE) {
             when (requestCode) {
                 REQUEST_GET_IMAGE ->
-                    try {
-                        val uri = data?.data
-                        recipeList[positionMain].image = uri.toString()
+                    data?.let {
+                        when {
+                            it.clipData != null -> {
+                                val clip = data?.clipData
+                                Log.d("clip", clip.toString())
+                                val size = clip!!.itemCount
+                                imageCount += size
+                                if (size == 1) {
+                                    val uri = it?.data
+                                    recipeList[positionMain].image = uri.toString()
+                                    addRecyclerView()
+                                    adapter.notifyDataSetChanged()
+                                } else if (imageCount <= 9) {
+                                    for (i in size-1 downTo 0) {
+                                        recipeList[select_cut].image =
+                                            clip?.getItemAt(i)?.uri.toString()
+                                        addRecyclerView()
+                                        adapter.notifyDataSetChanged()
+                                        select_cut++
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        App.instance,
+                                        "사진을 9개 이상 전송할 수 없습니다.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    imageCount -= size
+                                }
+                            }
 
-                        adapter.notifyDataSetChanged()
-                        showItem()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                            it.data != null -> {
+                                val uri = data?.data
+                                recipeList[positionMain].image = uri.toString()
+                                Log.d("first", recipeList[positionMain].image.toString())
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                        // showItem()
                     }
             }
         }
@@ -133,8 +188,10 @@ class UploadActivity3 : AppCompatActivity() {
 
     private fun pickUpGallery() {
         val intent = Intent(Intent.ACTION_PICK)
+
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_GET_IMAGE)
+        startActivityForResult(Intent.createChooser(intent, "gallery"), REQUEST_GET_IMAGE)
     }
 
     private fun checkPermissions() {
