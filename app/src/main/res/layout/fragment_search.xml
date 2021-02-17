@@ -1,109 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ncv_scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
-    tools:context=".navigation.search.SearchFragment">
+    tools:context=".navigation.search.SearchFragment"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_margin="20dp"
-            android:layout_weight="1"
             android:background="@drawable/round_layout">
 
             <AutoCompleteTextView
                 android:id="@+id/actv_recipe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="284dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="4dp"
-                android:background="@android:color/transparent"
-                android:completionThreshold="1"
-                android:hint=" 궁금하신 레시피를 입력해주세요."
-                android:maxLines="1"
-                android:inputType="text"
-                android:imeOptions="actionDone"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/ll_illustration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="3"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_search"
+                android:completionThreshold="1"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_launcher_foreground" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_search"
+                android:layout_width="72dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_search"
+                android:text="검색"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_launcher_background" />
+        </RelativeLayout>
 
-            </LinearLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_update"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp">
 
             <LinearLayout
-                android:id="@+id/ll_today_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:text="오늘은 3컷 요리 어때요?"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/srl_update"
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_weight="6">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/round_layout">
+                    android:orientation="vertical">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_random_recipe"
+                    <LinearLayout
+                        android:id="@+id/ll_illustration"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="160dp"
                         android:layout_margin="4dp"
-                        android:nestedScrollingEnabled="false"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_recommand"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:layout_margin="12dp"
+                            android:gravity="bottom"
+                            android:text="adfsf\nsdfdsf"
+                            android:fontFamily="monospace"
+                            android:textSize="24dp"
+                            android:textStyle="bold"
+                            android:lineSpacingExtra="6dp"
+                            android:paddingBottom="8dp"/>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="3"
+                            android:layout_margin="4dp"
+                            android:src="@drawable/ic_launcher_foreground" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="800dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_random_recipe"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </LinearLayout>
+            </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

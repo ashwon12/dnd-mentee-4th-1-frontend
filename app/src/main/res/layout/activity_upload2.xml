@@ -25,16 +25,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_poster_subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="맛있는 레시피를 함께 공유해요"
+            android:textColor="@color/darkGray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_poster2"
+            app:layout_constraintStart_toStartOf="@id/iv_poster2"
+            app:layout_constraintTop_toBottomOf="@id/iv_poster2" />
+
+        <TextView
             android:id="@+id/tv_text4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="34dp"
-            android:text="이 레시피에는 무엇이 들어가나요?"
+            android:text="레시피 썸네일 등록"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_poster2" />
+            app:layout_constraintTop_toBottomOf="@id/tv_poster_subtitle2" />
 
         <ImageView
             android:id="@+id/iv_upload_gallery"
@@ -60,15 +73,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_upload_gallery" />
 
-        <EditText
-            android:id="@+id/et_main_food"
+        <com.skyhope.materialtagview.TagView
+            android:id="@+id/tagView_mainfood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:hint="이 재료는 꼭 필요해요!"
-            android:textColor="@color/gray"
-            app:layout_constraintTop_toBottomOf="@id/tv_text5" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text5"
+            app:limit_error_text="더이상 재료를 추가할 수 없습니다."
+            app:tag_background_color="@color/orange"
+            app:tag_limit="20"
+            app:tag_separator="COMMA_SEPARATOR" />
 
         <TextView
             android:id="@+id/tv_text6"
@@ -80,37 +98,48 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_main_food" />
+            app:layout_constraintTop_toBottomOf="@id/tagView_mainfood" />
 
-        <EditText
-            android:id="@+id/et_sub_food"
+        <com.skyhope.materialtagview.TagView
+            android:id="@+id/tagView_subfood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:hint="이 음식의 맛을 위해서 있으면 좋아요!"
-            android:textColor="@color/gray"
-            app:layout_constraintTop_toBottomOf="@id/tv_text6" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text6"
+            app:limit_error_text="더이상 재료를 추가할 수 없습니다."
+            app:tag_background_color="@color/orange"
+            app:tag_limit="20"
+            app:tag_separator="COMMA_SEPARATOR" />
 
         <Button
             android:id="@+id/btn_upload_recipe_prev1"
-            android:layout_width="209dp"
+            android:layout_width="205dp"
             android:layout_height="60dp"
             android:layout_marginTop="37dp"
+            android:backgroundTint="@color/LightGray"
             android:text="이전"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_sub_food" />
+            app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
 
         <Button
             android:id="@+id/btn_upload_recipe_next2"
-            android:layout_width="209dp"
+            android:layout_width="206dp"
             android:layout_height="60dp"
             android:layout_marginTop="37dp"
+            android:backgroundTint="@color/orange"
             android:text="다음"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_sub_food" />
+            app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
