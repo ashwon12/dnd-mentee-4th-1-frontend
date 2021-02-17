@@ -15,6 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
         <activity android:name=".navigation.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".navigation.upload.UploadActivity" />
-        <activity android:name=".navigation.upload.UploadActivity2" />
-        <activity android:name=".navigation.upload.UploadActivity3" />
-        <activity android:name=".navigation.upload.UploadActivity4" />
+        <activity
+            android:name=".navigation.upload.UploadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".navigation.upload.UploadActivity2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".navigation.upload.UploadActivity3"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".navigation.upload.UploadActivity4"
+            android:screenOrientation="portrait" />
+    </application>
+
 
         <!-- 카카오 리다이렉트 URI 가져오기 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">

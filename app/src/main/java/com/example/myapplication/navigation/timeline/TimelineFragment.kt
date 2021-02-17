@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.example.myapplication.data.repository.RepositoryImpl
+import com.example.myapplication.data.repository.Repository
 
 class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
@@ -27,7 +27,7 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
 
     private lateinit var myAdapter: TimelineRecyclerAdapter
 
-    private val repository = RepositoryImpl()
+    private val repository = Repository()
     
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

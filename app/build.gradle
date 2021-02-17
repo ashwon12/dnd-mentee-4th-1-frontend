@@ -65,6 +65,16 @@ dependencies {
     //SwipeRefreshLayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+
+    //SpannedGridLayoutManager
+    implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
+
+    //ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    //Circle Indicator
+    implementation 'me.relex:circleindicator:2.1.6'
+    
     //KakaoLogin
     implementation "com.kakao.sdk:v2-user:2.3.0" // 카카오 로그인
     implementation "com.kakao.sdk:v2-talk:2.3.0" // 친구, 메시지(카카오톡)
