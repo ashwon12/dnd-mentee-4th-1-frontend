@@ -32,7 +32,7 @@ class TimelineFragment : Fragment(), TimelineRecyclerInterface {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        v = inflater.inflate(R.layout.fragment_list, container, false)
+        v = inflater.inflate(R.layout.fragment_feed, container, false)
 
         callRecycler()
         return v
