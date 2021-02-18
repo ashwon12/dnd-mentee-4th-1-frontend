@@ -1,7 +1,7 @@
 /**
  *  받아온 데이터를 구현한 UI의 View에 넣어주는 클래스
  */
-package com.example.myapplication.navigation.timeline
+package com.example.myapplication.navigation.feed
 
 import android.view.View
 import android.widget.Button
@@ -19,11 +19,17 @@ class TimelineRecyclerViewHolder(
     recyclerInterface: TimelineRecyclerInterface
 ) : RecyclerView.ViewHolder(v),
     View.OnClickListener {
-    private val title = v.findViewById<TextView>(R.id.tv_title)
-    private val subtitle = v.findViewById<TextView>(R.id.tv_subtitle)
-    private val image = v.findViewById<ImageView>(R.id.iv_image)
-    private val btn_delete = v.findViewById<Button>(R.id.btn_delete)
-    private val btn_modify = v.findViewById<Button>(R.id.btn_modify)
+
+    private val profile = v.findViewById<ImageView>(R.id.iv_feed_profile)
+    private val userName = v.findViewById<TextView>(R.id.tv_feed_username)
+    private val btn_delete = v.findViewById<Button>(R.id.btn_feed_delete)
+    private val btn_modify = v.findViewById<Button>(R.id.btn_feed_modify)
+    private val title = v.findViewById<TextView>(R.id.tv_feed_title)
+    private val contentsText = v.findViewById<TextView>(R.id.tv_feed_contents)
+    private val countStars = v.findViewById<TextView>(R.id.tv_feed_star_count)
+    private val countViews = v.findViewById<TextView>(R.id.tv_feed_views_count)
+
+
 
     private var myInterface: TimelineRecyclerInterface? = null
 
@@ -35,17 +41,14 @@ class TimelineRecyclerViewHolder(
 
     fun bind(data: RecipeDTO.PostItem) {
         title.text = data.title
-        subtitle.text = data.subTitle
 
-        /*TODO : 왜 imgUrl index가 0?
-        *  아래 사진이 안불러와지고 실행 안됨*/
         data.imageUrl?.let {
             if(it.isNotEmpty()) {
                 val oneUrl = it[0]
                 Glide.with(App.instance)
                     .load(oneUrl)
                     .placeholder(R.drawable.ic_no_image)
-                    .into(image);
+                    .into(profile);
             }
         }
 
@@ -69,7 +72,6 @@ class TimelineRecyclerViewHolder(
 
     override fun onClick(p0: View?) {
         this.myInterface?.onItemClicked(adapterPosition)
-
     }
 }
 
