@@ -27,7 +27,7 @@ class UploadCommentAdapter(
     override fun getItemCount(): Int {
         return commentList.size
     }
-    
+
     override fun getItemId(position: Int): Long {
         return super.getItemId(position)
     }
@@ -36,9 +36,9 @@ class UploadCommentAdapter(
         return super.getItemViewType(position)
     }
 
-    fun deleteItem(position :Int) {
+    fun deleteItem(position: Int) {
         commentList.removeAt(position)
-        for(i in position until commentList.size) {
+        for (i in position until commentList.size) {
             var num = Integer.parseInt(commentList[i].number)
             num--
             commentList[i].number = num.toString()
@@ -52,20 +52,10 @@ class UploadCommentAdapter(
         holder.comment.setText(commentList[position].comment)
         holder.comment.setHint((position + 1).toString() + "번째로 해야 할 것을 적어주세요.")
         holder.comment.setHintTextColor(Color.parseColor("#C8C8C8"))
-//        holder.itemView.setOnClickListener {
-//            Toast.makeText(
-//                App.instance,
-//                "번호 : " + CommentList.get(position).number
-//                        + "내용 : " + CommentList.get(position).comment + "사진 : " + CommentList.get(position).image + "입니다.",
-//                Toast.LENGTH_SHORT
-//            ).show()
-//        }
     }
 
     inner class UploadCommentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val number = itemView.findViewById<TextView>(R.id.tv_upload_number) // 단계
-
-        // private val image = itemView.findViewById<ImageView>(R.id.iv_photo) // 레시피 사진
         var comment = itemView.findViewById<EditText>(R.id.et_upload_comment) // 레시피 설명
 
         fun bind(data: RecipeDTO.Recipe) {

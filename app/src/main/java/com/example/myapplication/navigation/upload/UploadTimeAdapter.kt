@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class UploadTimeAdapter(val timeList: ArrayList<RecipeDTO.Time>, var saveTime: String?, val itemClick: (Int) -> Unit) :
+class UploadTimeAdapter(
+    val timeList: ArrayList<RecipeDTO.Time>,
+    var saveTime: String?,
+    val itemClick: (Int) -> Unit
+) :
     RecyclerView.Adapter<UploadTimeAdapter.UploadTimeHolder>() {
 
     private var currentPosition = -1

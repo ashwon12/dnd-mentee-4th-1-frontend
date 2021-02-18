@@ -156,7 +156,7 @@ class UploadActivity2 : AppCompatActivity() {
                 tv_upload_time_set_value.text = "0분"
                 tv_upload_time_set_text.visibility = View.INVISIBLE
                 tv_upload_time_set_value.visibility = View.INVISIBLE
-                
+
             }
 
             Log.d("mainmain", "main")
@@ -200,9 +200,67 @@ class UploadActivity2 : AppCompatActivity() {
             "22시간",
             "23시간"
         )
-        val step2: Array<String> = arrayOf("0분","1분","2분","3분","4분","5분","6분","7분","8분","9분","10분","11분","12분","13분","14분","15분","16분","17분","18분","19분","20분",
-            "21분","22분","23분","24분","25분","26분","27분","28분","29분","30분","31분","32분","33분","34분","35분","36분","37분","38분","39분","40분","41분","42분","43분","44분",
-            "45분","46분","47분","48분","49분","50분","51분","52분","53분","54분","55분","56분","57분","58분","59분"
+        val step2: Array<String> = arrayOf(
+            "0분",
+            "1분",
+            "2분",
+            "3분",
+            "4분",
+            "5분",
+            "6분",
+            "7분",
+            "8분",
+            "9분",
+            "10분",
+            "11분",
+            "12분",
+            "13분",
+            "14분",
+            "15분",
+            "16분",
+            "17분",
+            "18분",
+            "19분",
+            "20분",
+            "21분",
+            "22분",
+            "23분",
+            "24분",
+            "25분",
+            "26분",
+            "27분",
+            "28분",
+            "29분",
+            "30분",
+            "31분",
+            "32분",
+            "33분",
+            "34분",
+            "35분",
+            "36분",
+            "37분",
+            "38분",
+            "39분",
+            "40분",
+            "41분",
+            "42분",
+            "43분",
+            "44분",
+            "45분",
+            "46분",
+            "47분",
+            "48분",
+            "49분",
+            "50분",
+            "51분",
+            "52분",
+            "53분",
+            "54분",
+            "55분",
+            "56분",
+            "57분",
+            "58분",
+            "59분"
         )
 
         val minute: NumberPicker = mView.findViewById(R.id.min_picker)
@@ -234,7 +292,7 @@ class UploadActivity2 : AppCompatActivity() {
         submit.setOnClickListener {
             Log.d("submit", "submit")
             tv_upload_time_set_value.text = step[hour.value] + " " + step2[minute.value]
-            
+
             dialog.dismiss()
             dialog.cancel()
         }

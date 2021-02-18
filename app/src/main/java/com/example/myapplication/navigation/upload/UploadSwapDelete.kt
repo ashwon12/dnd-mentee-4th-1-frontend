@@ -11,10 +11,11 @@ import com.example.myapplication.App
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
-abstract class UploadSwapDelete(context: Context, dragDir: Int, swipeDir: Int):ItemTouchHelper.SimpleCallback(
-    dragDir,
-    swipeDir
-) {
+abstract class UploadSwapDelete(context: Context, dragDir: Int, swipeDir: Int) :
+    ItemTouchHelper.SimpleCallback(
+        dragDir,
+        swipeDir
+    ) {
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -37,7 +38,15 @@ abstract class UploadSwapDelete(context: Context, dragDir: Int, swipeDir: Int):I
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        RecyclerViewSwipeDecorator.Builder(c,recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        RecyclerViewSwipeDecorator.Builder(
+            c,
+            recyclerView,
+            viewHolder,
+            dX,
+            dY,
+            actionState,
+            isCurrentlyActive
+        )
             .addActionIcon(R.drawable.ic_menu_delete)
             .addBackgroundColor(ContextCompat.getColor(App.instance, R.color.holo_red_dark))
             .addSwipeLeftBackgroundColor(Color.parseColor("#777777"))

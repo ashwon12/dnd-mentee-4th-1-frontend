@@ -1,20 +1,18 @@
 package com.example.myapplication.navigation.upload
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
     private var select_cut: Int = 0
-    private var recipeTitle : String? = null
+    private var recipeTitle: String? = null
     private var filterList = ArrayList<RecipeDTO.Filter>()
     private var saveFilterList = ArrayList<String>()
 
@@ -68,7 +66,7 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun textWatcher() {
-        et_recipe_title.addTextChangedListener(object : TextWatcher{
+        et_recipe_title.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
