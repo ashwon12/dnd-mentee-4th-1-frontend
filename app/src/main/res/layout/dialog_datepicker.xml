@@ -17,15 +17,29 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="시간을 선택해주세요. (분)"
+            android:text="시간을 선택해주세요."
             android:textColor="@color/orange"
             android:textSize="24sp" />
 
-        <NumberPicker
-            android:id="@+id/min_picker"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <NumberPicker
+                android:id="@+id/hour_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <NumberPicker
+                android:id="@+id/min_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,17 +51,17 @@
                 android:id="@+id/btn_time_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange"
                 android:layout_weight="1"
-                android:text="취소"/>
+                android:backgroundTint="@color/orange"
+                android:text="취소" />
 
             <Button
                 android:id="@+id/btn_time_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/orange"
                 android:layout_weight="1"
-                android:text="확인"/>
+                android:backgroundTint="@color/orange"
+                android:text="확인" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

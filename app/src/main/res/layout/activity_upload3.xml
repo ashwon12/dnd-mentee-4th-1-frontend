@@ -64,10 +64,10 @@
             android:id="@+id/rv_upload_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
             android:layout_marginLeft="10dp"
+            android:nestedScrollingEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_text17" >
+            app:layout_constraintTop_toBottomOf="@id/tv_text17">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -108,11 +108,31 @@
             app:layout_constraintTop_toBottomOf="@id/tv_text19" />
 
         <Button
+            android:id="@+id/btn_upload_add_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/LightGray"
+            android:drawableLeft="@drawable/ic_add_image"
+            android:gravity="start|center_vertical"
+            android:paddingStart="120dp"
+            android:text="단계 추가하기"
+            android:textColor="@color/orange"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_comment" />
+
+
+        <Button
             android:id="@+id/btn_upload_recipe_prev2"
             android:layout_width="205dp"
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
-            android:backgroundTint="@color/LightGray"
+            android:backgroundTint="@color/gray"
             android:text="이전"
             android:textSize="20sp"
             android:textStyle="bold"
