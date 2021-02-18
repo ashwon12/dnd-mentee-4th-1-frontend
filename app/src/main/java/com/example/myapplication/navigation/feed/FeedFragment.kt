@@ -4,7 +4,7 @@
  *  게시글을 서버에서 받아서 리싸이클러뷰에 뿌려준다.
  */
 
-package com.example.myapplication.navigation.timeline
+package com.example.myapplication.navigation.feed
 
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +19,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 
-class TimelineFragment : Fragment(), TimelineRecyclerInterface {
+class FeedFragment : Fragment(), TimelineRecyclerInterface {
 
     private lateinit var v: View
 

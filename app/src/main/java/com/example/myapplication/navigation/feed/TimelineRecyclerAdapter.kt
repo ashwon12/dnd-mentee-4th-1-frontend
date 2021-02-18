@@ -2,7 +2,7 @@
  *  각각의 item을 recyclerview로 연결 시켜주는 adapter class
  */
 
-package com.example.myapplication.navigation.timeline
+package com.example.myapplication.navigation.feed
 
 import android.util.Log
 import android.view.LayoutInflater
