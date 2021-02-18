@@ -10,11 +10,15 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import kotlinx.android.synthetic.main.activity_upload3.*
 
 class UploadActivity3 : AppCompatActivity() {
@@ -26,9 +30,11 @@ class UploadActivity3 : AppCompatActivity() {
 
     private var select_cut: Int = 0
     private var number = 1
+    private var count = 0
     private var imageCount = 0
     private var recipeTitle: String? = null
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
+    private var commentList = ArrayList<RecipeDTO.Recipe>()
     private var saveFilterList = ArrayList<String>()
     private var filterList = ArrayList<RecipeDTO.Filter>()
     private var thumbnail: Uri? = null
@@ -37,6 +43,7 @@ class UploadActivity3 : AppCompatActivity() {
     private var positionMain = 0
 
     private lateinit var adapter: UploadRecipeAdapter
+    private lateinit var commentAdapter: UploadCommentAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +56,60 @@ class UploadActivity3 : AppCompatActivity() {
 
         makeRecyclerView()
 
+        itemTouch()
+
+        btn_upload_add_comment.setOnClickListener {
+            addButtonClick()
+        }
         btn_upload_recipe_prev2.setOnClickListener {
             clickPrevButton()
         }
         btn_preview.setOnClickListener {
-            clickPreviewButton()
+            Toast.makeText(this, "개발중", Toast.LENGTH_SHORT).show()
+        // clickPreviewButton()
+        }
+    }
+
+    private fun addButtonClick() {
+        if (count < 9) {
+            Log.d("click", "클릭됨")
+            Log.d("commentList", commentList.toString())
+            addItem(
+                rv_upload_comment.adapter!!.itemCount,
+                RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+            )
+            addRecyclerView()
+            adapter.notifyDataSetChanged()
+
+        } else {
+            Toast.makeText(this, "9개 이상 추가할 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun itemTouch() {
+        val item = object : UploadSwapDelete(this, 0, ItemTouchHelper.LEFT) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                commentAdapter.deleteItem(viewHolder.adapterPosition)
+                Log.d("id", viewHolder.itemId.toString())
+                Log.d("position", viewHolder.adapterPosition.toString())
+                Log.d("direction", direction.toString())
+                Log.d("positionMain", positionMain.toString())
+                adapter.deleteItem(viewHolder.layoutPosition)
+                number--
+                select_cut--
+                count--
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(item)
+        itemTouchHelper.attachToRecyclerView(rv_upload_comment)
+    }
+
+    private fun addItem(position: Int, data: RecipeDTO.Recipe) {
+        if(count < 9) {
+            commentList.add(position, data)
+            commentAdapter.notifyDataSetChanged()
+            count++
         }
     }
 
@@ -86,6 +142,7 @@ class UploadActivity3 : AppCompatActivity() {
         select_cut = 0
 
         recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
+        // commentList.add(RecipeDTO.Recipe("1", null, null))
         number++
     }
 
@@ -135,6 +192,13 @@ class UploadActivity3 : AppCompatActivity() {
         rv_recipe_list.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_recipe_list.setHasFixedSize(true)
+
+        commentAdapter = UploadCommentAdapter(commentList)
+        rv_upload_comment.adapter = commentAdapter
+        rv_upload_comment.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_upload_comment.setHasFixedSize(true)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -143,55 +207,51 @@ class UploadActivity3 : AppCompatActivity() {
         if (requestCode == REQUEST_GET_IMAGE) {
             when (requestCode) {
                 REQUEST_GET_IMAGE ->
-                    data?.let {
-                        when {
-                            it.clipData != null -> {
-                                val clip = data?.clipData
-                                Log.d("clip", clip.toString())
-                                val size = clip!!.itemCount
-                                imageCount += size
-                                if (size == 1) {
-                                    val uri = it?.data
-                                    recipeList[positionMain].image = uri.toString()
-                                    addRecyclerView()
-                                    adapter.notifyDataSetChanged()
-                                } else if (imageCount <= 9) {
-                                    for (i in size-1 downTo 0) {
-                                        recipeList[select_cut].image =
-                                            clip?.getItemAt(i)?.uri.toString()
-                                        addRecyclerView()
-                                        adapter.notifyDataSetChanged()
-                                        select_cut++
-                                    }
-                                } else {
-                                    Toast.makeText(
-                                        App.instance,
-                                        "사진을 9개 이상 전송할 수 없습니다.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    imageCount -= size
-                                }
+                    Matisse.obtainResult(data)?.let {
+                        val mSelected: List<Uri> = Matisse.obtainResult(data)
+                        val size = mSelected.size
+                        imageCount += size
+                        if(size == 1) {
+                            recipeList[positionMain].image = mSelected[0].toString()
+                            addRecyclerView()
+                            if(positionMain >= select_cut) {
+                                addItem(rv_upload_comment.adapter!!.itemCount,RecipeDTO.Recipe(Integer.toString(count + 1), "", ""))
+                                select_cut++
                             }
-
-                            it.data != null -> {
-                                val uri = data?.data
-                                recipeList[positionMain].image = uri.toString()
-                                Log.d("first", recipeList[positionMain].image.toString())
+                            adapter.notifyDataSetChanged()
+                        } else if(size <= 9) {
+                            for (i in mSelected.indices) {
+                                recipeList[select_cut].image = mSelected[i].toString()
+                                addRecyclerView()
+                                addItem(rv_upload_comment.adapter!!.itemCount,RecipeDTO.Recipe(Integer.toString(count + 1), "", ""))
+                                select_cut++
                                 adapter.notifyDataSetChanged()
                             }
+                        } else {
+                            Toast.makeText(App.instance,"사진을 9개 이상 전송할 수 없습니다.",Toast.LENGTH_SHORT).show()
+                            imageCount -= size
                         }
-                        // showItem()
                     }
             }
         }
     }
 
     private fun pickUpGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
+//        val intent = Intent(Intent.ACTION_PICK)
+//
+//
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        intent.type = "image/*"
+//        startActivityForResult(Intent.createChooser(intent, "gallery"), REQUEST_GET_IMAGE)
+        Matisse.from(this)
+            .choose(MimeType.ofAll())
+            .countable(true)
+            .maxSelectable(9)
+            .spanCount(3)
+            .imageEngine(GlideEngine())
+            .forResult(REQUEST_GET_IMAGE)
 
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, "gallery"), REQUEST_GET_IMAGE)
     }
 
     private fun checkPermissions() {
@@ -219,6 +279,7 @@ class UploadActivity3 : AppCompatActivity() {
             }
         }
     }
+
 
     private fun showItem() {
         for (i in 0..select_cut - 1) {
