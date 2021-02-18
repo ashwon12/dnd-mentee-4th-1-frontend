@@ -130,6 +130,7 @@
                 android:textSize="12dp"
                 android:ellipsize="marquee"
                 android:text="7시간전" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -183,6 +184,7 @@
                         android:gravity="center_vertical"
                         android:hint="123"
                         android:textSize="16dp" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -242,7 +244,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:textSize="18dp"
                 android:textStyle="bold"
-                android:text="조리 방법"/>
+                android:layout_marginBottom="8dp"
+                android:text="조리 방법" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_comments"
@@ -252,16 +255,78 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="vertical" />
+            <LinearLayout
+                android:id="@+id/ll_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="8dp">
 
+                <TextView
+                    android:id="@+id/tv_first"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:text="1단계"/>
+                <TextView
+                    android:id="@+id/tv_first_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="조리설명으로 단계별에 맞게 진하기가 변경"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="144dp"
+                android:layout_height="52dp"
+                android:background="@drawable/transparent_button"
+                android:drawableRight="@drawable/ic_search"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#FF7051"
+                android:textSize="15dp"
+                android:text="레시피 전체보기" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="이 레시피는 3점이에요!"
+                android:layout_marginBottom="4dp"
+                android:letterSpacing="0.1"
+                android:textSize="16dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_gravity="center"
+                android:progressTint="@color/LightGray"
+                android:numStars="5"
+                android:rating="3"/>
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_quote"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="52dp"
             android:layout_marginHorizontal="12dp"
             android:background="@drawable/round_button"
+            android:gravity="center"
+            android:paddingHorizontal="110dp"
             android:drawableLeft="@drawable/ic_search"
+
+            android:layout_marginBottom="8dp"
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
@@ -276,7 +341,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="32dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:text="후 기"

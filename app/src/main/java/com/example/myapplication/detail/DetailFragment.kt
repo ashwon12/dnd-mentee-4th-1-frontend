@@ -1,15 +1,17 @@
 package com.example.myapplication.detail
 
-import android.R.attr.rating
-import android.app.Dialog
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import android.widget.RatingBar.OnRatingBarChangeListener
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RatingBar
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,7 +83,10 @@ class DetailFragment : Fragment() {
 
             btn_ok.setOnClickListener(click);
         }*/
-
+//#FFD951 <- 별 색
+        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
+        val stars = ratingBar.progressDrawable as LayerDrawable
+        stars.getDrawable(2).setTint(Color.rgb(255,217,81))
 
         return v
     }
