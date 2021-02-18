@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="4dp"
-        android:padding="4dp">
+        android:paddingHorizontal="4dp">
 
         <ImageView
             android:id="@+id/iv_profile_pic"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_face" />
+            android:src="@drawable/ic_face"
+            android:scaleType="fitStart"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -23,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -34,29 +36,80 @@
                     android:layout_marginLeft="4dp"
                     android:gravity="center_vertical"
                     android:hint="(닉네임)"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_upload_date"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="16dp"
-                    android:text="2020.02.12"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
-                    android:textColor="#4D000000"/>
+                    android:text="2020.02.12"
+                    android:textColor="#4D000000"
+                    android:textSize="14dp" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_comment"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_weight="1"
-                android:textSize="16dp"
-                android:layout_marginLeft="4dp"/>
+                android:textSize="16dp" />
         </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="44dp">
+
+        <LinearLayout
+            android:id="@+id/ll_comment_like"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/iv_comment_like"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_select_cut" />
+
+            <TextView
+                android:id="@+id/tv_comment_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="123"
+                android:textSize="14dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_comment_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/iv_comment_comment"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_select_cut" />
+
+                <TextView
+                    android:id="@+id/tv_star_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="답글 달기"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -101,6 +101,7 @@
                 android:gravity="center_vertical"
                 android:hint="레시피 이름"
                 android:textSize="24dp"
+                android:typeface="monospace"
                 android:textStyle="bold" />
 
 
@@ -117,7 +118,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -185,18 +187,20 @@
             </LinearLayout>
         </LinearLayout>
 
+        <View style="@style/Divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
             android:layout_marginHorizontal="8dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
-                android:text="필수 재료"/>
+                android:text="필수 재료"
+                />
             <TextView
                 android:id="@+id/tv_ingredient1"
                 android:layout_width="match_parent"
@@ -215,7 +219,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:text="부가 재료"/>
             <TextView
@@ -230,13 +234,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="16dp"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:text="조리 방법"/>
 
@@ -261,7 +265,9 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#FFFFFF"
-            android:text="내 추가 비법으로 더 맛있게 만들기"/>
+            android:text="내 비법 추가하기"/>
+
+        <View style="@style/Divider"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -274,7 +280,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:text="후 기"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -285,10 +291,6 @@
                 android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
