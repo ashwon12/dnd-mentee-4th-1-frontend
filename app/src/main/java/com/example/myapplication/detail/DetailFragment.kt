@@ -1,9 +1,13 @@
 package com.example.myapplication.detail
 
+import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +21,11 @@ class DetailFragment : Fragment() {
 
     private lateinit var v: View
 
-    internal lateinit var viewPagerPic: ViewPager
+    internal lateinit var viewPagerPics: ViewPager
     internal lateinit var viewPagerSteps: ViewPager2
     internal lateinit var tabLayout: TabLayout
     internal lateinit var rvReviews: RecyclerView
+    internal lateinit var ibRating:ImageButton
 
     private lateinit var commentAdapter: DetailCommentAdapter
 
@@ -29,19 +34,17 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         v = inflater.inflate(R.layout.fragment_detail, container, false)
 
-        viewPagerPic = v.findViewById<ViewPager>(R.id.vp_recipes)
+        setViewPagerPics()
+        setStarRatingBtn()
+
         viewPagerSteps = v.findViewById<ViewPager2>(R.id.vp_comments)
-        tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
+
         rvReviews = v.findViewById<RecyclerView>(R.id.rv_comment)
 
-        val adapterPic = DetailViewPagerPicsAdapter(v.context)
-        adapterPic.addRecipeImage(R.drawable.ic_home)
-        adapterPic.addRecipeImage(R.drawable.ic_no_image)
-        adapterPic.addRecipeImage(R.drawable.ic_face)
-        viewPagerPic.adapter = adapterPic
-        tabLayout.setupWithViewPager(viewPagerPic)//Circle Indicator 추가
+
 
         val adapterStepDescription = DetailViewPagerStepsAdapter(v.context)
         adapterStepDescription.addDescription("물을 끓여주세요.")
@@ -71,7 +74,35 @@ class DetailFragment : Fragment() {
         rvComment.setHasFixedSize(true)
         rvComment.adapter = commentAdapter
 
-        viewPagerPic.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        return v
+    }
+
+    private fun setStarRatingBtn() {
+        ibRating = v.findViewById<ImageButton>(R.id.iv_like)
+    }
+
+    private fun setViewPagerPics() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sharedElementEnterTransition = TransitionInflater
+                .from(context).inflateTransition(
+                    android.R.transition.move // you can change this
+                )
+        }
+
+        viewPagerPics = v.findViewById<ViewPager>(R.id.vp_recipes)
+        ViewCompat.setTransitionName(viewPagerPics,"@string/transition_random_to_detail")
+
+        tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
+
+        val adapterPic = DetailViewPagerPicsAdapter(v.context)
+        adapterPic.addRecipeImage(R.drawable.ic_home)
+        adapterPic.addRecipeImage(R.drawable.ic_no_image)
+        adapterPic.addRecipeImage(R.drawable.ic_face)
+        viewPagerPics.adapter = adapterPic
+        tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
+
+        viewPagerPics.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(// 페이지가 스크롤 되었을 때
                 position: Int,
                 positionOffset: Float,
@@ -94,6 +125,5 @@ class DetailFragment : Fragment() {
             }
 
         })
-        return v
     }
 }
