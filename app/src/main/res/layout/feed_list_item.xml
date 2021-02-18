@@ -11,7 +11,7 @@
     android:weightSum="9">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_feed_profile"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_feed_username"
         style="@style/FontBody1"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -30,8 +30,18 @@
         android:layout_marginTop="4dp"
         android:gravity="center_vertical"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/iv_feed_profile"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ib_feed_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_vertical_more" />
 
     <FrameLayout
         android:id="@+id/feed_fl"
@@ -48,7 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/indicator"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true" >
+
+        </androidx.viewpager2.widget.ViewPager2>
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/indicator_feed"
@@ -60,7 +72,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tv_feed_title"
         style="@style/FontBody1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/feed_fl" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tv_feed_contents"
         style="@style/FontCaption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,16 +91,17 @@
         android:layout_marginTop="4dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView5" />
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_title" />
 
     <LinearLayout
+        android:id="@+id/ll_feed_theme"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="11dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView6">
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_contents">
 
         <TextView
             android:id="@+id/tv_home_theme1"
@@ -119,6 +132,89 @@
             android:background="@drawable/theme_radius"
             android:text="태그"
             android:textColor="@color/PrimaryColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_feed_more_set"
+        android:layout_width="59.8dp"
+        android:layout_height="73.6dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_feed_modify"
+            style="@style/FontBody2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="수정" />
+
+        <Button
+            android:id="@+id/btn_feed_delete"
+            style="@style/FontBody2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="삭제" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_feed_theme">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="12dp"
+            android:layout_height="11dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+
+            app:srcCompat="@drawable/ic_filled_star"
+            tools:layout_editor_absoluteX="38dp" />
+
+        <TextView
+            android:id="@+id/tv_feed_star_count"
+            style="@style/FontCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="14.12dp"
+            android:layout_height="10dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_views"
+            tools:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/tv_feed_views_count"
+            style="@style/FontCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2.88dp"
+            android:layout_weight="1"
+            android:text="TextView" />
     </LinearLayout>
 
 
