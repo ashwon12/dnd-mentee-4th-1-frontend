@@ -15,6 +15,6 @@
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/list_item" />
+        tools:listitem="@layout/feed_list_item" />
 
 </LinearLayout>

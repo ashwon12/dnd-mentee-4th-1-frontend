@@ -25,7 +25,7 @@ class TimelineRecyclerAdapter(myInterface: TimelineRecyclerInterface) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineRecyclerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.list_item,
+            R.layout.feed_list_item,
             parent, false
         )
         return TimelineRecyclerViewHolder(view, this.myInterface!!)
