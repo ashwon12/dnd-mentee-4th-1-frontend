@@ -176,37 +176,53 @@ class UploadActivity2 : AppCompatActivity() {
         val edialog: LayoutInflater = LayoutInflater.from(UploadActivity2@ this)
         val mView: View = edialog.inflate(R.layout.dialog_datepicker, null)
         val step: Array<String> = arrayOf(
-            "60분",
-            "70분",
-            "80분",
-            "90분",
-            "100분",
-            "110분",
-            "120분",
-            "130분",
-            "140분",
-            "150분",
-            "160분",
-            "170분",
-            "180분",
-            "190분",
-            "200분",
-            "210분",
-            "220분",
-            "230분",
-            "240분",
-            "end"
+            "1시간",
+            "2시간",
+            "3시간",
+            "4시간",
+            "5시간",
+            "6시간",
+            "7시간",
+            "8시간",
+            "9시간",
+            "10시간",
+            "11시간",
+            "12시간",
+            "13시간",
+            "14시간",
+            "15시간",
+            "16시간",
+            "17시간",
+            "18시간",
+            "19시간",
+            "20시간",
+            "21시간",
+            "22시간",
+            "23시간"
         )
+        val step2: Array<String> = arrayOf("0분","1분","2분","3분","4분","5분","6분","7분","8분","9분","10분","11분","12분","13분","14분","15분","16분","17분","18분","19분","20분",
+            "21분","22분","23분","24분","25분","26분","27분","28분","29분","30분","31분","32분","33분","34분","35분","36분","37분","38분","39분","40분","41분","42분","43분","44분",
+            "45분","46분","47분","48분","49분","50분","51분","52분","53분","54분","55분","56분","57분","58분","59분"
+        )
+
         val minute: NumberPicker = mView.findViewById(R.id.min_picker)
+        val hour: NumberPicker = mView.findViewById(R.id.hour_picker)
         val cancel: Button = mView.findViewById(R.id.btn_time_cancel)
         val submit: Button = mView.findViewById(R.id.btn_time_submit)
 
-        minute.apply {
-            wrapSelectorWheel = false
+        hour.apply {
+            wrapSelectorWheel = true
             descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
             minValue = 0
-            maxValue = step.size - 2
+            maxValue = 22
             displayedValues = step
+        }
+        minute.apply {
+            wrapSelectorWheel = true
+            descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+            minValue = 0
+            maxValue = 59
+            displayedValues = step2
         }
 
         cancel.setOnClickListener {
@@ -217,8 +233,8 @@ class UploadActivity2 : AppCompatActivity() {
 
         submit.setOnClickListener {
             Log.d("submit", "submit")
-            tv_upload_time_set_value.text = step[minute.value]
-
+            tv_upload_time_set_value.text = step[hour.value] + " " + step2[minute.value]
+            
             dialog.dismiss()
             dialog.cancel()
         }
