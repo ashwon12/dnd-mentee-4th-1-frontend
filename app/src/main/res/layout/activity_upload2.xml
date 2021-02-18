@@ -49,17 +49,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_poster_subtitle2" />
 
-        <ImageView
-            android:id="@+id/iv_upload_gallery"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/gallery"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/li_layout"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="10dp"
+            android:elevation="20dp"
+            app:cardBackgroundColor="#F8F8F8"
+            app:cardCornerRadius="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_text4" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_text4">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="이미지 추가"
+                android:textColor="@color/orange"
+                android:textStyle="bold" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_upload_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+
+                app:riv_corner_radius_bottom_left="6dp"
+                app:riv_corner_radius_bottom_right="6dp"
+                app:riv_corner_radius_top_left="6dp"
+                app:riv_corner_radius_top_right="6dp"
+                 />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tv_text5"
@@ -67,11 +89,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="24dp"
-            android:text="레시피 메인 재료"
+            android:text="요리 필수 재료"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_upload_gallery" />
+            app:layout_constraintTop_toBottomOf="@id/li_layout" />
+
+        <TextView
+            android:id="@+id/tv_text13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="요리에 없어선 안되는 재료를 구체적으로 적어주세요.\n쉼표로 구분됩니다."
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_text5" />
 
         <com.skyhope.materialtagview.TagView
             android:id="@+id/tagView_mainfood"
@@ -82,11 +115,12 @@
             android:layout_marginRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_text5"
+            app:layout_constraintTop_toBottomOf="@id/tv_text13"
             app:limit_error_text="더이상 재료를 추가할 수 없습니다."
-            app:tag_background_color="@color/orange"
+            app:tag_background_color="@color/LightOrange"
             app:tag_limit="20"
-            app:tag_separator="COMMA_SEPARATOR" />
+            app:tag_separator="COMMA_SEPARATOR"
+            app:tag_text_color="@color/orange" />
 
         <TextView
             android:id="@+id/tv_text6"
@@ -94,11 +128,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="24dp"
-            android:text="레시피 부가 재료"
+            android:text="요리 부가 재료"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tagView_mainfood" />
+
+        <TextView
+            android:id="@+id/tv_text14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="없어도 되지만 맛을 위해서 있으면 좋은 재료를 적어주세요."
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_text6" />
 
         <com.skyhope.materialtagview.TagView
             android:id="@+id/tagView_subfood"
@@ -109,24 +154,93 @@
             android:layout_marginRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_text6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_text14"
             app:limit_error_text="더이상 재료를 추가할 수 없습니다."
-            app:tag_background_color="@color/orange"
+            app:tag_background_color="@color/LightOrange"
             app:tag_limit="20"
-            app:tag_separator="COMMA_SEPARATOR" />
+            app:tag_separator="COMMA_SEPARATOR"
+            app:tag_text_color="@color/orange" />
+
+        <TextView
+            android:id="@+id/tv_text15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="24dp"
+            android:text="완성까지 얼마나 걸리나요?"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
+
+        <TextView
+            android:id="@+id/tv_text16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="에어프라이기 작동 시간까지 포함해서 알려주세요."
+            android:textColor="@color/gray"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_text15" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_upload_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_text16" />
+
+        <LinearLayout
+            android:id="@+id/li_time_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/rv_upload_time">
+
+            <TextView
+                android:id="@+id/tv_upload_time_set_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:text="소요되는 시간을 적어주세요."
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_upload_time" />
+
+            <TextView
+                android:id="@+id/tv_upload_time_set_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:gravity="end"
+                android:text="분"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintHorizontal_bias="1.5"
+                app:layout_constraintStart_toEndOf="@id/tv_upload_time_set_text"
+                app:layout_constraintTop_toBottomOf="@id/rv_upload_time" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_upload_recipe_prev1"
             android:layout_width="205dp"
             android:layout_height="60dp"
             android:layout_marginTop="37dp"
-            android:backgroundTint="@color/LightGray"
+            android:backgroundTint="@color/gray"
             android:text="이전"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
+            app:layout_constraintTop_toBottomOf="@id/li_time_layout" />
 
         <Button
             android:id="@+id/btn_upload_recipe_next2"
@@ -139,7 +253,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tagView_subfood" />
+            app:layout_constraintTop_toBottomOf="@id/li_time_layout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
