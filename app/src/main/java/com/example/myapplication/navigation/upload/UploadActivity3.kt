@@ -137,13 +137,13 @@ class UploadActivity3 : AppCompatActivity() {
     private fun makeRecyclerView() {
         recipeList.clear()
         recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
-        number++
+        // number++
     }
 
     private fun addRecyclerView() {
-        if (number < 10) {
-            recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
+        if (number < 9) {
             number++
+            recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
         }
     }
 
@@ -214,6 +214,7 @@ class UploadActivity3 : AppCompatActivity() {
                         val size = mSelected.size
                         Log.d("positionMain", positionMain.toString())
                         Log.d("size", size.toString())
+                        Log.d("number1", number.toString())
                         if (size == 1) {
                             recipeList[positionMain].image = mSelected[0].toString()
                             addRecyclerView()
@@ -235,10 +236,13 @@ class UploadActivity3 : AppCompatActivity() {
                                         )
                                         adapter.notifyDataSetChanged()
                                     }
+                                    // addRecyclerView()
                                 } else {
                                     for (i in mSelected.indices) {
                                         recipeList[positionMain + i].image = mSelected[i].toString()
                                         addRecyclerView()
+
+                                        Log.d("number3", number.toString())
                                         addItem(
                                             rv_upload_comment.adapter!!.itemCount,
                                             RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
@@ -262,7 +266,7 @@ class UploadActivity3 : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        Log.d("number", number.toString())
+                        Log.d("number2", number.toString())
                     }
                 else -> finish()
             }
@@ -311,13 +315,22 @@ class UploadActivity3 : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("사진을 삭제하시겠습니까?")
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                adapter.deleteItem(positionMain)
-                commentAdapter.deleteItem(positionMain)
-                count--
-                number--
+                Log.d("positionMain", positionMain.toString())
+                Log.d("count",count.toString())
+                if(positionMain < count || positionMain == 8) {
+                    adapter.deleteItem(positionMain)
+                    commentAdapter.deleteItem(positionMain)
+                    count--
+                    number--
+                    if(positionMain == 8) {
+                        addRecyclerView()
+                    }
+                } else {
+                    Toast.makeText(this, "삭제하실 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+                Log.d("dialog_number", number.toString())
             })
             .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
-                Toast.makeText(this, "취소를 누르셨습니다", Toast.LENGTH_SHORT).show()
             })
         builder.show()
     }
