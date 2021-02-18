@@ -15,6 +15,13 @@ interface RecipeApi {
         @Query("id") id: String? = null
     ): Call<RecipeDTO.PostItems>
 
+    @GET("/recipes")
+    fun getRandomRecipes(
+
+    ): Call<RecipeDTO.tempRandomRecipes>
+
+
+
     @FormUrlEncoded
     @POST("/posts")
     fun postTimeline(

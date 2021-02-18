@@ -2,4 +2,6 @@
     <string name="app_name">요리조리</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_hint">  먹고 싶은 요리를 검색해보세요:)</string>
+    <string name="transition_random_to_detail">randomToDetail</string>
 </resources>

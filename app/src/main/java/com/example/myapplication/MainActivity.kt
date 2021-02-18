@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val feedFragment by lazy { TimelineFragment() }
     private val searchFragment by lazy { SearchFragment() }
     private val myPageFragment by lazy { MyPageFragment() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
