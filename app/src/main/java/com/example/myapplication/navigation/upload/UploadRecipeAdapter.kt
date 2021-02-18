@@ -32,6 +32,14 @@ class UploadRecipeAdapter(
         return recipeList.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return super.getItemId(position)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
     override fun onBindViewHolder(holder: UploadRecipeAdapter.UploadRecipeHolder, position: Int) {
         val element = recipeList[position]
         holder.bind(element)
@@ -47,6 +55,15 @@ class UploadRecipeAdapter(
 //        }
     }
 
+    fun deleteItem(position :Int) {
+        recipeList.removeAt(position)
+        for(i in position until recipeList.size) {
+            var num = Integer.parseInt(recipeList[i].number)
+            num--
+            recipeList[i].number = num.toString()
+        }
+        notifyDataSetChanged()
+    }
 
     inner class UploadRecipeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val number = itemView.findViewById<TextView>(R.id.tv_number) // 단계
