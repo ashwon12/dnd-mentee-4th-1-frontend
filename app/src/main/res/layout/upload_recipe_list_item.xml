@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_border"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:layout_marginTop="20dp">
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tv_number"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:text="1단계"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/li_layout"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="8dp"
+        android:elevation="20dp"
+        app:cardBackgroundColor="#F8F8F8"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_quote_textView1">
 
-    <ImageView
-        android:id="@+id/iv_photo"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="20dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/gallery" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="이미지 추가"
+            android:textColor="@color/orange"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="레시피 설명"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius_bottom_left="6dp"
+            app:riv_corner_radius_bottom_right="6dp"
+            app:riv_corner_radius_top_left="6dp"
+            app:riv_corner_radius_top_right="6dp" />
 
-    <EditText
-        android:id="@+id/et_recipe_explain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="이 단계에서 해야하는 걸 설명해주세요." />
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_oval"
+            android:gravity="center"
+            android:text="1번"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
 
 </LinearLayout>

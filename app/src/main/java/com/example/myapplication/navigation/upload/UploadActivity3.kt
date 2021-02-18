@@ -1,7 +1,8 @@
 package com.example.myapplication.navigation.upload
 
 import android.Manifest
-import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,11 +10,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import kotlinx.android.synthetic.main.activity_upload3.*
 
 class UploadActivity3 : AppCompatActivity() {
@@ -23,16 +28,20 @@ class UploadActivity3 : AppCompatActivity() {
         private const val PERMISSION_CODE = 100
     }
 
-    private var select_cut: Int = 0
+    private var number = 1
+    private var count = 0
     private var recipeTitle: String? = null
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
+    private var commentList = ArrayList<RecipeDTO.Recipe>()
     private var saveFilterList = ArrayList<String>()
+    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var thumbnail: Uri? = null
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
     private var positionMain = 0
 
     private lateinit var adapter: UploadRecipeAdapter
+    private lateinit var commentAdapter: UploadCommentAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,26 +54,77 @@ class UploadActivity3 : AppCompatActivity() {
 
         makeRecyclerView()
 
+        itemTouch()
+
+        btn_upload_add_comment.setOnClickListener {
+            addButtonClick()
+        }
         btn_upload_recipe_prev2.setOnClickListener {
             clickPrevButton()
         }
         btn_preview.setOnClickListener {
-            clickPreviewButton()
+            Toast.makeText(this, "개발중", Toast.LENGTH_SHORT).show()
+            // clickPreviewButton()
+        }
+    }
+
+    private fun addButtonClick() {
+        if (count < 9) {
+            Log.d("click", "클릭됨")
+            Log.d("commentList", commentList.toString())
+            addItem(
+                rv_upload_comment.adapter!!.itemCount,
+                RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+            )
+            addRecyclerView()
+            adapter.notifyDataSetChanged()
+
+        } else {
+            Toast.makeText(this, "9개 이상 추가할 수 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun itemTouch() {
+        val item = object : UploadSwapDelete(this, 0, ItemTouchHelper.LEFT) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                commentAdapter.deleteItem(viewHolder.adapterPosition)
+                Log.d("id", viewHolder.itemId.toString())
+                Log.d("position", viewHolder.adapterPosition.toString())
+                Log.d("direction", direction.toString())
+                Log.d("positionMain", positionMain.toString())
+                adapter.deleteItem(viewHolder.layoutPosition)
+                number--
+                count--
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(item)
+        itemTouchHelper.attachToRecyclerView(rv_upload_comment)
+    }
+
+    private fun addItem(position: Int, data: RecipeDTO.Recipe) {
+        if (count < 9) {
+            commentList.add(position, data)
+            commentAdapter.notifyDataSetChanged()
+            count++
         }
     }
 
     private fun clickPrevButton() {
         val intent = Intent(this, UploadActivity2::class.java)
-        intent.putExtra("number", select_cut)
+        intent.putExtra("number", number)
         intent.putExtra("filter", saveFilterList)
+        intent.putExtra("originFilter", filterList)
         intent.putExtra("title", recipeTitle)
+        intent.putExtra("recipeList", recipeList)
         startActivity(intent)
     }
 
     private fun clickPreviewButton() {
         val intent = Intent(App.instance, UploadActivity4::class.java)
-        intent.putExtra("number", select_cut)
+        intent.putExtra("number", number)
         intent.putExtra("filter", saveFilterList)
+        intent.putExtra("originFilger", filterList)
         intent.putExtra("thumbnail", thumbnail)
         intent.putExtra("mainfood", mainFoodTagList)
         intent.putExtra("subfood", subFoodTagList)
@@ -73,29 +133,27 @@ class UploadActivity3 : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
+
     private fun makeRecyclerView() {
-        when (select_cut) {
-            3 -> for (i in 1..3) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            6 -> for (i in 1..6) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            9 -> for (i in 1..9) {
-                recipeList.add(RecipeDTO.Recipe(i.toString(), null, null))
-            }
-            else -> null
+        recipeList.clear()
+        recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
+        // number++
+    }
+
+    private fun addRecyclerView() {
+        if (number < 9) {
+            number++
+            recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
         }
     }
 
     private fun getItems() {
-        if (intent.hasExtra("number")) {
-            select_cut = intent.getIntExtra("number", 1)
-            Log.d("number", select_cut.toString())
-        }
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
+        }
+        if (intent.hasExtra("originFilter")) {
+            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
         }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")
@@ -116,7 +174,7 @@ class UploadActivity3 : AppCompatActivity() {
     }
 
     private fun callRecycler() {
-        var rv_recipe_list = findViewById(R.id.rv_upload_recipe) as RecyclerView
+        var rv_recipe_list = findViewById(R.id.rv_upload_image) as RecyclerView
         adapter = UploadRecipeAdapter(recipeList) { position, item ->
             positionMain = position
             itemMain = item
@@ -124,36 +182,105 @@ class UploadActivity3 : AppCompatActivity() {
             checkPermissions()
         }
 
+        adapter.onItemLongClick = { position, item ->
+            positionMain = position
+            itemMain = item
+
+            if (count > 0) {
+                showDialog()
+            }
+        }
         rv_recipe_list.adapter = adapter
         rv_recipe_list.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rv_recipe_list.setHasFixedSize(true)
+
+        commentAdapter = UploadCommentAdapter(commentList)
+        rv_upload_comment.adapter = commentAdapter
+        rv_upload_comment.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rv_upload_comment.setHasFixedSize(true)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_GET_IMAGE) {
+        if (resultCode == RESULT_OK) {
             when (requestCode) {
                 REQUEST_GET_IMAGE ->
-                    try {
-                        val uri = data?.data
-                        recipeList[positionMain].image = uri.toString()
+                    Matisse.obtainResult(data)?.let {
+                        val mSelected: List<Uri> = Matisse.obtainResult(data)
+                        val size = mSelected.size
+                        Log.d("positionMain", positionMain.toString())
+                        Log.d("size", size.toString())
+                        Log.d("number1", number.toString())
+                        if (size == 1) {
+                            recipeList[positionMain].image = mSelected[0].toString()
+                            addRecyclerView()
+                            if (positionMain >= number) {
+                                addItem(
+                                    rv_upload_comment.adapter!!.itemCount,
+                                    RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+                                )
+                            }
+                            adapter.notifyDataSetChanged()
+                        } else if (size <= 9) {
+                            if (positionMain + size <= 9) {
+                                if (positionMain + size <= number) {
+                                    for (i in mSelected.indices) {
+                                        recipeList[positionMain + i].image = mSelected[i].toString()
+                                        addItem(
+                                            rv_upload_comment.adapter!!.itemCount,
+                                            RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+                                        )
+                                        adapter.notifyDataSetChanged()
+                                    }
+                                    // addRecyclerView()
+                                } else {
+                                    for (i in mSelected.indices) {
+                                        recipeList[positionMain + i].image = mSelected[i].toString()
+                                        addRecyclerView()
 
-                        adapter.notifyDataSetChanged()
-                        showItem()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                                        Log.d("number3", number.toString())
+                                        addItem(
+                                            rv_upload_comment.adapter!!.itemCount,
+                                            RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+                                        )
+                                        adapter.notifyDataSetChanged()
+                                    }
+                                }
+
+                            } else if (number >= 9) {
+                                Toast.makeText(
+                                    App.instance,
+                                    "사진을 9개 이상 전송할 수 없습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        } else {
+                            Toast.makeText(
+                                App.instance,
+                                "사진을 9개 이상 전송할 수 없습니다.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        Log.d("number2", number.toString())
                     }
+                else -> finish()
             }
         }
     }
 
     private fun pickUpGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, REQUEST_GET_IMAGE)
+        Matisse.from(this)
+            .choose(MimeType.ofAll())
+            .countable(true)
+            .maxSelectable(9)
+            .spanCount(3)
+            .imageEngine(GlideEngine())
+            .forResult(REQUEST_GET_IMAGE)
     }
 
     private fun checkPermissions() {
@@ -182,8 +309,34 @@ class UploadActivity3 : AppCompatActivity() {
         }
     }
 
+
+    private fun showDialog() {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("사진을 삭제하시겠습니까?")
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                Log.d("positionMain", positionMain.toString())
+                Log.d("count",count.toString())
+                if(positionMain < count || positionMain == 8) {
+                    adapter.deleteItem(positionMain)
+                    commentAdapter.deleteItem(positionMain)
+                    count--
+                    number--
+                    if(positionMain == 8) {
+                        addRecyclerView()
+                    }
+                } else {
+                    Toast.makeText(this, "삭제하실 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+                Log.d("dialog_number", number.toString())
+            })
+            .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+            })
+        builder.show()
+    }
+
     private fun showItem() {
-        for (i in 0..select_cut - 1) {
+        for (i in 0..number - 1) {
             Log.d(
                 "log",
                 "${i} 번째 ,number : " + recipeList.get(i).number + "comment :" + recipeList.get(i).comment.toString() + "image : " + recipeList.get(

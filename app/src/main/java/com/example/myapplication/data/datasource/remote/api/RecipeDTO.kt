@@ -61,6 +61,10 @@ class RecipeDTO {
         var filterName: String
     ) : Serializable
 
+    data class Time(
+        var timeName: String
+    ) : Serializable
+
     data class TimelineResponse(
         val comment: ArrayList<String>?,
         val cookingTime: Any?,

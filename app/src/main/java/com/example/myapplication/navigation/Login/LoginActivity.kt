@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApi
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login_main.*
 
@@ -62,6 +63,13 @@ class LoginActivity : AppCompatActivity() {
             LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
         } else {
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
+        }
+        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+            if(error != null) {
+                Log.d("tag", "토큰 정보 보기 실패", error)
+            }  else if(tokenInfo != null) {
+                Log.d("tag", "${tokenInfo.id}" + "${tokenInfo.expiresIn} 초" )
+            }
         }
 
         mGoogleSignInClient.revokeAccess()
