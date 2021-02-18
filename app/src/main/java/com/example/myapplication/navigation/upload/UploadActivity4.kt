@@ -8,16 +8,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.navigation.quote.QuoteActivity
 import kotlinx.android.synthetic.main.activity_upload4.*
 
 class UploadActivity4 : AppCompatActivity() {
     private var select_cut: Int = 0
+    private var recipeTitle : String? = null
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
     private var saveFilterList = ArrayList<String>()
-    private var saveMainFoodList = ArrayList<String>()
-    private var saveSubFoodList = ArrayList<String>()
+    private var mainFoodTagList = ArrayList<String>()
+    private var subFoodTagList = ArrayList<String>()
     private var thumbnail: Uri? = null
     private var filterList = ArrayList<RecipeDTO.Filter>()
     private lateinit var adapter: UploadPreviewRecipeAdapter
@@ -29,13 +32,25 @@ class UploadActivity4 : AppCompatActivity() {
         getItems()
 
         btn_submit.setOnClickListener {
-            Toast.makeText(this, "서버 전송 미완성", Toast.LENGTH_SHORT).show()
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            // Toast.makeText(this, "서버 전송 미완성", Toast.LENGTH_SHORT).show()
+            clickSubmitButton()
         }
     }
 
+    private fun clickSubmitButton() {
+        val intent = Intent(this, QuoteActivity::class.java )
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("originFilter", filterList)
+        intent.putExtra("thumbnail", thumbnail)
+        intent.putExtra("mainfood", mainFoodTagList)
+        intent.putExtra("subfood", subFoodTagList)
+        intent.putExtra("recipeList", recipeList)
+        intent.putExtra("recipeTitle", recipeTitle)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+    }
     private fun getItems() {
-
         if (intent.hasExtra("number")) {
             select_cut = intent.getIntExtra("number", 1)
             setPageCut()
@@ -45,21 +60,27 @@ class UploadActivity4 : AppCompatActivity() {
             setPageFilter()
             Log.d("savefilterList", saveFilterList.toString())
         }
+        if(intent.hasExtra("originFilter")) {
+            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
+        }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")
             Log.d("thumbnail", thumbnail.toString())
         }
         if (intent.hasExtra("mainfood")) {
-            saveMainFoodList = intent.getStringArrayListExtra("mainfood")!!
-            Log.d("mainfood", saveMainFoodList.toString())
+            mainFoodTagList = intent.getStringArrayListExtra("mainfood")!!
+            Log.d("mainfood", mainFoodTagList.toString())
         }
         if (intent.hasExtra("subfood")) {
-            saveSubFoodList = intent.getStringArrayListExtra("subfood")!!
-            Log.d("subfood", saveSubFoodList.toString())
+            subFoodTagList = intent.getStringArrayListExtra("subfood")!!
+            Log.d("subfood", subFoodTagList.toString())
         }
         if (intent.hasExtra("recipeList")) {
             recipeList = intent.getSerializableExtra("recipeList") as ArrayList<RecipeDTO.Recipe>
             setPageImage()
+        }
+        if (intent.hasExtra("recipeTitle")) {
+            recipeTitle = intent.getStringExtra("recipeTitle")
         }
     }
 
@@ -89,6 +110,7 @@ class UploadActivity4 : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_recipe_list.setHasFixedSize(true)
     }
+
     private fun addFilter() {
         for(i in saveFilterList.indices) {
             filterList.add(RecipeDTO.Filter(saveFilterList[i]))

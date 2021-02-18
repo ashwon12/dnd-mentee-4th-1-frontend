@@ -16,10 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
-<<<<<<< HEAD
 import com.kakao.sdk.user.UserApi
-=======
->>>>>>> a27119a48f40fae020c6d59ed6723a6133afbfdd
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login_main.*
 
@@ -67,8 +64,6 @@ class LoginActivity : AppCompatActivity() {
         } else {
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
-
-<<<<<<< HEAD
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if(error != null) {
                 Log.d("tag", "토큰 정보 보기 실패", error)
@@ -77,8 +72,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-=======
->>>>>>> a27119a48f40fae020c6d59ed6723a6133afbfdd
         mGoogleSignInClient.revokeAccess()
             .addOnCompleteListener(this) {
                 Log.d("google", "google logout")

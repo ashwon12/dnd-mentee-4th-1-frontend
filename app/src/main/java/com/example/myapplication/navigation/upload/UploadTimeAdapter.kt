@@ -53,7 +53,7 @@ class UploadTimeAdapter(
 
             holder.name.setTextColor(Color.parseColor("#FF7051"))
         } else {
-            holder.name.setTextColor(Color.parseColor("#777777"))
+            holder.name.setTextColor(Color.parseColor("#8E8E93"))
         }
     }
 
