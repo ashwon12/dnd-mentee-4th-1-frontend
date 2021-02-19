@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".App"
@@ -15,15 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
+        <activity android:name=".navigation.quote.QuoteActivity"></activity>
+        <activity android:name=".navigation.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".navigation.Login.LoginActivity">
         </activity>
         <activity
             android:name=".navigation.upload.UploadActivity"
@@ -42,11 +44,13 @@
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao7c0ae88d49666eca35738b64bba94021" />
             </intent-filter>
         </activity>
