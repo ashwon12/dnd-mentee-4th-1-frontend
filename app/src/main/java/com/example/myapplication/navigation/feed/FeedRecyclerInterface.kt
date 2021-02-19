@@ -1,6 +1,6 @@
 package com.example.myapplication.navigation.feed
 
-interface TimelineRecyclerInterface {
+interface FeedRecyclerInterface {
 
     fun onItemClicked(position: Int)
 }
