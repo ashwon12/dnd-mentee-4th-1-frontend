@@ -2,6 +2,7 @@ package com.example.myapplication.navigation.upload
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,19 +39,16 @@ class UploadTimeAdapter(
 
         holder.itemView.setOnClickListener {
             currentPosition = position
+            saveTime = timeList[position].timeName
+            Log.d("savetime", saveTime + " savetime")
             notifyDataSetChanged()
         }
 
         if (currentPosition == position) {
             itemClick(currentPosition)
-            if (position == timeList.size - 1) {
 
-            } else {
-
-            }
             saveTime = timeList[position].timeName
-
-
+            Log.d("savetime", saveTime + " savetime")
             holder.name.setTextColor(Color.parseColor("#FF7051"))
         } else {
             holder.name.setTextColor(Color.parseColor("#8E8E93"))
