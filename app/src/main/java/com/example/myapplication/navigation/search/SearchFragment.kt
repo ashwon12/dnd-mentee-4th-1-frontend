@@ -32,7 +32,8 @@ import kotlin.collections.ArrayList
 class SearchFragment : Fragment() {
 
     private lateinit var v: View
-    private lateinit var autoCompleteTextView: View
+    private lateinit var vAutoCompleteTextView: View
+
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var autoTextview: AutoCompleteTextView
 
@@ -65,7 +66,7 @@ class SearchFragment : Fragment() {
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))
 
         v = inflater.inflate(R.layout.fragment_search, container, false)
-        autoCompleteTextView = inflater.inflate(R.layout.custom_auto_complete_item_line, container,false)
+        vAutoCompleteTextView = inflater.inflate(R.layout.custom_auto_complete_item_line, container,false)
 
         setRecyclerView()
         setAutoCompleteTextView()
@@ -125,7 +126,7 @@ class SearchFragment : Fragment() {
             }
 
         //검색기록 삭제 버튼
-        autoCompleteTextView.findViewById<Button>(R.id.btn_delete_search_history).setOnClickListener {
+        vAutoCompleteTextView.findViewById<Button>(R.id.btn_delete_search_history).setOnClickListener {
             Toast.makeText(v.context, "fafasf", Toast.LENGTH_SHORT).show()
         }
     }
