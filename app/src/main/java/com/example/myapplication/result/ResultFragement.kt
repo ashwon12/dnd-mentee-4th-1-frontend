@@ -2,6 +2,8 @@ package com.example.myapplication.result
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,9 @@ class ResultFragement : Fragment() {
     internal lateinit var rvResults: RecyclerView
     private lateinit var resultAdapter: ResultAdapter
     private lateinit var autoTextview: AutoCompleteTextView
+    private lateinit var btnSearch: Button
+    private lateinit var btnClear: Button
+    private lateinit var tvResultCount: TextView
 
     private var data1 = mutableListOf<String>("스피너1-1", "스피너1-2", "스피너1-3", "스피너1-4", "스피너1-5", "스피너1-6")
 
@@ -37,23 +42,55 @@ class ResultFragement : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_result, container, false)
 
+        setButtonSearch()
         setAutoCompleteTextView()
+        setAutoCompleteTextViewClearButton()
         setResultRecyclerView()
         setSpinner()
-        setButtonSearch()
 
         return v
     }
 
+    /**  [X] 버튼 클릭 리스너  */
+    private fun setAutoCompleteTextViewClearButton() {
+        btnClear = v.findViewById<Button>(R.id.btn_clear)
+        btnClear.setOnClickListener {
+
+            autoTextview.setText("")//Edittext 값 Null 초기화
+            autoTextview.setTextColor(Color.parseColor("#000000"))
+
+            setVisibility()
+        }
+    }
 
     private fun setAutoCompleteTextView() {
         inputTextFromSearchFragment = arguments?.getString("input_search")// arguments로 Bundle 받아옴
+
         autoTextview = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe_in_result)
-
         autoTextview.setText(inputTextFromSearchFragment, TextView.BufferType.EDITABLE);
-        autoTextview.setTextColor(Color.parseColor("#77000000"))
+        autoTextview.setTextColor(Color.parseColor("#7A7A7A"))
 
+        btnSearch.visibility = View.INVISIBLE// 초기 검색화면 Setting : [검색] 버튼 비활성화
+
+        tvResultCount = v.findViewById(R.id.tv_result_count)
+        tvResultCount.text = "3개"
+
+        autoTextview.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                return
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setVisibility()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                return
+            }
+
+        })
     }
+
 
     private fun setResultRecyclerView() {
         resultAdapter = ResultAdapter()
@@ -68,8 +105,6 @@ class ResultFragement : Fragment() {
         rvResults.setHasFixedSize(true)
         rvResults.adapter = resultAdapter
     }
-
-
     private fun setSpinner() {
         data1.add(0, "제목입니다.")
         var adapter1 = ArrayAdapter(v.context, android.R.layout.simple_spinner_dropdown_item, data1)
@@ -102,8 +137,9 @@ class ResultFragement : Fragment() {
         spinner1.adapter = adapter1
     }
 
+
     private fun setButtonSearch() {
-        val btnSearch = v.findViewById<Button>(R.id.btn_search)
+        btnSearch = v.findViewById<Button>(R.id.btn_search)
         btnSearch.setOnClickListener {
 
             repository.saveSearch(autoTextview.text.toString()) // 검색어 저장
@@ -123,4 +159,9 @@ class ResultFragement : Fragment() {
         }
     }
 
+    private fun setVisibility() {
+        btnSearch.visibility = View.VISIBLE
+        btnClear.visibility = View.INVISIBLE
+        tvResultCount.visibility = View.INVISIBLE
+    }
 }
