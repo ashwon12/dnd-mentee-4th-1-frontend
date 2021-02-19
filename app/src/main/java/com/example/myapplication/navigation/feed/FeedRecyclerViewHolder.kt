@@ -4,34 +4,33 @@
 package com.example.myapplication.navigation.feed
 
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.navigation.home.MultiViewAdapter
 
-class TimelineRecyclerViewHolder(
+class FeedRecyclerViewHolder(
     v: View,
-    recyclerInterface: TimelineRecyclerInterface
+    recyclerInterface: FeedRecyclerInterface
 ) : RecyclerView.ViewHolder(v),
     View.OnClickListener {
 
     private val profile = v.findViewById<ImageView>(R.id.iv_feed_profile)
     private val userName = v.findViewById<TextView>(R.id.tv_feed_username)
+    private val moreSet = v.findViewById<LinearLayout>(R.id.ll_feed_more_set)
+    private val btn_more = v.findViewById<ImageView>(R.id.ib_feed_more)
     private val btn_delete = v.findViewById<Button>(R.id.btn_feed_delete)
     private val btn_modify = v.findViewById<Button>(R.id.btn_feed_modify)
     private val title = v.findViewById<TextView>(R.id.tv_feed_title)
     private val contentsText = v.findViewById<TextView>(R.id.tv_feed_contents)
-    private val countStars = v.findViewById<TextView>(R.id.tv_feed_star_count)
-    private val countViews = v.findViewById<TextView>(R.id.tv_feed_views_count)
+    private val starCount = v.findViewById<TextView>(R.id.tv_feed_star_count)
+    private val starView = v.findViewById<TextView>(R.id.tv_feed_views_count)
+    private val writeDate = v.findViewById<TextView>(R.id.tv_feed_date)
 
-
-
-    private var myInterface: TimelineRecyclerInterface? = null
+    private var myInterface: FeedRecyclerInterface? = null
 
     //기본 생성자
     init {
@@ -39,20 +38,24 @@ class TimelineRecyclerViewHolder(
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data: RecipeDTO.PostItem) {
+    fun bind(data: RecipeDTO.tempRandomRecipes) {
         title.text = data.title
+        starCount.text = data.starCount.toString()
 
-        data.imageUrl?.let {
-            if(it.isNotEmpty()) {
-                val oneUrl = it[0]
-                Glide.with(App.instance)
-                    .load(oneUrl)
-                    .placeholder(R.drawable.ic_no_image)
-                    .into(profile);
+        Glide.with(App.instance)
+            .load(data.thunmbnail)
+            .placeholder(R.drawable.ic_no_image)
+            .circleCrop()
+            .into(profile)
+
+
+        btn_more.setOnClickListener {
+            when (moreSet.visibility) {
+                View.VISIBLE -> moreSet.visibility = View.INVISIBLE
+                View.INVISIBLE -> moreSet.visibility = View.VISIBLE
             }
         }
 
-        //TODO(삭제 버튼 클릭했을 때 해당 데이터 지우는 코드 )
         btn_delete.setOnClickListener {
             Toast.makeText(
                 App.instance,
@@ -68,6 +71,7 @@ class TimelineRecyclerViewHolder(
                 Toast.LENGTH_SHORT
             ).show()
         }
+
     }
 
     override fun onClick(p0: View?) {
