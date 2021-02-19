@@ -13,6 +13,17 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_upload_cancel"
+            android:layout_width="126dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="15dp"
+            app:srcCompat="@drawable/ic_cancel_upload"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <ImageView
             android:id="@+id/iv_poster3"
             android:layout_width="180dp"
             android:layout_height="180dp"
@@ -133,7 +144,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
             android:backgroundTint="@color/gray"
-            android:text="이전"
+            android:text="상세정보 수정"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -146,7 +157,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="80dp"
             android:backgroundTint="@color/orange"
-            android:text="미리보기"
+            android:text="레시피 미리보기"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
