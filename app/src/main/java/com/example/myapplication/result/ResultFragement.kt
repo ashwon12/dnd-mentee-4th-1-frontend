@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -31,7 +32,16 @@ class ResultFragement : Fragment() {
 
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
-    private var data1 = mutableListOf<String>("스피너1-1", "스피너1-2", "스피너1-3", "스피너1-4", "스피너1-5", "스피너1-6")
+    private var spinnerData1 = mutableListOf<String>("최신순", "별순", "조회순")
+    private var spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷")
+    private var spinnerData3 = mutableListOf<String>(
+        "15분 이내",
+        "30분 이내",
+        "45분 이내",
+        "60분 이내",
+        "60분 이상"
+    )
+
 
     private var inputTextFromSearchFragment: String? = ""
 
@@ -116,10 +126,54 @@ class ResultFragement : Fragment() {
 
     private fun setResultRecyclerView() {
         resultAdapter = ResultAdapter()
-        resultAdapter.addSampleResult(RecipeDTO.tempResultRecipes(1,"R.drawable.ic_home","간단한 햄버거 만들기",null,null,null,4.3,22))
-        resultAdapter.addSampleResult(RecipeDTO.tempResultRecipes(2,"R.drawable.ic_home","간단한 햄버거 만들기",null,null,null,4.3,22))
-        resultAdapter.addSampleResult(RecipeDTO.tempResultRecipes(3,"R.drawable.ic_home","간단한 햄버거 만들기",null,null,null,4.3,22))
-        resultAdapter.addSampleResult(RecipeDTO.tempResultRecipes(4,"R.drawable.ic_home","간단한 햄버거 만들기",null,null,null,4.3,22))
+        resultAdapter.addSampleResult(
+            RecipeDTO.tempResultRecipes(
+                1,
+                "R.drawable.ic_home",
+                "간단한 햄버거 만들기",
+                null,
+                null,
+                null,
+                4.3,
+                22
+            )
+        )
+        resultAdapter.addSampleResult(
+            RecipeDTO.tempResultRecipes(
+                2,
+                "R.drawable.ic_home",
+                "간단한 햄버거 만들기",
+                null,
+                null,
+                null,
+                4.3,
+                22
+            )
+        )
+        resultAdapter.addSampleResult(
+            RecipeDTO.tempResultRecipes(
+                3,
+                "R.drawable.ic_home",
+                "간단한 햄버거 만들기",
+                null,
+                null,
+                null,
+                4.3,
+                22
+            )
+        )
+        resultAdapter.addSampleResult(
+            RecipeDTO.tempResultRecipes(
+                4,
+                "R.drawable.ic_home",
+                "간단한 햄버거 만들기",
+                null,
+                null,
+                null,
+                4.3,
+                22
+            )
+        )
 
         rvResults = v.findViewById<RecyclerView>(R.id.rv_result_recipe)
         rvResults.layoutManager =
@@ -128,10 +182,13 @@ class ResultFragement : Fragment() {
         rvResults.adapter = resultAdapter
     }
     private fun setSpinner() {
-        data1.add(0, "제목입니다.")
-        var adapter1 = ArrayAdapter(v.context, android.R.layout.simple_spinner_dropdown_item, data1)
+
+        var adapter1 = ArrayAdapter(v.context, R.layout.spinner_item, spinnerData1)
 
         val spinner1 = v.findViewById<Spinner>(R.id.spinner_filter1)
+
+        spinner1.setSelection(0)
+
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -139,21 +196,11 @@ class ResultFragement : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                when(position) {
-                    0 -> {
-                        view?.setBackgroundColor(Color.LTGRAY)
-                    }
-                    1 -> {
-
-                    }
-                    else -> {
-
-                    }
-                }
+                (view as TextView).setTextColor(Color.rgb(255, 112, 81))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                spinner1.prompt = "Select your favorite Planet!"
+                println("")
             }
         }
         spinner1.adapter = adapter1
@@ -167,7 +214,7 @@ class ResultFragement : Fragment() {
             repository.saveSearchHistory(autoTextview.text.toString()) // 검색어 저장
 
             val bundle = Bundle()
-            bundle.putString("input_search",autoTextview.text.toString())
+            bundle.putString("input_search", autoTextview.text.toString())
 
             val activity = v.context as AppCompatActivity
             val transaction = activity.supportFragmentManager.beginTransaction()
