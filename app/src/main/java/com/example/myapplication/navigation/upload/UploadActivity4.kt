@@ -23,7 +23,7 @@ class UploadActivity4 : AppCompatActivity() {
     private var select_cut: Int = 0
     private var recipeTitle : String? = null
     private var steps = ArrayList<RecipeDTO.Recipe>()
-    private var test = ArrayList<RecipeDTO.Recipe>()
+    private var timeString: String = ""
     private var saveFilterList = ArrayList<String>()
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
@@ -37,17 +37,11 @@ class UploadActivity4 : AppCompatActivity() {
 
         getItems()
 
-        test.add(RecipeDTO.Recipe("1","안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","두줄 입력 시\n이렇게 나옵니다.","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
-        test.add(RecipeDTO.Recipe("1","한줄 입력 시 이렇게 나옵니다.","https://rgo4.com/files/attach/images/2681740/024/470/011/70c03f4555eaf6da08fcd9af5f0fe481.JPG"))
         setPageImage()
+        btn_upload_recipe_prev2.setOnClickListener {
+            clickPrevButton()
+        }
         btn_submit.setOnClickListener {
-            // Toast.makeText(this, "서버 전송 미완성", Toast.LENGTH_SHORT).show()
             clickSubmitButton()
         }
         iv_upload_cancel.setOnClickListener {
@@ -55,16 +49,30 @@ class UploadActivity4 : AppCompatActivity() {
         }
     }
 
-    private fun clickSubmitButton() {
+    private fun clickPrevButton() {
         val intent = Intent(this, QuoteActivity::class.java )
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
-        intent.putExtra("originFilter", filterList)
         intent.putExtra("thumbnail", thumbnail)
         intent.putExtra("mainfood", mainFoodTagList)
         intent.putExtra("subfood", subFoodTagList)
         intent.putExtra("steps", steps)
         intent.putExtra("recipeTitle", recipeTitle)
+        intent.putExtra("time", timeString)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun clickSubmitButton() {
+        val intent = Intent(this, QuoteActivity::class.java )
+        intent.putExtra("number", select_cut)
+        intent.putExtra("filter", saveFilterList)
+        intent.putExtra("thumbnail", thumbnail)
+        intent.putExtra("mainfood", mainFoodTagList)
+        intent.putExtra("subfood", subFoodTagList)
+        intent.putExtra("steps", steps)
+        intent.putExtra("recipeTitle", recipeTitle)
+        intent.putExtra("time", timeString)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
@@ -88,14 +96,11 @@ class UploadActivity4 : AppCompatActivity() {
 
         if (intent.hasExtra("number")) {
             select_cut = intent.getIntExtra("number", 1)
+            Log.d("select_cut", select_cut.toString())
         }
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
-            // setPageFilter()
             Log.d("savefilterList", saveFilterList.toString())
-        }
-        if(intent.hasExtra("originFilter")) {
-            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
         }
         if (intent.hasExtra("thumbnail")) {
             thumbnail = intent.getParcelableExtra("thumbnail")
@@ -109,32 +114,28 @@ class UploadActivity4 : AppCompatActivity() {
             subFoodTagList = intent.getStringArrayListExtra("subfood")!!
             Log.d("subfood", subFoodTagList.toString())
         }
-//        if (intent.hasExtra("steps")) {
-//            steps = intent.getSerializableExtra("steps") as ArrayList<RecipeDTO.Recipe>
-//            setPageImage()
-//        }
+        if (intent.hasExtra("steps")) {
+            steps = intent.getSerializableExtra("steps") as ArrayList<RecipeDTO.Recipe>
+            setPageImage()
+            Log.d("steps", steps.toString())
+        }
         if (intent.hasExtra("recipeTitle")) {
             recipeTitle = intent.getStringExtra("recipeTitle")
+            Log.d("recipeTitle", recipeTitle.toString())
+        }
+        if(intent.hasExtra("time")) {
+            timeString = intent.getStringExtra("time")!!
+            Log.d("time", timeString)
         }
     }
 
 
     private fun setPageImage() {
         var rv_recipe_list = findViewById(R.id.rv_upload_preview_recipe) as RecyclerView
-        adapter = UploadPreviewRecipeAdapter(test)
+        adapter = UploadPreviewRecipeAdapter(steps)
         rv_recipe_list.adapter = adapter
         rv_recipe_list.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_recipe_list.setHasFixedSize(true)
     }
-
-    private fun addFilter() {
-        for(i in saveFilterList.indices) {
-            filterList.add(RecipeDTO.Filter(saveFilterList[i]))
-            Log.d("filter", filterList.toString())
-        }
-    }
-
-
-
 }
