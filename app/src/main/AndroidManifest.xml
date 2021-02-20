@@ -19,7 +19,9 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".navigation.quote.QuoteActivity"></activity>
         <activity android:name=".navigation.Login.LoginActivity">
             <intent-filter>
