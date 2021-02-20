@@ -6,11 +6,13 @@ package com.example.myapplication.navigation.feed
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.navigation.home.MultiViewAdapter
+import me.relex.circleindicator.CircleIndicator3
 
 class FeedRecyclerViewHolder(
     v: View,
@@ -29,6 +31,9 @@ class FeedRecyclerViewHolder(
     private val starCount = v.findViewById<TextView>(R.id.tv_feed_star_count)
     private val starView = v.findViewById<TextView>(R.id.tv_feed_views_count)
     private val writeDate = v.findViewById<TextView>(R.id.tv_feed_date)
+
+    private val vpItem = v.findViewById<ViewPager2>(R.id.vp_feed)
+    private val feedIndicator = v.findViewById<CircleIndicator3>(R.id.indicator_feed)
 
     private var myInterface: FeedRecyclerInterface? = null
 
@@ -72,6 +77,14 @@ class FeedRecyclerViewHolder(
             ).show()
         }
 
+        //TODO:: step 사진을 전달해서 viewPager에 뿌려주기
+        setViewPager()
+    }
+
+    private fun setViewPager() {
+        //vpItem.adapter = FeedViewPagerAdapter()
+        vpItem.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        feedIndicator.setViewPager(vpItem)
     }
 
     override fun onClick(p0: View?) {
