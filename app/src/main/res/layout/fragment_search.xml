@@ -14,10 +14,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:descendantFocusability="blocksDescendants">
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="44dp"
@@ -28,7 +27,7 @@
                 android:id="@+id/actv_recipe"
                 android:layout_width="284dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
+                style="@android:style/Widget.DeviceDefault.Light.AutoCompleteTextView"
                 android:gravity="center_vertical"
                 android:textSize="16dp"
                 android:layout_marginLeft="20dp"
@@ -44,13 +43,14 @@
                 android:id="@+id/btn_search"
                 android:layout_width="72dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
                 android:background="@drawable/button_search"
                 android:text="검색"
-                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textColor="#FF7051"
                 android:textSize="18dp"/>
 
-        </RelativeLayout>
+        </FrameLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/srl_update"
@@ -105,7 +105,6 @@
                             android:id="@+id/rv_random_recipe"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="4dp"
                             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
                     </LinearLayout>

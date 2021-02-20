@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
@@ -16,6 +15,7 @@
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/nav_radius"
         android:layout_gravity="bottom"
         app:fabCradleMargin="0dp"
         app:fabCradleRoundedCornerRadius="0dp"
@@ -24,21 +24,36 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bnv_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="58dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:backgroundTint="@color/white"
+            app:itemIconTint="@drawable/bottom_icon_color"
+            app:itemTextAppearanceActive="@style/FontCaption"
+            app:itemTextAppearanceInactive="@style/FontCaption"
+            app:itemTextColor="@drawable/bottom_icon_color"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/home_nav" />
     </com.google.android.material.bottomappbar.BottomAppBar>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_write"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:layout_anchor="@id/bottomAppBar"
-        app:layout_anchorGravity="bottom|right|end"
-        app:fabSize="mini"/>
+        android:backgroundTint="@color/PrimaryColor"
+        android:scrollIndicators="top|left|bottom|start|none|right"
+        app:backgroundTint="#FFFFFF"
+        app:borderWidth="6dp"
+        app:elevation="0dp"
+        app:fabSize="normal"
+        app:iconSize="18dp"
+        app:layout_anchor="@+id/bottomAppBar"
+        app:layout_anchorGravity="bottom"
+        app:pressedTranslationZ="0dp"
+        app:rippleColor="@color/white"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="@color/white"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

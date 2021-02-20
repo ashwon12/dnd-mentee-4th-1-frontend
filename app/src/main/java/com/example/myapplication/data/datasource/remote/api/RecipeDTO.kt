@@ -36,6 +36,7 @@ class RecipeDTO {
 //        val writeDate: String?
     )
 
+
     data class tempResultRecipes(
         val id: Int?,
         val thunmbnail: String?,
@@ -48,7 +49,14 @@ class RecipeDTO {
         val wishCount: Int?
 //        val writer: User
     )
-
+  
+    data class Timeline(
+        val id: String,
+        val title: String,
+        val subTitle: String,
+        val images: List<Recipe>? = null
+    )
+  
     data class Recipe(
         var number: String?,
         var comment: String?,
@@ -71,4 +79,43 @@ class RecipeDTO {
         val comment: String?
     )
 
+// -------------- 2020. 2. 21 추가 -------------
+    data class RecipeFinal(
+        var themes: Array<Themes>,
+        var thumbnail: String? = null,
+        var starCount: String? = null,
+        var mainIngredients: Array<MainIngredients>,
+        var subIngredients: Array<String>,
+        var id: String? = null,
+        var time: String? = null,
+        var viewCount: String? = null,
+        var writer: Writer? = null,
+        var title: String? = null,
+        var wishCount: String? = null,
+        var steps: Array<Steps>
+    )
+
+    class Writer(
+        var name: String? = null,
+        var id: String? = null,
+        var email: String? = null
+    )
+
+    class Steps(
+        var id: String,
+        var sequence: String,
+        var imageUrl: String? = null,
+        var description: String
+    )
+
+    class Themes(
+        var name: String? = null,
+        var id: String? = null
+    )
+
+    class MainIngredients {
+        var name: String? = null
+    }
 }
+
+

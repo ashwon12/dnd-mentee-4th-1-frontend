@@ -10,7 +10,7 @@ class Repository {
     private val remoteMovieDataSourceImpl = RemoteDataSource()
 
     fun getRandomRecipes(
-        success: (RecipeDTO.tempRandomRecipes) -> Unit,
+        success: (RecipeDTO.RecipeFinal) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRandomRecipes(
@@ -19,11 +19,29 @@ class Repository {
         )
     }
 
-    fun saveSearch(recipe: String) {
+//    fun postTimeline(
+//        postInfo: ArrayList<RecipeDTO.PostItem>,
+//        success: (RecipeDTO.TimelineResponse) -> Unit,
+//        fail: (Throwable) -> Unit
+//    ) {
+//        remoteMovieDataSourceImpl.postTimeline(
+//            postInfo,
+//            success,
+//            fail
+//        )
+//    }
+
+    fun saveSearchHistory(recipe: String) {
         localDataSourceImpl.saveSearchWord(recipe)
+    }
+
+    fun deleteSearchHistory(selected: String) {
+        localDataSourceImpl.deleteSearcWord(selected)
     }
 
     fun getSavedSearchList(): ArrayList<String> {
         return localDataSourceImpl.getSavedSearchWordList()
     }
+
+
 }

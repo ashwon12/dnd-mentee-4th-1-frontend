@@ -16,7 +16,7 @@ import com.example.myapplication.detail.DetailFragment
 
 class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
 
-    var randomRecipes = ArrayList<RecipeDTO.tempRandomRecipes>()
+    var randomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     private lateinit var view: View
 
@@ -50,7 +50,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
                 .addSharedElement(itemImageView, "@string/transition_random_to_detail")
                 .replace(R.id.fl_container, detailFragment)
                 .addToBackStack(null)
-                .commit();
+                .commit()
         }
     }
 
@@ -59,7 +59,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
     }
 
 
-    fun updateRandomRecipeList(timeLines: ArrayList<RecipeDTO.tempRandomRecipes>) {
+    fun updateRandomRecipeList(timeLines: ArrayList<RecipeDTO.RecipeFinal>) {
         this.randomRecipes.addAll(timeLines)
     }
 
