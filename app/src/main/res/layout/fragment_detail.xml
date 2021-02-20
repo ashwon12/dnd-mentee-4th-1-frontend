@@ -63,7 +63,8 @@
                     android:id="@+id/vp_recipes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#EECC77"/>
+                    android:background="@drawable/item_random_recipe"
+                    android:transitionName="@string/transition_random_to_detail" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -72,8 +73,13 @@
                     android:layout_gravity="bottom"
                     android:background="@android:color/transparent"
                     app:tabBackground="@drawable/tab_selector"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp" />
+                    app:tabIndicatorFullWidth="true"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabMaxWidth="50dp"
+                    app:tabPaddingBottom="8dp"
+                    app:tabPaddingEnd="10dp"
+                    app:tabPaddingStart="10dp" />
 
             </FrameLayout>
 
@@ -82,7 +88,9 @@
         <LinearLayout
             android:id="@+id/ll_today_text"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
             android:orientation="horizontal">
 
             <TextView
@@ -90,66 +98,241 @@
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:fontFamily="serif"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:hint="레시피 이름"
                 android:textSize="24dp"
+                android:typeface="monospace"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="70dp">
 
-                <ImageButton
-                    android:id="@+id/iv_like"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_select_cut" />
-
-                <TextView
-                    android:id="@+id/tv_star_rating"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="123"
-                    android:textSize="18dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/iv_subscribe"
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_no_select_cut" />
-
-                    <TextView
-                        android:id="@+id/tv_subscribe"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:hint="123"
-                        android:textSize="18dp" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_layout"
+            android:layout_marginHorizontal="8dp"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
+                android:textSize="16dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginVertical="4dp"
+                android:layout_marginLeft="4dp"
+                android:textSize="12dp"
+                android:ellipsize="marquee"
+                android:text="7시간전" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_star_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/iv_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_select_cut" />
+
+                    <TextView
+                        android:id="@+id/tv_star_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="123"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_subscribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_select_cut" />
+
+                    <TextView
+                        android:id="@+id/tv_subscribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="123"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/Divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="필수 재료"
+                />
+            <TextView
+                android:id="@+id/tv_ingredient1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="16dp"
+                android:text="당근 1개, 마늘 30쪽, 파스타면"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="부가 재료"/>
+            <TextView
+                android:id="@+id/tv_ingredient2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="16dp"
+                android:text="올리브유, 소고기, 허브"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:text="조리 방법" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_comments"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:background="@drawable/round_layout"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="vertical" />
+            <LinearLayout
+                android:id="@+id/ll_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="8dp">
+
+                <TextView
+                    android:id="@+id/tv_first"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:text="1단계"/>
+                <TextView
+                    android:id="@+id/tv_first_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="조리설명으로 단계별에 맞게 진하기가 변경"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="144dp"
+                android:layout_height="52dp"
+                android:background="@drawable/transparent_button"
+                android:drawableRight="@drawable/ic_search"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#FF7051"
+                android:textSize="15dp"
+                android:text="레시피 전체보기" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="이 레시피는 3점이에요!"
+                android:layout_marginBottom="4dp"
+                android:letterSpacing="0.1"
+                android:textSize="16dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_gravity="center"
+                android:progressTint="@color/LightGray"
+                android:numStars="5"
+                android:rating="3"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_quote"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@drawable/round_button"
+            android:gravity="center"
+            android:paddingHorizontal="110dp"
+            android:drawableLeft="@drawable/ic_search"
+
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#FFFFFF"
+            android:text="내 비법 추가하기"/>
+
+        <View style="@style/Divider"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -158,24 +341,21 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textStyle="bold"
+                android:layout_height="32dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
-                android:textSize="20dp"
-                android:text="후 기"/>
+                android:text="후 기"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_margin="4dp"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 

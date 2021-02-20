@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.myapplication.navigation.feed.FeedFragment
+import androidx.fragment.app.FragmentManager
 import com.example.myapplication.navigation.home.HomeFragment
 import com.example.myapplication.navigation.mypage.MyPageFragment
 import com.example.myapplication.navigation.search.SearchFragment
@@ -66,9 +67,15 @@ class MainActivity : AppCompatActivity() {
      * @param fragment: Fragment 전환될 프래그먼트
      */
     private fun setFragment(fragment: Fragment){
-        supportFragmentManager
-            .beginTransaction()
+        val manager: FragmentManager = supportFragmentManager
+        manager.beginTransaction().setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_left,
+            R.anim.enter_from_left,
+            R.anim.exit_to_right
+        )
             .replace(R.id.fl_container, fragment)
+            .addToBackStack(null)
             .commit()
     }
 }
