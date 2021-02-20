@@ -50,7 +50,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
                 .addSharedElement(itemImageView, "@string/transition_random_to_detail")
                 .replace(R.id.fl_container, detailFragment)
                 .addToBackStack(null)
-                .commit();
+                .commit()
         }
     }
 

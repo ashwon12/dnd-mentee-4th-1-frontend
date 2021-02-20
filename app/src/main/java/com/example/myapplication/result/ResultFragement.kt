@@ -181,6 +181,7 @@ class ResultFragement : Fragment() {
         rvResults.setHasFixedSize(true)
         rvResults.adapter = resultAdapter
     }
+
     private fun setSpinner() {
 
         var adapter1 = ArrayAdapter(v.context, R.layout.spinner_item, spinnerData1)
