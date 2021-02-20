@@ -19,6 +19,7 @@ class RecipeDTO {
         val subTitle: String?,
         val title: String?
     )
+
     data class tempRandomRecipes(
         val id: Int?,
         val thunmbnail: String?,
@@ -26,10 +27,13 @@ class RecipeDTO {
         val ingredient: ArrayList<String>?,
         val subIngredient: ArrayList<String>?,
         val theme: ArrayList<String>?,
-//        val steps: ArrayList<Image, Comment>,
+        //val steps: ArrayList<Image, Comment>,
         val starCount: Double?,
         val wishCount: Int?
-//        val writer: User
+//        val userProfile : String?,
+//        val viewCount :Int?,
+//        val writer: String?,
+//        val writeDate: String?
     )
 
     data class tempResultRecipes(
@@ -43,12 +47,6 @@ class RecipeDTO {
         val starCount: Double?,
         val wishCount: Int?
 //        val writer: User
-    )
-    data class Timeline(
-        val id: String,
-        val title: String,
-        val subTitle: String,
-        val images: List<Recipe>? = null
     )
 
     data class Recipe(
@@ -64,17 +62,6 @@ class RecipeDTO {
     data class Time(
         var timeName: String
     ) : Serializable
-
-    data class TimelineResponse(
-        val comment: ArrayList<String>?,
-        val cookingTime: Any?,
-        val cookingTool: Any?,
-        val id: Int?,
-        val imageUrl: ArrayList<String>?,
-        val likeCount: Int?,
-        val subTitle: String?,
-        val title: String?
-    )
 
     data class Comment(
         val id: String,

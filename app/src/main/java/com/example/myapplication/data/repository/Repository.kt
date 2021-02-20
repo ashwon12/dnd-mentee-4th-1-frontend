@@ -9,33 +9,11 @@ class Repository {
     private val localDataSourceImpl = LocalDataSource()
     private val remoteMovieDataSourceImpl = RemoteDataSource()
 
-    fun getAllTimelineList(
-        success: (RecipeDTO.PostItems) -> Unit,
-        fail: (Throwable) -> Unit
-    ) {
-        remoteMovieDataSourceImpl.getAllTimelinesFromRemote(
-            success,
-            fail
-        )
-    }
-
     fun getRandomRecipes(
         success: (RecipeDTO.tempRandomRecipes) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRandomRecipes(
-            success,
-            fail
-        )
-    }
-
-    fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItem>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
-        fail: (Throwable) -> Unit
-    ) {
-        remoteMovieDataSourceImpl.postTimeline(
-            postInfo,
             success,
             fail
         )
