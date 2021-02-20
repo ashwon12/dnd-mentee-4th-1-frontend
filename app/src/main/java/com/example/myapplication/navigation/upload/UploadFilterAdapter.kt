@@ -38,9 +38,11 @@ class UploadFilterAdapter(
             if (!saveList.contains(filterList[position].filterName)) {
                 saveList.add(filterList[position].filterName)
                 holder.name.setTextColor(Color.parseColor("#FF7051"))
+                holder.name.setBackgroundResource(R.drawable.select_border_layout)
             } else {
                 saveList.remove(filterList[position].filterName)
                 holder.name.setTextColor(Color.parseColor("#777777"))
+                holder.name.setBackgroundResource(R.drawable.no_select_border_layout)
             }
         }
     }

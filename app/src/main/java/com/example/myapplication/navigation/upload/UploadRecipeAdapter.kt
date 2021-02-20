@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.upload
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,10 +63,14 @@ class UploadRecipeAdapter(
                 Glide.with(itemView.context)
                     .load(data.image)
                     .into(image)
+
+                number.setBackgroundResource(R.drawable.ic_select_oval)
             } else {
                 Glide.with(itemView.context)
                     .load("")
                     .into(image)
+
+                number.setBackgroundResource(R.drawable.ic_oval)
             }
 
             image.setOnClickListener {

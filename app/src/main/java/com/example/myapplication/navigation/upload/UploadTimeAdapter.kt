@@ -40,7 +40,7 @@ class UploadTimeAdapter(
         holder.itemView.setOnClickListener {
             currentPosition = position
             saveTime = timeList[position].timeName
-            Log.d("savetime", saveTime + " savetime")
+           // Log.d("savetime", saveTime + " savetime")
             notifyDataSetChanged()
         }
 
@@ -48,10 +48,12 @@ class UploadTimeAdapter(
             itemClick(currentPosition)
 
             saveTime = timeList[position].timeName
-            Log.d("savetime", saveTime + " savetime")
+            // Log.d("savetime", saveTime + " savetime")
             holder.name.setTextColor(Color.parseColor("#FF7051"))
+            holder.name.setBackgroundResource(R.drawable.select_border_layout)
         } else {
             holder.name.setTextColor(Color.parseColor("#8E8E93"))
+            holder.name.setBackgroundResource(R.drawable.no_select_border_layout)
         }
     }
 
