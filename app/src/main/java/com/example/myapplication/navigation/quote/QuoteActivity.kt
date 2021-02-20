@@ -16,16 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.example.myapplication.navigation.upload.UploadActivity3
-import com.example.myapplication.navigation.upload.UploadCommentAdapter
 import com.example.myapplication.navigation.upload.UploadSwapDelete
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine
 import kotlinx.android.synthetic.main.activity_quote.*
-import kotlinx.android.synthetic.main.activity_upload3.*
 
 class QuoteActivity : AppCompatActivity() {
     companion object {
@@ -33,6 +31,7 @@ class QuoteActivity : AppCompatActivity() {
         private const val PERMISSION_CODE = 100
     }
 
+    private var saveCommentList = ArrayList<RecipeDTO.Recipe>()
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
     private var commentList = ArrayList<RecipeDTO.Recipe>()
     private var filterList = ArrayList<RecipeDTO.Filter>()
@@ -48,6 +47,7 @@ class QuoteActivity : AppCompatActivity() {
     private var number1 = 1
     private var count = 0
     private var positionMain = -1
+    private var quoteRecipeTitle: String = ""
     private lateinit var itemMain: RecipeDTO.Recipe
 
     private lateinit var imageAdapter: QuoteImageAdapter
@@ -66,12 +66,34 @@ class QuoteActivity : AppCompatActivity() {
         btn_quote_add_comment.setOnClickListener {
             addButtonClick()
         }
+        iv_upload_cancel.setOnClickListener {
+            clickCancelButton()
+        }
+        btn_quote_submit.setOnClickListener {
+            makeSteps()
+            checkPermissionNextButton()
+        }
+    }
+
+    private fun clickCancelButton() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("나중에 올릴 땐 다시 작성해야해요\n" +
+                "작성을 멈추시겠어요?")
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            })
+            .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+            })
+        builder.show()
     }
 
     private fun makeRecyclerView() {
         for(i in 0..select_cut-1) {
             recipeList.add(RecipeDTO.Recipe(steps[i].number, null, steps[i].image))
             commentList.add(RecipeDTO.Recipe(steps[i].number, steps[i].comment, null))
+            saveCommentList.add(RecipeDTO.Recipe(steps[i].number, "", null))
             number++
             count++
         }
@@ -122,7 +144,7 @@ class QuoteActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
 
-        commentAdapter = QuoteCommentAdapter(commentList, select_cut)
+        commentAdapter = QuoteCommentAdapter(commentList, saveCommentList, select_cut)
         rv_quote_comment.adapter = commentAdapter
         rv_quote_comment.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -220,6 +242,7 @@ class QuoteActivity : AppCompatActivity() {
     private fun addItem(position: Int, data: RecipeDTO.Recipe) {
         if (count < 9) {
             commentList.add(position, data)
+            saveCommentList.add(position,data)
             commentAdapter.notifyDataSetChanged()
             count++
         }
@@ -411,4 +434,49 @@ class QuoteActivity : AppCompatActivity() {
             })
         builder.show()
     }
+
+    private fun showAddPictureDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("단계별 사진이 부족해요\n" +
+                "추가 사진을 업로드 하시겠습니까?")
+            .setPositiveButton("네", DialogInterface.OnClickListener { dialog, which ->
+                pickUpGallery()
+            })
+            .setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
+            })
+        builder.show()
+    }
+
+    private fun makeSteps() {
+        steps.clear()
+
+        for (i in commentList.indices) {
+            steps.add(
+                RecipeDTO.Recipe(
+                    commentList[i].number,
+                    saveCommentList[i].comment,
+                    recipeList[i].image
+                )
+            )
+        }
+
+        Log.d("steps", steps.toString())
+    }
+
+    private fun checkPermissionNextButton(): Boolean {
+        for(i in steps.indices) {
+            Log.d("steps", steps.toString())
+            if(steps[i].image == null) {
+                Toast.makeText(this, "사진이 비어있습니다.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if(steps[i].comment!!.length < 50) {
+                Toast.makeText(this, "추가 설명은 50자 이상 작성해야합니다.", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+        return true
+    }
+
 }
