@@ -4,6 +4,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -17,19 +18,18 @@ interface RecipeApi {
 
     @GET("/recipes")
     fun getRandomRecipes(
-
-    ): Call<RecipeDTO.tempRandomRecipes>
-
-
+        @Query("queryType") queryType: String,
+        @Query("keyword") keyword: String
+    ): Call<RecipeDTO.RecipeFinal>
 
     @FormUrlEncoded
     @POST("/posts")
     fun postTimeline(
-        @Field("id") id:String,
+        @Field("id") id: String,
         @Field("title") title: String,
         @Field("subTitle") subTitle: String,
         @Field("imageUrl") imageUrls: List<String>,
-        @Field("comment") comments:List<String>
+        @Field("comment") comments: List<String>
     ): Call<RecipeDTO.PostItems>
 
     companion object {

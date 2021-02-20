@@ -16,7 +16,7 @@ import com.example.myapplication.detail.DetailFragment
 
 class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
 
-    var randomRecipes = ArrayList<RecipeDTO.tempRandomRecipes>()
+    var randomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     private lateinit var view: View
 
@@ -59,7 +59,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
     }
 
 
-    fun updateRandomRecipeList(timeLines: ArrayList<RecipeDTO.tempRandomRecipes>) {
+    fun updateRandomRecipeList(timeLines: ArrayList<RecipeDTO.RecipeFinal>) {
         this.randomRecipes.addAll(timeLines)
     }
 

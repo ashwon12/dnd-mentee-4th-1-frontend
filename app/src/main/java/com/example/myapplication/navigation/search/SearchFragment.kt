@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -38,7 +40,7 @@ class SearchFragment : Fragment() {
     private lateinit var autoTextview: AutoCompleteTextView
     private lateinit var srl_update: SwipeRefreshLayout
 
-    private val tempRandomRecipes = ArrayList<RecipeDTO.tempRandomRecipes>()
+    private val tempRandomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
@@ -51,7 +53,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(0,"R.drawable.ic_home",null,null,null,null,null,null))
+    /*    tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(0,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(1,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(2,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(3,"R.drawable.ic_home",null,null,null,null,null,null))
@@ -65,9 +67,13 @@ class SearchFragment : Fragment() {
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(11,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(12,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))
-
+*/
         v = inflater.inflate(R.layout.fragment_search, container, false)
-        vAutoCompleteTextView = inflater.inflate(R.layout.custom_auto_complete_item_line, container,false)
+        vAutoCompleteTextView = inflater.inflate(
+            R.layout.custom_auto_complete_item_line,
+            container,
+            false
+        )
 
         setRecyclerView()
         setAutoCompleteTextView()
@@ -91,12 +97,14 @@ class SearchFragment : Fragment() {
         searchHistoryArrayList = repository.getSavedSearchList()
 
         autoTextview = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe)
-        autoTextview.setText("",TextView.BufferType.EDITABLE) // 검색 프로그먼트 다시 돌아왔을 때, 텍스트 Null로 초기화
+        autoTextview.setText("", TextView.BufferType.EDITABLE) // 검색 프로그먼트 다시 돌아왔을 때, 텍스트 Null로 초기화
 
-        val adapter = object : ArrayAdapter<String>(v.context,
+        val adapter = object : ArrayAdapter<String>(
+            v.context,
             R.layout.custom_auto_complete_item_line,
             R.id.tv_auto_complete_item,
-            searchHistoryArrayList) {
+            searchHistoryArrayList
+        ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
                 val view = super.getView(position, convertView, parent)
@@ -126,6 +134,10 @@ class SearchFragment : Fragment() {
                 searchHistoryArrayList = repository.getSavedSearchList()
                 adapter.notifyDataSetChanged()
             }
+
+        autoTextview.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+            // click event (such as filling the autocomplete section)
+        })
 
         autoTextview.setAdapter(adapter)
 
@@ -157,7 +169,7 @@ class SearchFragment : Fragment() {
 
             repository.saveSearchHistory(autoTextview.text.toString())//검색어 저장
             val bundle = Bundle()
-            bundle.putString("input_search",autoTextview.text.toString())
+            bundle.putString("input_search", autoTextview.text.toString())
 
             val activity = v.context as AppCompatActivity
             val transaction = activity.supportFragmentManager.beginTransaction()
@@ -165,7 +177,12 @@ class SearchFragment : Fragment() {
             resultFragment.arguments = bundle
 
             transaction.replace(R.id.fl_container, resultFragment)
-            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_right)
+            transaction.setCustomAnimations(
+                R.anim.enter_from_left,
+                R.anim.exit_to_right,
+                R.anim.enter_from_left,
+                R.anim.exit_to_right
+            )
             transaction.addToBackStack(null)
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             transaction.commit()
@@ -188,7 +205,7 @@ class SearchFragment : Fragment() {
 
         sgLayoutManager.spanSizeLookup = SpannedGridLayoutManager.SpanSizeLookup { position ->
             when (position % 12) {
-                1,6 -> {
+                1, 6 -> {
                     SpanSize(2, 2)
                 }
                 else -> {
@@ -218,7 +235,6 @@ class SearchFragment : Fragment() {
         repository.getRandomRecipes(//TODO : getAllTimelinesList -> getRandomRecipes
             success = {
                 it.run {
-
                     tempRandomRecipes.add(it)
 
                     searchAdapter.updateRandomRecipeList(tempRandomRecipes)
@@ -245,7 +261,12 @@ class SearchFragment : Fragment() {
         val randomText = arr369.get(Random().nextInt(3))
 
         val ssb = SpannableStringBuilder("오늘은\n$randomText" + "컷요리 어때요?")
-        ssb.setSpan( ForegroundColorSpan(Color.parseColor("#FF7051")), 3, 8, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ssb.setSpan(
+            ForegroundColorSpan(Color.parseColor("#FF7051")),
+            3,
+            8,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 
         tvRecommand = v.findViewById<TextView>(R.id.tv_recommand)
         tvRecommand.text = ssb

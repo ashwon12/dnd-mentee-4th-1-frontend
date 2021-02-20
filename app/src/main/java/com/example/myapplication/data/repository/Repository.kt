@@ -20,7 +20,7 @@ class Repository {
     }
 
     fun getRandomRecipes(
-        success: (RecipeDTO.tempRandomRecipes) -> Unit,
+        success: (RecipeDTO.RecipeFinal) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRandomRecipes(
