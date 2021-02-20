@@ -144,6 +144,7 @@ class SearchFragment : Fragment() {
             resultFragment.arguments = bundle
 
             transaction.replace(R.id.fl_container, resultFragment)
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_right)
             transaction.addToBackStack(null)
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             transaction.commit()

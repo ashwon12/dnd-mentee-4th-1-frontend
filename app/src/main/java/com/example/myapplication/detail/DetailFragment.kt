@@ -1,9 +1,18 @@
 package com.example.myapplication.detail
 
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.RatingBar
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,14 +22,17 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.google.android.material.tabs.TabLayout
 
+
 class DetailFragment : Fragment() {
 
     private lateinit var v: View
 
-    internal lateinit var viewPagerPic: ViewPager
+    internal lateinit var viewPagerPics: ViewPager
     internal lateinit var viewPagerSteps: ViewPager2
     internal lateinit var tabLayout: TabLayout
-    internal lateinit var rvReviews: RecyclerView
+    internal lateinit var rvComment: RecyclerView
+    internal lateinit var ibRating:ImageButton
+    internal lateinit var llStarRating:LinearLayout
 
     private lateinit var commentAdapter: DetailCommentAdapter
 
@@ -29,19 +41,59 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         v = inflater.inflate(R.layout.fragment_detail, container, false)
 
-        viewPagerPic = v.findViewById<ViewPager>(R.id.vp_recipes)
-        viewPagerSteps = v.findViewById<ViewPager2>(R.id.vp_comments)
-        tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
-        rvReviews = v.findViewById<RecyclerView>(R.id.rv_comment)
+        setViewPagerPics()
+        setStarRatingBtn()
+        setCommentRecyclerView()
+        setViewPagerSteps()
 
-        val adapterPic = DetailViewPagerPicsAdapter(v.context)
-        adapterPic.addRecipeImage(R.drawable.ic_home)
-        adapterPic.addRecipeImage(R.drawable.ic_no_image)
-        adapterPic.addRecipeImage(R.drawable.ic_face)
-        viewPagerPic.adapter = adapterPic
-        tabLayout.setupWithViewPager(viewPagerPic)//Circle Indicator 추가
+/*        val tvRatingResult = v.findViewById<TextView>(R.id.tv_star_rating)
+        llStarRating = v.findViewById(R.id.ll_star_rating)
+        val ratClick =
+            OnRatingBarChangeListener { ratingBar, r, b ->
+                val num = r
+
+                // 별 갯수에 따른 한칸의 점수
+                val st: Float = 10.0f / rating.getNumStars()
+
+                // 소수점 한자리로 결과값 끊어주기
+                val str = String.format("%.1f", st * r)
+                tvRatingResult.text = "$str/10.0"
+            }
+        llStarRating.setOnClickListener {
+            val dialog = Dialog(v.context);
+            dialog.setCancelable(false);
+            // 다이얼로그 화면 설정
+            dialog.setContentView(R.layout.dialogue_star_rating);
+
+            val rating : RatingBar = dialog.findViewById(R.id.ratingbar);
+            val btn_ok : Button = dialog.findViewById(R.id.btn_ok);
+
+            rating.setRating(3f) // 레이팅 바에 기본값 채우기
+            rating.setIsIndicator(false)// 사용자가 임의로 별점을 바꿀수 있도록 허가하는 메서드
+            rating.setStepSize(1f)// 한칸당 1 점으로 할당
+
+            // 레이팅바의 변경사항을 감자히는 감지자
+            rating.onRatingBarChangeListener = ratClick;
+
+            // 다이얼로그 보이기
+            dialog.show();
+
+            btn_ok.setOnClickListener(click);
+        }*/
+//#FFD951 <- 별 색
+        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
+        val stars = ratingBar.progressDrawable as LayerDrawable
+        stars.getDrawable(2).setTint(Color.rgb(255,217,81))
+
+        return v
+    }
+
+    /**  ViewPager : 요리순서  **/
+    private fun setViewPagerSteps() {
+        viewPagerSteps = v.findViewById<ViewPager2>(R.id.vp_comments)
 
         val adapterStepDescription = DetailViewPagerStepsAdapter(v.context)
         adapterStepDescription.addDescription("물을 끓여주세요.")
@@ -49,7 +101,6 @@ class DetailFragment : Fragment() {
         adapterStepDescription.addDescription("가루스프를 넣어주세요")
         adapterStepDescription.addDescription("라면사리를 넣어주세요.")
         viewPagerSteps.adapter = adapterStepDescription
-
 
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
         val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pagerHeight)
@@ -59,41 +110,80 @@ class DetailFragment : Fragment() {
         viewPagerSteps.setPageTransformer { page, position ->
             page.translationY = position * -offsetPx
         }
+    }
 
+    /**  RecyclerView : 댓글  **/
+    private fun setCommentRecyclerView() {
+        rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
         commentAdapter = DetailCommentAdapter()
-        commentAdapter.addComment(RecipeDTO.Comment("1","R.drawable.ic_home","닉네임1","2020.02.12","존맛"))
-        commentAdapter.addComment(RecipeDTO.Comment("2","R.drawable.ic_home","닉네임1","2020.02.12","존맛"))
-        commentAdapter.addComment(RecipeDTO.Comment("3","R.drawable.ic_home","닉네임1","2020.02.12","존맛"))
-        commentAdapter.addComment(RecipeDTO.Comment("4","R.drawable.ic_home","닉네임1","2020.02.12","존맛"))
+        commentAdapter.addComment(
+            RecipeDTO.Comment(
+                "1",
+                "R.drawable.ic_home",
+                "닉네임1",
+                "2020.02.12",
+                "존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛"
+            )
+        )
+        commentAdapter.addComment(
+            RecipeDTO.Comment(
+                "2",
+                "R.drawable.ic_home",
+                "닉네임1",
+                "2020.02.12",
+                "존맛"
+            )
+        )
+        commentAdapter.addComment(
+            RecipeDTO.Comment(
+                "3",
+                "R.drawable.ic_home",
+                "닉네임1",
+                "2020.02.12",
+                "존맛"
+            )
+        )
+        commentAdapter.addComment(
+            RecipeDTO.Comment(
+                "4",
+                "R.drawable.ic_home",
+                "닉네임1",
+                "2020.02.12",
+                "존맛"
+            )
+        )
 
-        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
-        rvComment.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
+        rvComment.layoutManager = LinearLayoutManager(
+            v.context,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         rvComment.setHasFixedSize(true)
         rvComment.adapter = commentAdapter
+    }
 
-        viewPagerPic.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(// 페이지가 스크롤 되었을 때
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                viewPagerSteps.setPageTransformer { page, position ->
+    private fun setStarRatingBtn() {
+        ibRating = v.findViewById<ImageButton>(R.id.iv_like)
+    }
 
-                }
-                return
-            }
+    private fun setViewPagerPics() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            sharedElementEnterTransition = TransitionInflater
+                .from(context).inflateTransition(
+                    android.R.transition.move // you can change this
+                )
+        }
+        viewPagerPics = v.findViewById<ViewPager>(R.id.vp_recipes)
+        ViewCompat.setTransitionName(viewPagerPics, "@string/transition_random_to_detail")
 
-            override fun onPageSelected(position: Int) {// 페이지를 클릭 했을
-                viewPagerSteps.verticalScrollbarPosition = position
-                return
-            }
+        tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
 
-            override fun onPageScrollStateChanged(state: Int) {// 스크롤 상태가 변경되었을 때
-                viewPagerSteps.verticalScrollbarPosition = state
-                return
-            }
-
-        })
-        return v
+        val adapterPic = DetailViewPagerPicsAdapter(v.context)
+        adapterPic.addRecipeImage(R.drawable.ic_home)
+        adapterPic.addRecipeImage(R.drawable.ic_no_image)
+        adapterPic.addRecipeImage(R.drawable.ic_face)
+        viewPagerPics.adapter = adapterPic
+        tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
+        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
     }
 }
