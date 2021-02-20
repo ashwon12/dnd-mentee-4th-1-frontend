@@ -32,10 +32,8 @@ class UploadActivity2 : AppCompatActivity() {
     }
     private var recipeTitle: String = ""
     private var saveFilterList = ArrayList<String>()
-    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var timeList = ArrayList<RecipeDTO.Time>()
     private var timeString: String = ""
-    private var time: Int = 0
     private var thumbnail: Uri? = null
     private lateinit var tagModel: MutableList<TagModel>
     private lateinit var tagModel2: MutableList<TagModel>
@@ -79,9 +77,6 @@ class UploadActivity2 : AppCompatActivity() {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
         }
-        if (intent.hasExtra("originFilter")) {
-            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
-        }
     }
 
     private fun clickPrevButton() {
@@ -97,10 +92,10 @@ class UploadActivity2 : AppCompatActivity() {
             val intent = Intent(this, UploadActivity3::class.java)
             intent.putExtra("recipeTitle", recipeTitle)
             intent.putExtra("filter", saveFilterList)
-            intent.putExtra("originFilter", filterList)
             intent.putExtra("thumbnail", thumbnail)
             intent.putExtra("mainfood", mainFoodTagList)
             intent.putExtra("subfood", subFoodTagList)
+            intent.putExtra("time", timeString)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
             startActivity(intent)
@@ -206,7 +201,7 @@ class UploadActivity2 : AppCompatActivity() {
 
         if (tagModel2 != null) {
             for (i in tagModel2.indices) {
-                if (tagModel[i].tagText.toString() != "") {
+                if (tagModel2[i].tagText.toString() != "") {
                     subFoodTagList.add(tagModel2[i].tagText.toString().replace(" ", ""))
                 }
             }
@@ -231,7 +226,11 @@ class UploadActivity2 : AppCompatActivity() {
                 tv_upload_time_set_value.visibility = View.INVISIBLE
             }
 
-            Log.d("mainmain", "main")
+            timeString = timeList[positionMain].timeName.substring(0,2)
+            if(Integer.parseInt(timeString) == 60) {
+                timeString = "59"
+            }
+            Log.d("timeString adapter", timeString)
         }
     }
 
@@ -365,10 +364,20 @@ class UploadActivity2 : AppCompatActivity() {
             Log.d("submit", "submit")
             tv_upload_time_set_value.text = step[hour.value] + " " + step2[minute.value]
 
-            var hour = Integer.parseInt(step[hour.value])
-            var min = Integer.parseInt(step2[minute.value])
+            var hour_time = step[hour.value]
+            var min_time = step2[minute.value]
+            var hour_len = step[hour.value].length
+            var min_len = step2[minute.value].length
 
-            timeString = ((hour * 60) + min).toString()
+            val h = hour_time.substring(0,hour_len-2)
+            val m = min_time.substring(0,min_len-1)
+
+            Log.d("hour_time", hour_len.toString())
+            Log.d("min_time", min_len.toString())
+
+
+            timeString = ((Integer.parseInt(h) * 60) + Integer.parseInt(m)).toString()
+            Log.d("timeString here", timeString)
             dialog.dismiss()
             dialog.cancel()
         }
