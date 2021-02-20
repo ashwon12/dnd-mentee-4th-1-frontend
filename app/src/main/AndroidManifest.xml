@@ -23,16 +23,11 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".navigation.upload.UploadActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".navigation.upload.UploadActivity2"
             android:screenOrientation="portrait" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,12 +35,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".navigation.upload.UploadActivity2"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".navigation.upload.UploadActivity3"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".navigation.upload.UploadActivity4"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
         </activity>
 
