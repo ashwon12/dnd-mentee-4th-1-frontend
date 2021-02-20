@@ -169,9 +169,8 @@ class DetailFragment : Fragment() {
     private fun setViewPagerPics() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sharedElementEnterTransition = TransitionInflater
-                .from(context).inflateTransition(
-                    android.R.transition.move // you can change this
-                )
+                .from(context)
+                .inflateTransition(R.transition.shared_image)// 바꿀 수 있음
         }
         viewPagerPics = v.findViewById<ViewPager>(R.id.vp_recipes)
         ViewCompat.setTransitionName(viewPagerPics, "@string/transition_random_to_detail")

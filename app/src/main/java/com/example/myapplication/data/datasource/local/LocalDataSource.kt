@@ -16,6 +16,13 @@ class LocalDataSource {
         App.sharedPrefs.set(searchWordList)
     }
 
+    fun deleteSearcWord(seleted: String) {
+        val searchWordList = getSavedSearchWordList()
+        searchWordList.remove(seleted)
+
+        App.sharedPrefs.set(searchWordList)
+    }
+
     fun getSavedSearchWordList(): ArrayList<String> {
         val wordListSharedPrefs = App.sharedPrefs.get()
         val searchedList = ArrayList<String>()

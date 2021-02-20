@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/select_border_layout"
+    android:paddingHorizontal="8dp"
     android:layout_marginTop="4dp">
 
     <TextView
@@ -13,8 +14,7 @@
         android:text="text"
         android:textSize="16dp"
         android:layout_weight="9"
-        style="?android:attr/dropDownItemStyle"
-        android:textAppearance="?android:attr/textAppearanceLargePopupMenu"
+
         android:singleLine="true"
         android:ellipsize="marquee" />
 

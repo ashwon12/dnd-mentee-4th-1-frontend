@@ -25,6 +25,7 @@
                 android:id="@+id/actv_recipe_in_result"
                 android:layout_width="284dp"
                 android:layout_height="match_parent"
+                style="@android:style/Widget.DeviceDefault.Light.AutoCompleteTextView"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:textSize="16dp"

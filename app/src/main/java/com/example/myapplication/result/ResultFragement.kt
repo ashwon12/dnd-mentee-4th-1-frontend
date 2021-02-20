@@ -29,6 +29,8 @@ class ResultFragement : Fragment() {
     private lateinit var btnClear: Button
     private lateinit var tvResultCount: TextView
 
+    private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
+
     private var data1 = mutableListOf<String>("스피너1-1", "스피너1-2", "스피너1-3", "스피너1-4", "스피너1-5", "스피너1-6")
 
     private var inputTextFromSearchFragment: String? = ""
@@ -53,6 +55,26 @@ class ResultFragement : Fragment() {
 
     /**  [X] 버튼 클릭 리스너  */
     private fun setAutoCompleteTextViewClearButton() {
+
+        searchHistoryArrayList = repository.getSavedSearchList()
+
+        val adapter = object : ArrayAdapter<String>(
+            v.context,
+            R.layout.custom_auto_complete_item_line,
+            R.id.tv_auto_complete_item,
+            searchHistoryArrayList
+        ) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getView(position, convertView, parent)
+                val btnDeleteHistory = view.findViewById<Button>(R.id.btn_delete_search_history)
+                btnDeleteHistory.setOnClickListener {
+                    Toast.makeText(v.context, "fafasf", Toast.LENGTH_SHORT).show()
+                }
+                return view
+            }
+        }
+        autoTextview.setAdapter(adapter)
+
         btnClear = v.findViewById<Button>(R.id.btn_clear)
         btnClear.setOnClickListener {
 
@@ -142,7 +164,7 @@ class ResultFragement : Fragment() {
         btnSearch = v.findViewById<Button>(R.id.btn_search)
         btnSearch.setOnClickListener {
 
-            repository.saveSearch(autoTextview.text.toString()) // 검색어 저장
+            repository.saveSearchHistory(autoTextview.text.toString()) // 검색어 저장
 
             val bundle = Bundle()
             bundle.putString("input_search",autoTextview.text.toString())

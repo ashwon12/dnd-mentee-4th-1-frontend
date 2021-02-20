@@ -41,11 +41,17 @@ class Repository {
         )
     }
 
-    fun saveSearch(recipe: String) {
+    fun saveSearchHistory(recipe: String) {
         localDataSourceImpl.saveSearchWord(recipe)
+    }
+
+    fun deleteSearchHistory(selected: String) {
+        localDataSourceImpl.deleteSearcWord(selected)
     }
 
     fun getSavedSearchList(): ArrayList<String> {
         return localDataSourceImpl.getSavedSearchWordList()
     }
+
+
 }
