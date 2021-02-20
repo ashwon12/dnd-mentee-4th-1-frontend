@@ -58,11 +58,11 @@ class RemoteDataSource {
         })
     }
 
-    fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItem>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
-        fail: (Throwable) -> Unit
-    ) {
-
-    }
+//    fun postTimeline(
+//        postInfo: ArrayList<RecipeDTO.PostItem>,
+//        success: (RecipeDTO.TimelineResponse) -> Unit,
+//        fail: (Throwable) -> Unit
+//    ) {
+//
+//    }
 }
