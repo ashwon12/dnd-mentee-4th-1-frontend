@@ -12,4 +12,6 @@
     <color name="black">#222222</color>
     <color name="LightGray">#A8A8AC</color>
     <color name="bgGray">#F1F1F1</color>
+    <color name="editGray">#969393</color>
+    <color name="red">#F21F1F</color>
 </resources>

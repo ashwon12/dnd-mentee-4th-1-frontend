@@ -18,8 +18,17 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
-
-<!--    폰트스타일-->
+    <!-- EditText -->
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/editGray</item>
+        <item name="android:textSize">14sp</item>
+<!--        &lt;!&ndash; Label color in TRUE state and bar color FALSE and TRUE State &ndash;&gt;-->
+<!--        <item name="colorAccent">@color/Color Name</item>-->
+<!--        <item name="colorControlNormal">@color/Color Name</item>-->
+<!--        <item name="colorControlActivated">@color/Color Name</item>-->
+    </style>
+    <!--    폰트스타일-->
     <style name="FontHeadLine">
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/black</item>
