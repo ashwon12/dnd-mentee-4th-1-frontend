@@ -1,8 +1,11 @@
 package com.example.myapplication.navigation.upload
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.skyhope.materialtagview.interfaces.TagItemListener
@@ -21,20 +26,21 @@ import com.skyhope.materialtagview.model.TagModel
 import kotlinx.android.synthetic.main.activity_upload2.*
 
 class UploadActivity2 : AppCompatActivity() {
-    private var select_cut: Int = 0
-    private var recipeTitle: String? = null
+    companion object {
+        private const val REQUEST_GALLERY_CODE = 100
+        private const val PERMISSION_CODE = 100
+    }
+    private var recipeTitle: String = ""
     private var saveFilterList = ArrayList<String>()
-    private var filterList = ArrayList<RecipeDTO.Filter>()
     private var timeList = ArrayList<RecipeDTO.Time>()
-    private var timeString: String? = null
-    private val REQUEST_GALLERY_CODE = 100
+    private var timeString: String = ""
     private var thumbnail: Uri? = null
     private lateinit var tagModel: MutableList<TagModel>
     private lateinit var tagModel2: MutableList<TagModel>
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
     private var positionMain = -1
-    private lateinit var adapter: UploadTimeAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload2)
@@ -46,7 +52,7 @@ class UploadActivity2 : AppCompatActivity() {
         callAdapter()
 
         iv_upload_gallery.setOnClickListener {
-            pickFromGallery()
+            checkPermissions()
         }
 
         btn_upload_recipe_prev1.setOnClickListener {
@@ -56,24 +62,58 @@ class UploadActivity2 : AppCompatActivity() {
         btn_upload_recipe_next2.setOnClickListener {
             clickNextButton()
         }
+
+        iv_upload_cancel.setOnClickListener {
+            clickCancelButton()
+        }
     }
 
     private fun getItems() {
-        if (intent.hasExtra("number")) {
-            select_cut = intent.getIntExtra("number", 1)
+        if (intent.hasExtra("recipeTitle")) {
+            recipeTitle = intent.getStringExtra("recipeTitle")!!
+            Log.d("title", recipeTitle.toString())
         }
         if (intent.hasExtra("filter")) {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
         }
-        if (intent.hasExtra("originFilter")) {
-            filterList = intent.getSerializableExtra("originFilter") as ArrayList<RecipeDTO.Filter>
-        }
-        if (intent.hasExtra("recipeTitle")) {
-            recipeTitle = intent.getStringExtra("recipeTitle")
-            Log.d("title", recipeTitle.toString())
-        }
+    }
 
+    private fun clickPrevButton() {
+        val intent = Intent(this, UploadActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun clickNextButton() {
+        makeTagList()
+
+        if(checkPermissionNextButton()) {
+            val intent = Intent(this, UploadActivity3::class.java)
+            intent.putExtra("recipeTitle", recipeTitle)
+            intent.putExtra("filter", saveFilterList)
+            intent.putExtra("thumbnail", thumbnail)
+            intent.putExtra("mainfood", mainFoodTagList)
+            intent.putExtra("subfood", subFoodTagList)
+            intent.putExtra("time", timeString)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            startActivity(intent)
+        }
+    }
+
+    private fun clickCancelButton() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("나중에 올릴 땐 다시 작성해야해요\n" +
+                "작성을 멈추시겠어요?")
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            })
+            .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+            })
+        builder.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -106,6 +146,31 @@ class UploadActivity2 : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_GALLERY_CODE)
     }
 
+    private fun checkPermissions() {
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            requestPermissions(permissions, PERMISSION_CODE)
+        } else {
+            pickFromGallery()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickFromGallery()
+                } else {
+                    Toast.makeText(App.instance, "권한이 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+    }
     private fun initMainFoodTagView() {
         val listener: TagItemListener? = null
         tagView_mainfood.initTagListener(listener)
@@ -123,6 +188,9 @@ class UploadActivity2 : AppCompatActivity() {
     }
 
     private fun makeTagList() {
+        mainFoodTagList.clear()
+        subFoodTagList.clear()
+        
         if (tagModel != null) {
             for (i in tagModel.indices) {
                 if (tagModel[i].tagText.toString() != "") {
@@ -133,7 +201,7 @@ class UploadActivity2 : AppCompatActivity() {
 
         if (tagModel2 != null) {
             for (i in tagModel2.indices) {
-                if (tagModel[i].tagText.toString() != "") {
+                if (tagModel2[i].tagText.toString() != "") {
                     subFoodTagList.add(tagModel2[i].tagText.toString().replace(" ", ""))
                 }
             }
@@ -156,10 +224,13 @@ class UploadActivity2 : AppCompatActivity() {
                 tv_upload_time_set_value.text = "0분"
                 tv_upload_time_set_text.visibility = View.INVISIBLE
                 tv_upload_time_set_value.visibility = View.INVISIBLE
-
             }
 
-            Log.d("mainmain", "main")
+            timeString = timeList[positionMain].timeName.substring(0,2)
+            if(Integer.parseInt(timeString) == 60) {
+                timeString = "59"
+            }
+            Log.d("timeString adapter", timeString)
         }
     }
 
@@ -293,6 +364,20 @@ class UploadActivity2 : AppCompatActivity() {
             Log.d("submit", "submit")
             tv_upload_time_set_value.text = step[hour.value] + " " + step2[minute.value]
 
+            var hour_time = step[hour.value]
+            var min_time = step2[minute.value]
+            var hour_len = step[hour.value].length
+            var min_len = step2[minute.value].length
+
+            val h = hour_time.substring(0,hour_len-2)
+            val m = min_time.substring(0,min_len-1)
+
+            Log.d("hour_time", hour_len.toString())
+            Log.d("min_time", min_len.toString())
+
+
+            timeString = ((Integer.parseInt(h) * 60) + Integer.parseInt(m)).toString()
+            Log.d("timeString here", timeString)
             dialog.dismiss()
             dialog.cancel()
         }
@@ -302,26 +387,30 @@ class UploadActivity2 : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun clickPrevButton() {
-        val intent = Intent(this, UploadActivity::class.java)
-        startActivity(intent)
+    private fun checkPermissionNextButton(): Boolean {
+        Log.d("timeString", timeString + "여기")
+        
+        if (thumbnail != null && mainFoodTagList.size > 0 && subFoodTagList.size > 0 && timeString != "") {
+            return true
+        } else if (mainFoodTagList.size > 0 && subFoodTagList.size > 0 && timeString != "") {
+            Toast.makeText(this, "레시피 썸네일을 등록해주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (thumbnail != null && subFoodTagList.size > 0 && timeString != "") {
+            Toast.makeText(this, "요리 필수 재료를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (thumbnail != null && mainFoodTagList.size > 0 && timeString != "") {
+            Toast.makeText(this, "요리 부가 재료를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (thumbnail != null && mainFoodTagList.size > 0 && subFoodTagList.size > 0) {
+            Toast.makeText(this, "얼마나 걸리는지 시간을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        Toast.makeText(this, "항목을 채워주세요", Toast.LENGTH_SHORT).show()
+
+        return false
     }
 
-    private fun clickNextButton() {
-        makeTagList()
-
-        val intent = Intent(this, UploadActivity3::class.java)
-        intent.putExtra("number", select_cut)
-        intent.putExtra("filter", saveFilterList)
-        intent.putExtra("originFilter", filterList)
-        intent.putExtra("thumbnail", thumbnail)
-        intent.putExtra("mainfood", mainFoodTagList)
-        intent.putExtra("subfood", subFoodTagList)
-        intent.putExtra("recipeTitle", recipeTitle)
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-
-        startActivity(intent)
-    }
 }
 
 

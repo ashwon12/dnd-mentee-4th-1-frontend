@@ -1,4 +1,4 @@
-package com.example.myapplication.navigation.upload
+package com.example.myapplication.navigation.quote
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -11,15 +11,15 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class UploadRecipeAdapter(
+class QuoteImageAdapter(
     val recipeList: ArrayList<RecipeDTO.Recipe>,
     val itemClick: (Int, RecipeDTO.Recipe) -> Unit
-) : RecyclerView.Adapter<UploadRecipeAdapter.UploadRecipeHolder>() {
+) : RecyclerView.Adapter<QuoteImageAdapter.UploadRecipeHolder>() {
     var onItemLongClick: ((Int, RecipeDTO.Recipe) -> Unit)? = null
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): UploadRecipeAdapter.UploadRecipeHolder {
+    ): QuoteImageAdapter.UploadRecipeHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.upload_recipe_list_item, parent, false)
         return UploadRecipeHolder(view)
@@ -37,7 +37,7 @@ class UploadRecipeAdapter(
         return super.getItemViewType(position)
     }
 
-    override fun onBindViewHolder(holder: UploadRecipeAdapter.UploadRecipeHolder, position: Int) {
+    override fun onBindViewHolder(holder: QuoteImageAdapter.UploadRecipeHolder, position: Int) {
         val element = recipeList[position]
         holder.bind(element)
     }

@@ -31,6 +31,7 @@ class QuoteFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
     override fun onBindViewHolder(holder: QuoteFilterAdapter.QuoteFilterHolder, position: Int) {
         holder.name.text = filterList[position].filterName
         holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#FF8C4B"))
+        holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.select_border_layout)
     }
 
     class QuoteFilterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

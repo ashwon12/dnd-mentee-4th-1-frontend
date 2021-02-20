@@ -19,17 +19,17 @@ class Repository {
         )
     }
 
-    fun postTimeline(
-        postInfo: ArrayList<RecipeDTO.PostItem>,
-        success: (RecipeDTO.TimelineResponse) -> Unit,
-        fail: (Throwable) -> Unit
-    ) {
-        remoteMovieDataSourceImpl.postTimeline(
-            postInfo,
-            success,
-            fail
-        )
-    }
+//    fun postTimeline(
+//        postInfo: ArrayList<RecipeDTO.PostItem>,
+//        success: (RecipeDTO.TimelineResponse) -> Unit,
+//        fail: (Throwable) -> Unit
+//    ) {
+//        remoteMovieDataSourceImpl.postTimeline(
+//            postInfo,
+//            success,
+//            fail
+//        )
+//    }
 
     fun saveSearchHistory(recipe: String) {
         localDataSourceImpl.saveSearchWord(recipe)

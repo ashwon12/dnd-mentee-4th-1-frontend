@@ -51,7 +51,7 @@ class FeedFragment : Fragment(), FeedRecyclerInterface {
         repository.getRandomRecipes(
             success = {
                 it.run {
-                    feedRecipeList.add(it)
+                    // feedRecipeList.add(it)
                     myAdapter.feedUpdateList(feedRecipeList)
                     myAdapter.notifyDataSetChanged()
                     rvFeed.adapter = myAdapter

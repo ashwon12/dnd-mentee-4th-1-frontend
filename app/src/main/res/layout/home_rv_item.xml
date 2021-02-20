@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     app:layout_constraintCircleRadius="12dp"
     android:background="@drawable/home_rv_item_radius"
-    android:elevation="10dp">
+    android:elevation="2dp">
 
     <ImageView
         android:id="@+id/iv_recent_item"

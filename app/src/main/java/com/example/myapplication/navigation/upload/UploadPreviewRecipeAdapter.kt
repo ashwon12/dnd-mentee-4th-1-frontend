@@ -32,12 +32,12 @@ class UploadPreviewRecipeAdapter(
     }
 
     inner class UploadPreviewRecipeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val number = itemView.findViewById<TextView>(R.id.tv_number2) // 단계
-        private val image = itemView.findViewById<ImageView>(R.id.iv_photo2) // 레시피 사진
-        private val comment = itemView.findViewById<TextView>(R.id.tv_recipe_explain2) // 레시피 설명
+        private val number = itemView.findViewById<TextView>(R.id.tv_upload_preview_number) // 단계
+        private val image = itemView.findViewById<ImageView>(R.id.iv_upload_preview_photo) // 레시피 사진
+        private val comment = itemView.findViewById<TextView>(R.id.tv_upload_preview_comment) // 레시피 설명
 
         fun bind(data: RecipeDTO.Recipe) {
-            number.text = data.number + "단계"
+            number.text = data.number
             comment.text = data.comment
 
             if (data.image != null) {
