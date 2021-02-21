@@ -1,6 +1,7 @@
 package com.example.myapplication.navigation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
 
     private lateinit var v: View
+    private var TestList = ArrayList<RecipeDTO.RecipeFinal>()
     private var top3ImagesList = ArrayList<String>()
     private var popularImagesList = ArrayList<String>()
     private var recentImageList = ArrayList<String>()
@@ -39,6 +42,21 @@ class HomeFragment : Fragment() {
         setRecent()
 
         return v
+    }
+
+
+    private fun requestTop3Recipe() {
+        repository.getHomeRecipes(
+            success = {
+                it.run {
+                    TestList.add(it)
+                    Log.d("homeAPI", TestList.get(0).toString())
+                }
+            },
+            fail = {
+                Log.d("fail", "fail fail fail")
+            }
+        )
     }
 
     private fun setTop3() {

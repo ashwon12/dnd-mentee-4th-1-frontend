@@ -19,6 +19,17 @@ class Repository {
         )
     }
 
+    fun getHomeRecipes(
+        success: (RecipeDTO.RecipeFinal) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getHomeRecipes(
+            success,
+            fail
+        )
+    }
+
+
 //    fun postTimeline(
 //        postInfo: ArrayList<RecipeDTO.PostItem>,
 //        success: (RecipeDTO.TimelineResponse) -> Unit,

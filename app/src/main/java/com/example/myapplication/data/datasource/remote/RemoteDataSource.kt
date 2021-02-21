@@ -37,7 +37,6 @@ class RemoteDataSource {
 
     }
 
-
     fun getRandomRecipes(
         success: (RecipeDTO.RecipeFinal) -> Unit,
         fail: (Throwable) -> Unit
@@ -54,6 +53,27 @@ class RemoteDataSource {
             }
             override fun onFailure(call: Call<RecipeDTO.RecipeFinal>, t: Throwable) {
                 Log.e("/posts", "RandomRecipes 가져오기 실패 : " + t)
+            }
+        })
+    }
+
+    /** 홈에서 사용하는 api, queryType = viewTop ,labelTop **/
+    fun getHomeRecipes(
+        success: (RecipeDTO.RecipeFinal) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        val callHomeRecipes = recipeApi.getHomeRecipes("viewTop")
+        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.RecipeFinal>{
+            override fun onResponse(
+                call: Call<RecipeDTO.RecipeFinal>,
+                response: Response<RecipeDTO.RecipeFinal>
+            ) {
+                response.body()?.let{
+                    success(it)
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.RecipeFinal>, t: Throwable) {
+                Log.e("queryType=viewTop", "이번달 top3 item 가져오기 실패 : " + t)
             }
         })
     }

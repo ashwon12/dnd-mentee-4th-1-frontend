@@ -32,6 +32,11 @@ interface RecipeApi {
         @Field("comment") comments: List<String>
     ): Call<RecipeDTO.PostItems>
 
+    @GET("/recipes")
+    fun getHomeRecipes(
+        @Query("queryType") queryType: String
+    ): Call<RecipeDTO.RecipeFinal>
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 
