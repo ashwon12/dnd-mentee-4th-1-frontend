@@ -6,6 +6,7 @@
     android:id="@+id/ncv_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
     android:fillViewport="true"
     tools:context=".navigation.search.SearchFragment">
 
@@ -38,9 +39,9 @@
 
             <Button
                 android:id="@+id/btn_follow"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="28dp"
+                android:layout_marginLeft="16dp"
                 android:background="@android:color/transparent"
                 android:text="팔 로 우"
                 android:textColor="#FF7051"
@@ -371,11 +372,14 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
