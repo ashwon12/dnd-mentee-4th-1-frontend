@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="320dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
     >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/li_layout"
-        android:layout_width="328dp"
+        android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
@@ -24,7 +24,7 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_upload_preview_photo"
-            android:layout_width="328dp"
+            android:layout_width="match_parent"
             android:layout_height="180dp"
             android:scaleType="centerCrop"
             app:riv_corner_radius_bottom_left="6dp"
@@ -35,7 +35,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_height="34dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/number_background2"
+            android:background="@drawable/ic_select_oval"
             android:gravity="center"
             android:text="1"
             android:textColor="#F8F8F8"
@@ -60,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="30dp"
-            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
             android:textColor="#464646"
             android:gravity="center_vertical"
             android:text="설명부분" />
