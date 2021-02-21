@@ -40,7 +40,7 @@ class SearchFragment : Fragment() {
     private lateinit var autoTextview: AutoCompleteTextView
     private lateinit var srl_update: SwipeRefreshLayout
 
-    private val tempRandomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
+//    private val tempRandomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
@@ -190,6 +190,7 @@ class SearchFragment : Fragment() {
     /**   RecyclerView 설정   */
     private fun setRecyclerView() {
         searchAdapter = SearchAdapter()
+        requestRandomRecipes()
 
         val sgLayoutManager = SpannedGridLayoutManager(
             orientation = SpannedGridLayoutManager.Orientation.VERTICAL,
@@ -211,7 +212,7 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        requestRandomRecipes()
+
     }
 
     /**  스와이프 동작 시, 리싸이클러뷰 아이템 재요청  */
@@ -233,9 +234,9 @@ class SearchFragment : Fragment() {
         repository.getRandomRecipes(//TODO : getAllTimelinesList -> getRandomRecipes
             success = {
                 it.run {
-                    tempRandomRecipes.add(it)
+                    searchAdapter.randomRecipes = it.list!!
 
-                    searchAdapter.updateRandomRecipeList(tempRandomRecipes)
+                    searchAdapter.updateRandomRecipeList(searchAdapter.randomRecipes)
                     searchAdapter.notifyDataSetChanged()
                 }
             },
@@ -243,8 +244,6 @@ class SearchFragment : Fragment() {
                 Log.d("fail", "fail fail fail")
             }
         )
-        searchAdapter.updateRandomRecipeList(tempRandomRecipes)
-        searchAdapter.notifyDataSetChanged()
     }
 
     /** 키보드 숨기기 */

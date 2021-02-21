@@ -20,7 +20,7 @@ interface RecipeApi {
     fun getRandomRecipes(
         @Query("queryType") queryType: String,
         @Query("keyword") keyword: String
-    ): Call<RecipeDTO.RecipeFinal>
+    ): Call<RecipeDTO.APIresponse>
 
     @FormUrlEncoded
     @POST("/posts")
