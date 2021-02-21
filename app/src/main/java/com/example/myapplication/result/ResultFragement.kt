@@ -197,7 +197,7 @@ class ResultFragement : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                (view as TextView).setTextColor(Color.rgb(255, 112, 81))
+                (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
