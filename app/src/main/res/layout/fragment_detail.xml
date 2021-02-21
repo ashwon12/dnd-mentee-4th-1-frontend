@@ -36,15 +36,16 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/btn_follow"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="28dp"
-                android:background="#FFA500"
-                android:text="follow"
+                android:background="@android:color/transparent"
+                android:text="팔 로 우"
                 android:textColor="#FF7051"
-                android:textSize="10dp" />
+                android:textSize="14dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -63,7 +64,7 @@
                     android:id="@+id/vp_recipes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/item_random_recipe"
+                    android:background="#FAECC5"
                     android:transitionName="@string/transition_random_to_detail" />
 
                 <com.google.android.material.tabs.TabLayout
@@ -101,8 +102,8 @@
                 android:gravity="center_vertical"
                 android:hint="레시피 이름"
                 android:textSize="24dp"
-                android:typeface="monospace"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:typeface="monospace" />
 
 
         </LinearLayout>
@@ -118,19 +119,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
-                android:textSize="16dp"
-                />
+                android:textSize="16dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginVertical="4dp"
                 android:layout_marginLeft="4dp"
-                android:textSize="12dp"
+                android:layout_marginTop="4dp"
                 android:ellipsize="marquee"
-                android:text="7시간전" />
+                android:text="7시간전"
+                android:textSize="12dp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_home_theme1"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/theme_radius"
+                android:text="3컷"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_home_theme2"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/theme_radius"
+                android:text="태그"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_home_theme3"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/theme_radius"
+                android:text="태그"
+                android:textColor="@color/PrimaryColor"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -189,48 +230,51 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/Divider"/>
+        <View style="@style/Divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="8dp">
+            android:layout_marginHorizontal="8dp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:textStyle="bold"
                 android:text="필수 재료"
-                />
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_ingredient1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textSize="16dp"
-                android:text="당근 1개, 마늘 30쪽, 파스타면"/>
+                android:text="당근 1개, 마늘 30쪽, 파스타면"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="8dp">
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="부가 재료"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                android:text="부가 재료"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_ingredient2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textSize="16dp"
-                android:text="올리브유, 소고기, 허브"/>
+                android:text="올리브유, 소고기, 허브"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -238,82 +282,58 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:textSize="18dp"
-                android:textStyle="bold"
                 android:layout_marginBottom="8dp"
-                android:text="조리 방법" />
+                android:text="조리 방법"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_comments"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/round_layout"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="vertical" />
-            <LinearLayout
-                android:id="@+id/ll_show"
+            <RelativeLayout
+                android:id="@+id/rl_show"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginHorizontal="8dp">
+                >
 
-                <TextView
-                    android:id="@+id/tv_first"
-                    android:layout_width="40dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_steps"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginRight="12dp"
-                    android:text="1단계"/>
-                <TextView
-                    android:id="@+id/tv_first_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="조리설명으로 단계별에 맞게 진하기가 변경"/>
+                    android:orientation="vertical"
+                    android:overScrollMode="never" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="144dp"
-                android:layout_height="52dp"
-                android:background="@drawable/transparent_button"
-                android:drawableRight="@drawable/ic_search"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="#FF7051"
-                android:textSize="15dp"
-                android:text="레시피 전체보기" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="12dp">
+            android:layout_margin="12dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:gravity="center"
                 android:hint="이 레시피는 3점이에요!"
-                android:layout_marginBottom="4dp"
                 android:letterSpacing="0.1"
-                android:textSize="16dp"/>
+                android:textSize="16dp" />
 
-            <RatingBar
+            <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/ratingbar"
+                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_gravity="center"
-                android:progressTint="@color/LightGray"
                 android:numStars="5"
-                android:rating="3"/>
+                android:progressTint="@color/LightGray"
+                android:rating="3" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -321,18 +341,18 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginHorizontal="12dp"
-            android:background="@drawable/round_button"
-            android:gravity="center"
-            android:paddingHorizontal="110dp"
-            android:drawableLeft="@drawable/ic_search"
-
             android:layout_marginBottom="8dp"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textColor="#FFFFFF"
-            android:text="내 비법 추가하기"/>
+            android:background="@drawable/round_button"
+            android:drawableLeft="@drawable/ic_search"
+            android:gravity="center"
 
-        <View style="@style/Divider"/>
+            android:paddingHorizontal="110dp"
+            android:text="내 비법 추가하기"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <View style="@style/Divider" />
 
         <LinearLayout
             android:layout_width="match_parent"

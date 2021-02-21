@@ -110,7 +110,7 @@ class RecipeDTO {
 
     class Themes(
         var name: String? = null,
-        var id: String? = null
+        var id: Int? = null
     )
 
     class MainIngredients {

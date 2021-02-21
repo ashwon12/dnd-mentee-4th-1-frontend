@@ -1,7 +1,8 @@
 package com.example.myapplication.detail
 
+import android.app.Dialog
 import android.graphics.Color
-import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RatingBar
@@ -17,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.google.android.material.tabs.TabLayout
@@ -28,7 +29,7 @@ class DetailFragment : Fragment() {
     private lateinit var v: View
 
     internal lateinit var viewPagerPics: ViewPager
-    internal lateinit var viewPagerSteps: ViewPager2
+    internal lateinit var rvSteps: RecyclerView
     internal lateinit var tabLayout: TabLayout
     internal lateinit var rvComment: RecyclerView
     internal lateinit var ibRating:ImageButton
@@ -45,71 +46,37 @@ class DetailFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_detail, container, false)
 
         setViewPagerPics()
-        setStarRatingBtn()
+        setStarRatingButton()
         setCommentRecyclerView()
         setViewPagerSteps()
-
-/*        val tvRatingResult = v.findViewById<TextView>(R.id.tv_star_rating)
-        llStarRating = v.findViewById(R.id.ll_star_rating)
-        val ratClick =
-            OnRatingBarChangeListener { ratingBar, r, b ->
-                val num = r
-
-                // 별 갯수에 따른 한칸의 점수
-                val st: Float = 10.0f / rating.getNumStars()
-
-                // 소수점 한자리로 결과값 끊어주기
-                val str = String.format("%.1f", st * r)
-                tvRatingResult.text = "$str/10.0"
-            }
-        llStarRating.setOnClickListener {
-            val dialog = Dialog(v.context);
-            dialog.setCancelable(false);
-            // 다이얼로그 화면 설정
-            dialog.setContentView(R.layout.dialogue_star_rating);
-
-            val rating : RatingBar = dialog.findViewById(R.id.ratingbar);
-            val btn_ok : Button = dialog.findViewById(R.id.btn_ok);
-
-            rating.setRating(3f) // 레이팅 바에 기본값 채우기
-            rating.setIsIndicator(false)// 사용자가 임의로 별점을 바꿀수 있도록 허가하는 메서드
-            rating.setStepSize(1f)// 한칸당 1 점으로 할당
-
-            // 레이팅바의 변경사항을 감자히는 감지자
-            rating.onRatingBarChangeListener = ratClick;
-
-            // 다이얼로그 보이기
-            dialog.show();
-
-            btn_ok.setOnClickListener(click);
-        }*/
-//#FFD951 <- 별 색
-        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
-        val stars = ratingBar.progressDrawable as LayerDrawable
-        stars.getDrawable(2).setTint(Color.rgb(255,217,81))
+        setRatingBar()
 
         return v
     }
 
-    /**  ViewPager : 요리순서  **/
-    private fun setViewPagerSteps() {
-        viewPagerSteps = v.findViewById<ViewPager2>(R.id.vp_comments)
 
-        val adapterStepDescription = DetailViewPagerStepsAdapter(v.context)
+
+
+    private fun setRatingBar() {
+        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
+        val stars = ratingBar.progressDrawable as LayerDrawable
+        stars.getDrawable(2).setTint(Color.rgb(255,217,81))
+    }
+
+    /**  RecyclerView : 요리순서  **/
+    private fun setViewPagerSteps() {
+        rvSteps = v.findViewById<RecyclerView>(R.id.rv_steps)
+
+        val adapterStepDescription = DetailStepsAdapter()
         adapterStepDescription.addDescription("물을 끓여주세요.")
         adapterStepDescription.addDescription("라면 봉지를 뜯어주세요. 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 ")
         adapterStepDescription.addDescription("가루스프를 넣어주세요")
         adapterStepDescription.addDescription("라면사리를 넣어주세요.")
-        viewPagerSteps.adapter = adapterStepDescription
 
-        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.pageMargin)
-        val pagerWidth = resources.getDimensionPixelOffset(R.dimen.pagerHeight)
-        val viewPagerHeight = 150
-        val offsetPx = viewPagerHeight - pageMarginPx - pagerWidth
+        rvSteps.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.VERTICAL,false)
+        rvSteps.setHasFixedSize(true)
+        rvSteps.adapter = adapterStepDescription
 
-        viewPagerSteps.setPageTransformer { page, position ->
-            page.translationY = position * -offsetPx
-        }
     }
 
     /**  RecyclerView : 댓글  **/
@@ -162,8 +129,38 @@ class DetailFragment : Fragment() {
         rvComment.adapter = commentAdapter
     }
 
-    private fun setStarRatingBtn() {
+    private fun setStarRatingButton() {
         ibRating = v.findViewById<ImageButton>(R.id.iv_like)
+        ibRating.setOnClickListener {//평점주기 버튼 클릭 리스너
+
+            val dialog = Dialog(v.context);
+            dialog.setCancelable(false);
+            // 다이얼로그 화면 설정
+            dialog.setContentView(R.layout.dialogue_star_rating)
+            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+            val rating : RatingBar = dialog.findViewById(R.id.ratingbar);
+            val btn_ok : Button = dialog.findViewById(R.id.btn_ok);
+            val btn_cancel : Button = dialog.findViewById(R.id.btn_cancel)
+
+            rating.setRating(3f) // 레이팅 바에 기본값 채우기
+            rating.setIsIndicator(false)// 사용자가 임의로 별점을 바꿀수 있도록 허가하는 메서드
+            rating.setStepSize(1f)// 한칸당 1 점으로 할당
+
+            val starsInRatingDialogue = rating.progressDrawable as LayerDrawable
+            starsInRatingDialogue.getDrawable(2).setTint(Color.rgb(255,217,81))
+
+            btn_ok.setOnClickListener {
+                dialog.dismiss()
+                ibRating.setBackgroundResource(R.drawable.ic_home);
+                //TODO : 서버 요청
+            }
+            btn_cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.show();
+        }
     }
 
     private fun setViewPagerPics() {

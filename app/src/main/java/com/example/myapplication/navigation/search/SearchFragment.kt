@@ -53,8 +53,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-    /*    tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(0,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(1,"R.drawable.ic_home",null,null,null,null,null,null))
+/*      tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(1,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(2,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(3,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(4,"R.drawable.ic_home",null,null,null,null,null,null))
@@ -66,8 +65,7 @@ class SearchFragment : Fragment() {
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(10,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(11,"R.drawable.ic_home",null,null,null,null,null,null))
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(12,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))
-*/
+        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))*/
         v = inflater.inflate(R.layout.fragment_search, container, false)
         vAutoCompleteTextView = inflater.inflate(
             R.layout.custom_auto_complete_item_line,
@@ -82,8 +80,8 @@ class SearchFragment : Fragment() {
         pickRandomNumberOnRecommandTextView()
 
         return v
-    }
 
+    }
     /** Fragment 생명주기 */
     override fun onResume() {
         autoTextview.setText("")
