@@ -27,6 +27,7 @@ class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
                 parent,
                 false
             )
+
         return ResultViewHolder(view)
     }
 
