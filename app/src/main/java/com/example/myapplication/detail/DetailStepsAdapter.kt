@@ -1,20 +1,19 @@
 package com.example.myapplication.detail
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.kakao.sdk.common.KakaoSdk.type
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 
 class DetailStepsAdapter : RecyclerView.Adapter<DetailStepsAdapter.StepsViewHolder>() {
 
-    var stepDescriptions = ArrayList<String>()//R.id.resId가 들어감
-
     private lateinit var view: View
+
+    var stepDescriptions = ArrayList<RecipeDTO.Steps>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StepsViewHolder {
         view = LayoutInflater
@@ -29,23 +28,27 @@ class DetailStepsAdapter : RecyclerView.Adapter<DetailStepsAdapter.StepsViewHold
     }
 
     override fun onBindViewHolder(holder: StepsViewHolder, position: Int) {
-        holder.bind(stepDescriptions[position], position)
+        holder.bind(stepDescriptions.get(position), position)
     }
 
-    override fun getItemCount(): Int = stepDescriptions.size
+    override fun getItemCount(): Int {
+        return stepDescriptions.size
+    }
+
+
 
     inner class StepsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvStep = itemView.findViewById<TextView>(R.id.tv_step)
         private val tvStepDesc = itemView.findViewById<TextView>(R.id.tv_step_description)
 
-        fun bind(steDesc: String, position: Int) {
+        fun bind(steps: RecipeDTO.Steps, position: Int) {
             tvStep.text = "${position + 1}" + "단계"
-            tvStepDesc.text = steDesc
+            tvStepDesc.text = steps.description
         }
     }
 
-    fun addDescription(description: String) {
-        stepDescriptions.add(description)
+    fun updateDescription(steps: ArrayList<RecipeDTO.Steps>) {
+        stepDescriptions = steps
     }
 }

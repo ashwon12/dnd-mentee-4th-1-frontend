@@ -7,13 +7,11 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.RatingBar
+import android.widget.*
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import com.google.android.material.tabs.TabLayout
 
 
@@ -31,11 +30,16 @@ class DetailFragment : Fragment() {
     internal lateinit var viewPagerPics: ViewPager
     internal lateinit var rvSteps: RecyclerView
     internal lateinit var tabLayout: TabLayout
-    internal lateinit var rvComment: RecyclerView
     internal lateinit var ibRating:ImageButton
     internal lateinit var llStarRating:LinearLayout
 
+    private lateinit var picsAdapter: DetailViewPagerPicsAdapter
+    private lateinit var StepDescriptionAdapter: DetailStepsAdapter
     private lateinit var commentAdapter: DetailCommentAdapter
+    private lateinit var tagAdapter: DetailTagAdapter
+    private var recipeId: Int = 0
+
+    private val repository = Repository()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,81 +49,98 @@ class DetailFragment : Fragment() {
 
         v = inflater.inflate(R.layout.fragment_detail, container, false)
 
+
+        getRecipeIdFromBeforeFragment()
+        requestRecipeById(recipeId)
+
+        setTitle()
         setViewPagerPics()
         setStarRatingButton()
+        setTagRecyclerView()
         setCommentRecyclerView()
         setViewPagerSteps()
-        setRatingBar()
 
         return v
     }
 
 
+    private fun setTitle() {
 
 
-    private fun setRatingBar() {
+    }
+
+    /**  API Reciep Data 요청(id로) **/
+    private fun requestRecipeById(recipeId: Int) {
+        repository.getRecipeById(
+            recipeId,
+            success = {
+                it.run {
+
+                    val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
+                    val tvTitle = v.findViewById<TextView>(R.id.tv_detail_title)
+                    val tvSubtitle = v.findViewById<TextView>(R.id.tv_introduction)
+                    val tvStarAverage = v.findViewById<TextView>(R.id.tv_star_rating)
+                    val tvViewCount = v.findViewById<TextView>(R.id.tv_viewcount)
+                    val tvRating = v.findViewById<TextView>(R.id.tv_star_rating2)
+
+
+                    tvNickname.text = it.data?.writer?.name
+                    tvTitle.text = it.data?.title
+                    //tvSubtitle.text = it.data?.subtitle
+                    tvStarAverage.text = it.data?.starCount.toString()
+                    tvViewCount.text = it.data?.viewCount
+                    tvRating.text = "이 레시피는 ${it.data?.starCount}점 이에요!"
+                    //it.data?.starCount?.let { it1 -> setRatingBar(it1) }
+
+                    // 어댑터 설정
+                    picsAdapter.updateRecipeImage(it.data?.steps!!)
+                    StepDescriptionAdapter.updateDescription(it.data?.steps!!)
+
+                    tagAdapter.updateMainIngredients(it.data?.mainIngredients)
+                    tagAdapter.updateSubIngredients(it.data?.subIngredients)
+                    tagAdapter.updateThemes(it.data?.themes)
+
+                    StepDescriptionAdapter.notifyDataSetChanged()
+                    picsAdapter.notifyDataSetChanged()
+                    tagAdapter.notifyDataSetChanged()
+                }
+            },
+            fail = {
+                Log.d("fail", "fail fail fail")
+            }
+        )
+    }
+
+    /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
+    private fun getRecipeIdFromBeforeFragment() {
+        recipeId = arguments!!.getInt("recipeId") // 전달한 key 값
+    }
+
+
+    private fun setRatingBar(ratingAverage: Float) {
         val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
         val stars = ratingBar.progressDrawable as LayerDrawable
         stars.getDrawable(2).setTint(Color.rgb(255,217,81))
+        ratingBar.rating= ratingAverage
     }
 
     /**  RecyclerView : 요리순서  **/
     private fun setViewPagerSteps() {
+
+        StepDescriptionAdapter = DetailStepsAdapter()
+
         rvSteps = v.findViewById<RecyclerView>(R.id.rv_steps)
-
-        val adapterStepDescription = DetailStepsAdapter()
-        adapterStepDescription.addDescription("물을 끓여주세요.")
-        adapterStepDescription.addDescription("라면 봉지를 뜯어주세요. 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 글자 줄바꾸기 테스트용 ")
-        adapterStepDescription.addDescription("가루스프를 넣어주세요")
-        adapterStepDescription.addDescription("라면사리를 넣어주세요.")
-
         rvSteps.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.VERTICAL,false)
         rvSteps.setHasFixedSize(true)
-        rvSteps.adapter = adapterStepDescription
+        rvSteps.adapter = StepDescriptionAdapter
 
     }
 
     /**  RecyclerView : 댓글  **/
     private fun setCommentRecyclerView() {
-        rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
+        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
         commentAdapter = DetailCommentAdapter()
-        commentAdapter.addComment(
-            RecipeDTO.Comment(
-                "1",
-                "R.drawable.ic_home",
-                "닉네임1",
-                "2020.02.12",
-                "존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛존맛개노맛"
-            )
-        )
-        commentAdapter.addComment(
-            RecipeDTO.Comment(
-                "2",
-                "R.drawable.ic_home",
-                "닉네임1",
-                "2020.02.12",
-                "존맛"
-            )
-        )
-        commentAdapter.addComment(
-            RecipeDTO.Comment(
-                "3",
-                "R.drawable.ic_home",
-                "닉네임1",
-                "2020.02.12",
-                "존맛"
-            )
-        )
-        commentAdapter.addComment(
-            RecipeDTO.Comment(
-                "4",
-                "R.drawable.ic_home",
-                "닉네임1",
-                "2020.02.12",
-                "존맛"
-            )
-        )
-
+        commentAdapter.addComment(RecipeDTO.Comment(17,1,"존맛개노존맛개노맛존맛개노맛존맛개노맛존맛개노맛","R.drawable.ic_home","2020.02.22","2020.02.22",null)       )
         rvComment.layoutManager = LinearLayoutManager(
             v.context,
             LinearLayoutManager.VERTICAL,
@@ -128,6 +149,16 @@ class DetailFragment : Fragment() {
         rvComment.setHasFixedSize(true)
         rvComment.adapter = commentAdapter
     }
+
+    /**  RecyclerView : 태그 버튼  **/
+    private fun setTagRecyclerView() {
+        tagAdapter = DetailTagAdapter()
+        val rvTag = v.findViewById<RecyclerView>(R.id.rv_tag)
+        rvTag.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.HORIZONTAL,false)
+        rvTag.setHasFixedSize(true)
+        rvTag.adapter = tagAdapter
+    }
+
 
     private fun setStarRatingButton() {
         ibRating = v.findViewById<ImageButton>(R.id.iv_like)
@@ -174,11 +205,9 @@ class DetailFragment : Fragment() {
 
         tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
 
-        val adapterPic = DetailViewPagerPicsAdapter(v.context)
-        adapterPic.addRecipeImage(R.drawable.ic_home)
-        adapterPic.addRecipeImage(R.drawable.ic_no_image)
-        adapterPic.addRecipeImage(R.drawable.ic_face)
-        viewPagerPics.adapter = adapterPic
+        picsAdapter = DetailViewPagerPicsAdapter(v.context)
+        viewPagerPics.adapter = picsAdapter
+
         tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
         sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
     }

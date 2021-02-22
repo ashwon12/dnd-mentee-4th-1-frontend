@@ -17,16 +17,16 @@ class DetailCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private val tvComment = itemView.findViewById<TextView>(R.id.tv_comment)
 
     fun bindItem(data: RecipeDTO.Comment) {
-        data.profilePic?.let {
+        data.imageUrl?.let {
             if (it.isNotEmpty()) {
                 Glide.with(App.instance)
-                    .load(data.profilePic)
+                    .load(data.imageUrl)
                     .placeholder(R.drawable.ic_face)
                     .into(ivProfilePic);
             }
         }
-        tvNickname.text = data.nickname
-        tvDate.text = data.date
-        tvComment.text = data.comment
+        tvNickname.text = data.user?.name
+        tvDate.text = data.createDate
+        tvComment.text = data.content
     }
 }
