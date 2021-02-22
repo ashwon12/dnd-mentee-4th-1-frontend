@@ -1,155 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="12dp"
-    android:layout_marginBottom="16dp"
-    android:background="@drawable/item_result_recipe"
-    android:elevation="5dp"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/iv_result_image"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/item_result_recipe" />
+    android:layout_marginTop="4dp">
 
     <LinearLayout
-        android:id="@+id/ll_today_text"
+        android:id="@+id/ll_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/item_result_recipe"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:translationZ="1dp">
 
-        <TextView
-            android:id="@+id/tv_recipe_name"
+        <ImageView
+            android:id="@+id/iv_result_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="serif"
-            android:gravity="left|center_vertical"
-            android:hint="레시피 이름"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginHorizontal="4dp"
-        android:orientation="horizontal">
+            android:layout_height="200dp"
+            android:background="@drawable/item_result_recipe" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="3"
+            android:id="@+id/ll_today_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_tag_1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_tag_2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_tag_3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_tag_4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_recipe_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="serif"
+                android:gravity="left|center_vertical"
+                android:hint="레시피 이름"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp">
-
-            <ImageButton
-                android:id="@+id/iv_like"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_select_cut" />
-
-            <TextView
-                android:id="@+id/tv_star_rating"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:hint="123"
-                android:textSize="18dp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/iv_subscribe"
-                    android:layout_width="32dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_no_select_cut" />
-
-                <TextView
-                    android:id="@+id/tv_subscribe"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="123"
-                    android:textSize="18dp" />
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
+                android:layout_weight="3"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_result_profile"
-                    android:layout_width="24dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_face" />
-
                 <TextView
-                    android:id="@+id/tv_result_nickname"
+                    android:id="@+id/tv_description"
                     android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:gravity="center_vertical"
-                    android:text="nickname"
-                    android:textSize="16dp" />
+                    android:text="고구마 30개, 설탕 40스폰, 참을성, 인내심,  인내심,  인내심, 인내심, 인내심, 인내심, 인내심,"
+                    android:textSize="14dp" />
+<!--
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_tag_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_tag_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_tag_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_tag_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />-->
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp">
 
                 <ImageButton
-                    android:id="@+id/iv_calendar"
-                    android:layout_width="40dp"
+                    android:id="@+id/iv_like"
+                    android:layout_width="32dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_no_select_cut" />
+                    android:src="@drawable/ic_select_cut" />
 
                 <TextView
-                    android:id="@+id/tv_calendar"
-                    android:layout_width="40dp"
+                    android:id="@+id/tv_star_rating"
+                    android:layout_width="32dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:hint="2021.222"
+                    android:hint="123"
                     android:textSize="14dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/iv_subscribe"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_select_cut" />
+
+                    <TextView
+                        android:id="@+id/tv_subscribe"
+                        android:layout_width="32dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="123"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_result_profile"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_face" />
+
+                    <TextView
+                        android:id="@+id/tv_result_nickname"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical"
+                        android:text="nickname"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/iv_calendar"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_select_cut" />
+
+                    <TextView
+                        android:id="@+id/tv_calendar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center_vertical"
+                        android:hint="2021.12.22"
+                        android:textSize="12dp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_tag_time"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="186dp"
+        android:elevation="6dp"
+        android:translationZ="16dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/detail_tag_button"
+        android:text="15분 이내"
+        android:textColor="#FFFFFF"
+        />
 
-</LinearLayout>
+</RelativeLayout>
