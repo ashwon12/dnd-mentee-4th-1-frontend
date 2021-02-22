@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.home
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
-
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class MultiViewAdapter(
     private var type: Int,
-    private var Images: ArrayList<String>
+    private var Images: ArrayList<RecipeDTO.RecipeFinal>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -53,28 +54,39 @@ class MultiViewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (type) {
             1 -> {
-                Glide.with(App.instance)
-                    .load(Images[position])
-                    .placeholder(R.drawable.ic_no_image)
-                    .into((holder as ViewPagerViewHolder).top3Image)
+                for(i in 0 .. 2) {
+                    Glide.with(App.instance)
+                        .load(Images[i].thumbnail)
+                        .placeholder(R.drawable.ic_no_image)
+                        .into((holder as ViewPagerViewHolder).top3Image)
+                }
             }
 
             2 -> {
-                Glide.with(App.instance)
-                    .load(Images[position])
-                    .placeholder(R.drawable.ic_no_image)
-                    .into((holder as GridViewHolder).popularImage)
+                for(i in 0 .. 4){
+                    Glide.with(App.instance)
+                        .load(Images[i].thumbnail)
+                        .placeholder(R.drawable.ic_no_image)
+                        .into((holder as GridViewHolder).popularImage)
+                }
             }
 
             3 -> {
+                val mainIngredients = Images[position].mainIngredients
+                val sb = StringBuilder()
+                for (text in mainIngredients){
+                    sb.append(text.name+"\t")
+                }
+                sb.toString()
+                (holder as ListViewHolder).recentContent.text = sb
+                holder.recentTitle.text = Images[position].title
                 Glide.with(App.instance)
-                    .load(Images[position])
+                    .load(Images[position].thumbnail)
                     .placeholder(R.drawable.ic_no_image)
-                    .into((holder as ListViewHolder).recentImage)
+                    .into(holder.recentImage)
             }
         }
     }
-
 
     inner class ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val top3Image: ImageView = itemView.findViewById(R.id.iv_top3_image_item)
