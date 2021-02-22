@@ -97,5 +97,8 @@ dependencies {
 
     //SwipeDecorator
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
+
+    //transparent
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
 }
 
