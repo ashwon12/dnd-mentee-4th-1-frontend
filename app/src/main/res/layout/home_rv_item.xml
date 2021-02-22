@@ -15,15 +15,15 @@
         android:layout_height="120dp"
         android:scaleType="center"
         app:srcCompat="@drawable/ic_no_image"
+        android:background="@drawable/home_rv_image_radius"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="13dp"
         android:orientation="vertical">
 
         <TextView
@@ -64,8 +64,8 @@
                 style="@style/FontCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/theme_radius"
                 android:layout_marginRight="8dp"
+                android:background="@drawable/theme_radius"
                 android:text="태그"
                 android:textColor="@color/PrimaryColor" />
 
@@ -74,8 +74,8 @@
                 style="@style/FontCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/theme_radius"
                 android:layout_marginRight="8dp"
+                android:background="@drawable/theme_radius"
                 android:text="태그"
                 android:textColor="@color/PrimaryColor" />
         </LinearLayout>
