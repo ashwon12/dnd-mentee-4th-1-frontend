@@ -53,7 +53,9 @@ class HomeFragment : Fragment() {
             success = {
                 it.run {
                     val data = it.list
-                    top3ImagesList.addAll(data!!)
+                    for(i in 0..2){
+                        top3ImagesList.add(data!!.get(i))
+                    }
                     vp_top3.adapter = MultiViewAdapter(1,top3ImagesList)
                     indicator.setViewPager(vp_top3)
                 }
