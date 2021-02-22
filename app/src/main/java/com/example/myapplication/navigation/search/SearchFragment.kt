@@ -68,7 +68,7 @@ class SearchFragment : Fragment() {
         tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))*/
         v = inflater.inflate(R.layout.fragment_search, container, false)
         vAutoCompleteTextView = inflater.inflate(
-            R.layout.custom_auto_complete_item_line,
+            android.R.layout.simple_dropdown_item_1line,
             container,
             false
         )
@@ -76,7 +76,7 @@ class SearchFragment : Fragment() {
         setRecyclerView()
         setAutoCompleteTextView()
         setButtonSearch()
-        setSwipeRefreshLayout()
+        //setSwipeRefreshLayout()
         pickRandomNumberOnRecommandTextView()
 
         return v
@@ -97,7 +97,9 @@ class SearchFragment : Fragment() {
         autoTextview = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe)
         autoTextview.setText("", TextView.BufferType.EDITABLE) // 검색 프로그먼트 다시 돌아왔을 때, 텍스트 Null로 초기화
 
-        val adapter = object : ArrayAdapter<String>(
+        val adapter = ArrayAdapter<String>(v.context, android.R.layout.simple_dropdown_item_1line, searchHistoryArrayList)
+
+        /*val adapter = object : ArrayAdapter<String>(
             v.context,
             R.layout.custom_auto_complete_item_line,
             R.id.tv_auto_complete_item,
@@ -120,7 +122,7 @@ class SearchFragment : Fragment() {
                 }
                 return view
             }
-        }
+        }*/
         // 자동완성목록 Item 클릭 리스너
         autoTextview.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -154,10 +156,10 @@ class SearchFragment : Fragment() {
             false
         })
 
-        //검색기록 삭제 버튼
+/*        //검색기록 삭제 버튼
         vAutoCompleteTextView.findViewById<Button>(R.id.btn_delete_search_history).setOnClickListener {
             Toast.makeText(v.context, "fafasf", Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
 
@@ -228,7 +230,9 @@ class SearchFragment : Fragment() {
         }
     }
 
-    /**  Repository에게 타임라인 목록 요청  */
+    /**  Repository에게 타임라인 목록 요청
+     *   Size = 9개만
+     * */
     private fun requestRandomRecipes() {
         searchAdapter.randomRecipes.clear()
         repository.getRandomRecipes(//TODO : getAllTimelinesList -> getRandomRecipes

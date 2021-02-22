@@ -19,7 +19,9 @@
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_margin="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/round_layout">
 
             <AutoCompleteTextView
@@ -28,10 +30,11 @@
                 android:layout_width="284dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
                 android:completionThreshold="1"
                 android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 android:imeOptions="actionDone"
                 android:inputType="text"
@@ -73,33 +76,59 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="36dp"
             android:layout_marginHorizontal="16dp"
             android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spinner_filter1"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/spinner_default_background"
-                android:dropDownVerticalOffset="40dp"
-                android:gravity="center"
-                android:spinnerMode="dropdown"
-                android:textColor="#FF7051"
-                android:theme="@style/Divider" />
-
-            <Spinner
-                android:id="@+id/spinner_filter2"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:background="@drawable/round_spinner">
 
-            <Spinner
-                android:id="@+id/spinner_filter3"
-                android:layout_width="0dp"
+                <Spinner
+                    android:id="@+id/spinner_filter1"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:dropDownVerticalOffset="36dp"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:dropDownWidth="120dp"
+                    android:textColor="#FF7051" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:background="@drawable/round_spinner"
+                android:layout_marginHorizontal="8dp">
+
+                <Spinner
+                    android:id="@+id/spinner_filter2"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:dropDownWidth="80dp"
+                    android:dropDownVerticalOffset="36dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_spinner">
+
+                <Spinner
+                    android:id="@+id/spinner_filter3"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:layout_width="140dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:dropDownWidth="140dp"
+                    android:dropDownVerticalOffset="36dp" />
+            </LinearLayout>
 
         </LinearLayout>
 

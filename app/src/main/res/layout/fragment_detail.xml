@@ -314,7 +314,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="28dp"
             android:orientation="vertical">
 
             <TextView
@@ -346,8 +347,7 @@
             android:background="@drawable/round_button"
             android:drawableLeft="@drawable/ic_search"
             android:gravity="center"
-
-            android:paddingHorizontal="110dp"
+            android:paddingHorizontal="105dp"
             android:text="내 비법 추가하기"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
