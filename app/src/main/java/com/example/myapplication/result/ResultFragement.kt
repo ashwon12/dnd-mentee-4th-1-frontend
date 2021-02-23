@@ -230,9 +230,9 @@ class ResultFragement : Fragment() {
         spinner2.adapter = adapter2
         spinner3.adapter = adapter3
 
-        spinner1.setSelection(0)// 최신순 선택
-        spinner2.setSelection(adapter2.count)// "컷수" 선택
-        spinner3.setSelection(adapter3.count)// "시간" 선택
+        spinner1.setSelection(0)// "최신순" 선택
+        spinner2.setSelection(adapter2.count)// "컷수" 제목 설정
+        spinner3.setSelection(adapter3.count)// "시간" 제목 설정
 
         // Spinner 클릭 리스너
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {

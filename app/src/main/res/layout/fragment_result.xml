@@ -31,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:background="@android:color/transparent"
                 android:completionThreshold="1"
                 android:drawableLeft="@drawable/ic_search"

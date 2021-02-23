@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.search
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,9 @@ import com.example.myapplication.detail.DetailFragment
 
 class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
 
-    var randomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
-
     private lateinit var view: View
+
+    var randomRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         view = LayoutInflater
@@ -40,12 +41,16 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
             val itemImageView = view.findViewById<ImageView>(R.id.iv_random_recipe)
             ViewCompat.setTransitionName(itemImageView, "@string/transition_random_to_detail")
 
-            val activity = view.context as AppCompatActivity
-            val detailFragment: Fragment = DetailFragment()
+            val args = Bundle()// 클릭된 Recipe의 id 전달
+            args.putInt("recipeId", data.id)
 
+            val detailFragment: Fragment = DetailFragment()
+            detailFragment.arguments = args
+
+            val activity = view.context as AppCompatActivity
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                .setCustomAnimations(R.anim.slide_in,R.anim.fade_out,R.anim.fade_in,R.anim.slide_out) //프래그먼트 전환 애니메이션
                 .setReorderingAllowed(true)
                 .addSharedElement(itemImageView, "@string/transition_random_to_detail")
                 .replace(R.id.fl_container, detailFragment)
