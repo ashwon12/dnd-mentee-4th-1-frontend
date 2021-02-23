@@ -1,8 +1,10 @@
 package com.example.myapplication.data.repository
 
+import android.net.Uri
 import com.example.myapplication.data.datasource.local.LocalDataSource
 import com.example.myapplication.data.datasource.remote.RemoteDataSource
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import okhttp3.MultipartBody
 
 class Repository {
 
@@ -44,4 +46,24 @@ class Repository {
     }
 
 
+
+    // 이미지 s3 업로드
+
+    fun postImageUpload(
+        imagePath: String,
+        success: (RecipeDTO.UploadImage) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.postImageUpload(imagePath, success, fail)
+    }
+
+    // 레시피 등록
+
+    fun postRecipeUpload(
+        recipeInfo: (RecipeDTO.RecipeFinal),
+        success: (RecipeDTO.RecipeFinal) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.postRecipeUpload(recipeInfo, success, fail)
+    }
 }
