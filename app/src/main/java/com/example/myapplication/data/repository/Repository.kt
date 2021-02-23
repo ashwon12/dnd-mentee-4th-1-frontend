@@ -19,6 +19,7 @@ class Repository {
         )
     }
 
+
     fun getRecipeById(
         recipeId: Int,
         success: (RecipeDTO.APIResponseData) -> Unit,
@@ -28,6 +29,18 @@ class Repository {
             recipeId,
             success,
             fail
+
+    fun getHomeRecipes(
+        success: (RecipeDTO.APIresponse) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        order : String
+    ) {
+        remoteMovieDataSourceImpl.getHomeRecipes(
+            success,
+            fail,
+            queryType,
+            order
         )
     }
 
