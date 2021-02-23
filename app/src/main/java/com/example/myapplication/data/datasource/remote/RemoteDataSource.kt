@@ -3,26 +3,19 @@ package com.example.myapplication.data.datasource.remote
 import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.example.myapplication.App
 import com.example.myapplication.data.datasource.remote.api.RecipeApi
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Multipart
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 
 class RemoteDataSource {
 
@@ -56,22 +49,45 @@ class RemoteDataSource {
     }
 
     fun getRandomRecipes(
-        success: (RecipeDTO.RecipeFinal) -> Unit,
+        success: (RecipeDTO.APIresponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        val callGetRandomRecipes = recipeApi.getRandomRecipes("search", "수배")
-        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.RecipeFinal> {
+        val callGetRandomRecipes = recipeApi.getRandomRecipes("search","수배")
+        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse>{
             override fun onResponse(
-                call: Call<RecipeDTO.RecipeFinal>,
-                response: Response<RecipeDTO.RecipeFinal>
+                call: Call<RecipeDTO.APIresponse>,
+                response: Response<RecipeDTO.APIresponse>
             ) {
                 response.body()?.let {
                     success(it)
                 }
             }
-
-            override fun onFailure(call: Call<RecipeDTO.RecipeFinal>, t: Throwable) {
+            override fun onFailure(call: Call<RecipeDTO.APIresponse>, t: Throwable) {
                 Log.e("/posts", "RandomRecipes 가져오기 실패 : " + t)
+                fail(t)
+            }
+        })
+    }
+
+    /** 홈에서 사용하는 api, queryType = viewTop ,labelTop **/
+    fun getHomeRecipes(
+        success: (RecipeDTO.APIresponse) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        order : String
+    ) {
+        val callHomeRecipes = recipeApi.getHomeRecipes(queryType,order)
+        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse>{
+                override fun onResponse(
+                call: Call<RecipeDTO.APIresponse>,
+                response: Response<RecipeDTO.APIresponse>
+            ) {
+                response.body()?.let{
+                    success(it)
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIresponse>, t: Throwable) {
+                Log.e("queryType=viewTop", "홈 데이터 가져오기 실패 : " + t)
             }
         })
     }

@@ -24,7 +24,7 @@ interface RecipeApi {
     fun getRandomRecipes(
         @Query("queryType") queryType: String,
         @Query("keyword") keyword: String
-    ): Call<RecipeDTO.RecipeFinal>
+    ): Call<RecipeDTO.APIresponse>
 
     @FormUrlEncoded
     @POST("/posts")
@@ -48,6 +48,11 @@ interface RecipeApi {
         @FieldMap recipe : HashMap<String, Any>
     ): Call<RecipeDTO.RecipeFinal>
 
+    @GET("/recipes")
+    fun getHomeRecipes(
+        @Query("queryType") queryType: String,
+        @Query("order") order: String
+    ): Call<RecipeDTO.APIresponse>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"

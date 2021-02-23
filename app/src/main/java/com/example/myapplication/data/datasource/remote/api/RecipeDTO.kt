@@ -92,10 +92,17 @@ class RecipeDTO {
     )
 
     // -------------- 2020. 2. 21 추가 -------------
+    data class APIresponse(
+        val timestamp: String,
+        val status: String,
+        val error:String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<RecipeFinal>? = null
+    )
+
     data class RecipeFinal(
-        var themes: Array<Themes>,
         var thumbnail: String? = null,
-        var starCount: String? = null,
         var mainIngredients: Array<MainIngredients>,
         var subIngredients: Array<SubIngredients>,
         var id: String? = null,
@@ -104,18 +111,20 @@ class RecipeDTO {
         var writer: Writer? = null,
         var title: String? = null,
         var subtitle: String? = null,
-        var wishCount: String? = null,
-        var steps: Array<Steps>
+        var themes: Array<Themes>,
+        var steps: Array<Steps>,
+        var starCount: String? = null,
+        var wishCount: String? = null
     )
 
     class Writer(
         var name: String? = null,
-        var id: String? = null,
+        var id: Int,
         var email: String? = null
     )
 
     class Steps(
-        var id: String,
+        var id: Int,
         var sequence: String,
         var imageUrl: String? = null,
         var description: String
