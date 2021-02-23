@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 import com.google.android.material.tabs.TabLayout
 
@@ -37,6 +36,9 @@ class DetailFragment : Fragment() {
     private lateinit var StepDescriptionAdapter: DetailStepsAdapter
     private lateinit var commentAdapter: DetailCommentAdapter
     private lateinit var tagAdapter: DetailTagAdapter
+    private lateinit var mainIngredientAdapter: DetailMainIngredientAdapter
+    private lateinit var subIngredientAdapter: DetailSubIngredientAdapter
+
     private var recipeId: Int = 0
 
     private val repository = Repository()
@@ -53,10 +55,11 @@ class DetailFragment : Fragment() {
         getRecipeIdFromBeforeFragment()
         requestRecipeById(recipeId)
 
-        setTitle()
         setViewPagerPics()
         setStarRatingButton()
         setTagRecyclerView()
+        setMainIngredients()
+        setSubIngredients()
         setCommentRecyclerView()
         setViewPagerSteps()
 
@@ -64,45 +67,42 @@ class DetailFragment : Fragment() {
     }
 
 
-    private fun setTitle() {
-
-
-    }
-
     /**  API Reciep Data 요청(id로) **/
     private fun requestRecipeById(recipeId: Int) {
         repository.getRecipeById(
-            recipeId,
+            1,//TODO : recipeId로 변경 나중에
             success = {
                 it.run {
-
                     val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
                     val tvTitle = v.findViewById<TextView>(R.id.tv_detail_title)
-                    val tvSubtitle = v.findViewById<TextView>(R.id.tv_introduction)
+                    val tvDescription = v.findViewById<TextView>(R.id.tv_introduction)
                     val tvStarAverage = v.findViewById<TextView>(R.id.tv_star_rating)
                     val tvViewCount = v.findViewById<TextView>(R.id.tv_viewcount)
                     val tvRating = v.findViewById<TextView>(R.id.tv_star_rating2)
+                    val tvTime = v.findViewById<TextView>(R.id.tv_time)
 
 
                     tvNickname.text = it.data?.writer?.name
                     tvTitle.text = it.data?.title
-                    //tvSubtitle.text = it.data?.subtitle
+                    tvDescription.text = it.data?.description
                     tvStarAverage.text = it.data?.starCount.toString()
                     tvViewCount.text = it.data?.viewCount
                     tvRating.text = "이 레시피는 ${it.data?.starCount}점 이에요!"
                     //it.data?.starCount?.let { it1 -> setRatingBar(it1) }
+                    tvTime.text = it.data?.time
 
                     // 어댑터 설정
                     picsAdapter.updateRecipeImage(it.data?.steps!!)
                     StepDescriptionAdapter.updateDescription(it.data?.steps!!)
-
-                    tagAdapter.updateMainIngredients(it.data?.mainIngredients)
-                    tagAdapter.updateSubIngredients(it.data?.subIngredients)
                     tagAdapter.updateThemes(it.data?.themes)
+                    mainIngredientAdapter.updateMainIngredients(it.data?.mainIngredients)
+                    subIngredientAdapter.updateMainIngredients(it.data?.subIngredients)
 
-                    StepDescriptionAdapter.notifyDataSetChanged()
                     picsAdapter.notifyDataSetChanged()
+                    StepDescriptionAdapter.notifyDataSetChanged()
                     tagAdapter.notifyDataSetChanged()
+                    mainIngredientAdapter.notifyDataSetChanged()
+                    subIngredientAdapter.notifyDataSetChanged()
                 }
             },
             fail = {
@@ -124,9 +124,27 @@ class DetailFragment : Fragment() {
         ratingBar.rating= ratingAverage
     }
 
+    /**  매인 재료 RecyclerView  **/
+    private fun setMainIngredients() {
+        mainIngredientAdapter = DetailMainIngredientAdapter()
+
+        val rvMainIngredient = v.findViewById<RecyclerView>(R.id.rv_main_ingredient)
+        rvMainIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL,false)
+        rvMainIngredient.setHasFixedSize(true)
+        rvMainIngredient.adapter = mainIngredientAdapter
+    }
+
+    private fun setSubIngredients() {
+        subIngredientAdapter = DetailSubIngredientAdapter()
+
+        val rvSubIngredient = v.findViewById<RecyclerView>(R.id.rv_sub_ingredient)
+        rvSubIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
+        rvSubIngredient.setHasFixedSize(true)
+        rvSubIngredient.adapter = subIngredientAdapter
+    }
+
     /**  RecyclerView : 요리순서  **/
     private fun setViewPagerSteps() {
-
         StepDescriptionAdapter = DetailStepsAdapter()
 
         rvSteps = v.findViewById<RecyclerView>(R.id.rv_steps)
@@ -138,14 +156,10 @@ class DetailFragment : Fragment() {
 
     /**  RecyclerView : 댓글  **/
     private fun setCommentRecyclerView() {
-        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
         commentAdapter = DetailCommentAdapter()
-        commentAdapter.addComment(RecipeDTO.Comment(17,1,"존맛개노존맛개노맛존맛개노맛존맛개노맛존맛개노맛","R.drawable.ic_home","2020.02.22","2020.02.22",null)       )
-        rvComment.layoutManager = LinearLayoutManager(
-            v.context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+
+        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
+        rvComment.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.VERTICAL,false)
         rvComment.setHasFixedSize(true)
         rvComment.adapter = commentAdapter
     }
@@ -153,6 +167,7 @@ class DetailFragment : Fragment() {
     /**  RecyclerView : 태그 버튼  **/
     private fun setTagRecyclerView() {
         tagAdapter = DetailTagAdapter()
+
         val rvTag = v.findViewById<RecyclerView>(R.id.rv_tag)
         rvTag.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.HORIZONTAL,false)
         rvTag.setHasFixedSize(true)

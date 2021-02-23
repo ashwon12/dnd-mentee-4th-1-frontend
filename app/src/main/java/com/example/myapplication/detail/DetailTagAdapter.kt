@@ -11,7 +11,7 @@ class DetailTagAdapter : RecyclerView.Adapter<DetailTagViewHolder>() {
 
     private lateinit var view: View
 
-    var tags = ArrayList<String>()
+    var tags = ArrayList<RecipeDTO.Themes>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailTagViewHolder {
         view = LayoutInflater
@@ -33,21 +33,7 @@ class DetailTagAdapter : RecyclerView.Adapter<DetailTagViewHolder>() {
         return tags.size
     }
 
-    fun updateMainIngredients(mainIngs: ArrayList<RecipeDTO.MainIngredients>) {
-        for (ingredient in mainIngs) {
-            tags.add(ingredient.name!!)
-        }
-    }
-
-    fun updateSubIngredients(subIngs: ArrayList<RecipeDTO.SubIngredients>) {
-        for (ingredient in subIngs) {
-            tags.add(ingredient.name!!)
-        }
-    }
-
     fun updateThemes(themes: ArrayList<RecipeDTO.Themes>) {
-        for (theme in themes) {
-            tags.add(theme.name!!)
-        }
+        tags = themes
     }
 }

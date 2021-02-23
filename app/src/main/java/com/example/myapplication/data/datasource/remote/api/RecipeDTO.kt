@@ -93,6 +93,7 @@ class RecipeDTO {
     data class RecipeFinal(
         var id: Int,
         var title: String? = null,
+        var description: String? = null,
         var thumbnail: String? = null,
         var mainIngredients: ArrayList<MainIngredients>,
         var subIngredients: ArrayList<SubIngredients>,

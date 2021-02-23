@@ -25,12 +25,14 @@
                 android:id="@+id/iv_uploader_profile"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
                 android:src="@drawable/ic_face" />
 
             <TextView
                 android:id="@+id/tv_uploader_name"
-                android:layout_width="240dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="5"
                 android:layout_marginLeft="6dp"
                 android:gravity="center_vertical"
                 android:hint="userid"
@@ -39,9 +41,9 @@
 
             <Button
                 android:id="@+id/btn_follow"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
+                android:layout_weight="2"
                 android:background="@android:color/transparent"
                 android:text="팔로우"
                 android:textColor="#FF7051"
@@ -122,22 +124,12 @@
                 android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
                 android:textSize="16dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:ellipsize="marquee"
-                android:text="7시간전"
-                android:textSize="12dp" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_add_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
             android:orientation="horizontal">
@@ -145,14 +137,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tag"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
+                android:layout_height="32dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
             android:orientation="horizontal">
 
@@ -179,7 +172,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:hint="123"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                 </LinearLayout>
 
@@ -198,11 +191,22 @@
                         android:id="@+id/tv_viewcount"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
                         android:gravity="center_vertical"
                         android:hint="123"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:ellipsize="marquee"
+                    android:text="7시간전"
+                    android:textSize="14dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -221,13 +225,13 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_ingredient1"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main_ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="당근 1개, 마늘 30쪽, 파스타면"
-                android:textSize="16dp" />
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -244,13 +248,12 @@
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_ingredient2"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sub_ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="올리브유, 소고기, 허브"
-                android:textSize="16dp" />
+                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -355,11 +358,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="68dp"
-            android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:paddingBottom="22dp"
             android:background="#F6F6F6"
-            android:elevation="10dp">
+            android:elevation="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="22dp">
 
             <ImageView
                 android:id="@+id/iv_comment_profile"
@@ -372,12 +375,12 @@
                 android:id="@+id/edt_comment"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="5"
                 android:layout_marginLeft="4dp"
+                android:layout_weight="5"
                 android:backgroundTint="@color/orange"
-                android:textCursorDrawable="@drawable/cursor_color"
                 android:gravity="center_vertical"
                 android:hint="댓글 내용을 입력해주세요."
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="16dp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -386,11 +389,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="올리기"
                 android:gravity="center"
+                android:text="올리기"
                 android:textColor="#FF7051"
-                android:textStyle="bold"
-                android:textSize="14dp"/>
+                android:textSize="14dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
