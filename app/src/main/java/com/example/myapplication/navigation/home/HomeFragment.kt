@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
                     for(i in 0..2){
                         top3ImagesList.add(data!!.get(i))
                     }
-                    vp_top3.adapter = MultiViewAdapter(1,top3ImagesList)
+                    vp_top3.adapter = HomeMultiViewAdapter(1,top3ImagesList)
                     indicator.setViewPager(vp_top3)
                 }
             },
@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
                 it.run {
                     val data = it.list
                     popularImagesList.addAll(data!!)
-                    rv_popular.adapter = MultiViewAdapter(2,popularImagesList)
+                    rv_popular.adapter = HomeMultiViewAdapter(2,popularImagesList)
                 }
             },
             fail = {
@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
                 it.run {
                     val data = it.list
                     recentImageList.addAll(data!!)
-                    rv_recent.adapter = MultiViewAdapter(3,recentImageList)
+                    rv_recent.adapter = HomeMultiViewAdapter(3,recentImageList)
                 }
             },
             fail = {

@@ -18,7 +18,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.detail.DetailFragment
 
-class MultiViewAdapter(
+class HomeMultiViewAdapter(
 
     private var type: Int,
     private var ItemsList: ArrayList<RecipeDTO.RecipeFinal>
