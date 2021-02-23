@@ -82,22 +82,22 @@ class RemoteDataSource {
 
     /** 홈에서 사용하는 api, queryType = viewTop ,labelTop **/
     fun getHomeRecipes(
-        success: (RecipeDTO.APIresponse) -> Unit,
+        success: (RecipeDTO.APIResponseList) -> Unit,
         fail: (Throwable) -> Unit,
         queryType: String,
         order : String
     ) {
         val callHomeRecipes = recipeApi.getHomeRecipes(queryType,order)
-        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse>{
+        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIResponseList>{
                 override fun onResponse(
-                call: Call<RecipeDTO.APIresponse>,
-                response: Response<RecipeDTO.APIresponse>
+                call: Call<RecipeDTO.APIResponseList>,
+                response: Response<RecipeDTO.APIResponseList>
             ) {
                 response.body()?.let{
                     success(it)
                 }
             }
-            override fun onFailure(call: Call<RecipeDTO.APIresponse>, t: Throwable) {
+            override fun onFailure(call: Call<RecipeDTO.APIResponseList>, t: Throwable) {
                 Log.e("queryType=viewTop", "홈 데이터 가져오기 실패 : " + t)
             }
         })

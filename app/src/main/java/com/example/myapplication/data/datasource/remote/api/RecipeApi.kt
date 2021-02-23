@@ -40,7 +40,7 @@ interface RecipeApi {
     fun getHomeRecipes(
         @Query("queryType") queryType: String,
         @Query("order") order: String
-    ): Call<RecipeDTO.APIresponse>
+    ): Call<RecipeDTO.APIResponseList>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"

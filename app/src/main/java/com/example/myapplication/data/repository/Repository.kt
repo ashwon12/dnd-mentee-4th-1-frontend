@@ -29,9 +29,12 @@ class Repository {
             recipeId,
             success,
             fail
+        )
+    }
+
 
     fun getHomeRecipes(
-        success: (RecipeDTO.APIresponse) -> Unit,
+        success: (RecipeDTO.APIResponseList) -> Unit,
         fail: (Throwable) -> Unit,
         queryType: String,
         order : String
