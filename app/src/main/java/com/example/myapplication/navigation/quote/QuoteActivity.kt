@@ -37,17 +37,17 @@ class QuoteActivity : AppCompatActivity() {
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
     private var resultCommentList = ArrayList<RecipeDTO.Recipe>()
     private var commentList = ArrayList<RecipeDTO.Recipe>()
-    private var filterList = ArrayList<RecipeDTO.Filter>()
+    private var filterList = ArrayList<RecipeDTO.Themes>()
     private var select_cut: Int = 0
     private var recipeTitle: String? = null
     private var timeString: String = ""
     private var saveFilterList = ArrayList<String>()
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
-    private var thumbnail: Uri? = null
+    private var thumbnail: String? = null
     private var steps = ArrayList<RecipeDTO.Recipe>()
     private var number = 0
-    private var number1 = 1
+    private var quoteThumbnail: Uri? = null
     private var count = 0
     private var positionMain = -1
     private var quoteRecipeTitle: String = ""
@@ -175,7 +175,7 @@ class QuoteActivity : AppCompatActivity() {
         }
 
         for (i in saveFilterList.indices) {
-            filterList.add(RecipeDTO.Filter(saveFilterList[i]))
+            filterList.add(RecipeDTO.Themes("21", saveFilterList[i]))
         }
     }
 
@@ -269,7 +269,7 @@ class QuoteActivity : AppCompatActivity() {
             Log.d("savefilterList", saveFilterList.toString())
         }
         if (intent.hasExtra("thumbnail")) {
-            thumbnail = intent.getParcelableExtra("thumbnail")
+            thumbnail = intent.getStringExtra("thumbnail")
             setThumbnail()
             Log.d("thumbnail", thumbnail.toString())
         }
@@ -327,10 +327,10 @@ class QuoteActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 REQUEST_GALLERY_CODE -> {
-                    thumbnail = data?.data
+                    quoteThumbnail = data?.data
                     try {
                         Glide.with(App.instance)
-                            .load(thumbnail)
+                            .load(quoteThumbnail)
                             .into(iv_quote_recipe_result)
                     } catch (e: Exception) {
                         e.printStackTrace()
