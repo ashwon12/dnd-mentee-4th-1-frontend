@@ -1,12 +1,16 @@
 package com.example.myapplication.data.datasource.remote.api
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 interface RecipeApi {
@@ -32,6 +36,19 @@ interface RecipeApi {
         @Field("comment") comments: List<String>
     ): Call<RecipeDTO.PostItems>
 
+    @Multipart
+    @POST("/upload/step")
+    fun postImageUpload(
+        @Part imageFile : MultipartBody.Part
+    ): Call<RecipeDTO.UploadImage>
+
+    @FormUrlEncoded
+    @POST("/recipes")
+    fun postRecipeUpload(
+        @FieldMap recipe : HashMap<String, Any>
+    ): Call<RecipeDTO.RecipeFinal>
+
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 
@@ -46,6 +63,10 @@ interface RecipeApi {
                 return@Interceptor it.proceed(request)
             }
 
+            val gson : Gson =  GsonBuilder()
+                .setLenient()
+                .create()
+
             val client = OkHttpClient.Builder()
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(httpLoggingInterceptor)
@@ -53,7 +74,8 @@ interface RecipeApi {
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build()
                 .create(RecipeApi::class.java)
