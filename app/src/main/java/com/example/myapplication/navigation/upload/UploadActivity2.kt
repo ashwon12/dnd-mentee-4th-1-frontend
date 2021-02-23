@@ -7,7 +7,9 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,31 +17,42 @@ import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import com.skyhope.materialtagview.interfaces.TagItemListener
 import com.skyhope.materialtagview.model.TagModel
+import com.zhihu.matisse.internal.utils.PathUtils
+import com.zhihu.matisse.internal.utils.PathUtils.*
 import kotlinx.android.synthetic.main.activity_upload2.*
+
 
 class UploadActivity2 : AppCompatActivity() {
     companion object {
         private const val REQUEST_GALLERY_CODE = 100
         private const val PERMISSION_CODE = 100
     }
+    private var themes : Array<RecipeDTO.Themes> = emptyArray()
+    private var subTitle: String = ""
     private var recipeTitle: String = ""
     private var saveFilterList = ArrayList<String>()
     private var timeList = ArrayList<RecipeDTO.Time>()
     private var timeString: String = ""
-    private var thumbnail: Uri? = null
+    private var thumbnail: String? = null
+    private var tempThumb: Uri? = null
     private lateinit var tagModel: MutableList<TagModel>
     private lateinit var tagModel2: MutableList<TagModel>
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
     private var positionMain = -1
+
+    private var saveImages = RecipeDTO.UploadImage("", "", "", "", "", "")
+    private val repository = Repository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +90,16 @@ class UploadActivity2 : AppCompatActivity() {
             saveFilterList = intent.getStringArrayListExtra("filter")!!
             Log.d("savefilterList", saveFilterList.toString())
         }
+        if (intent.hasExtra("subtitle")) {
+            subTitle = intent.getStringExtra("subtitle")!!
+            Log.d("subTitle", subTitle)
+        }
+        if (intent.hasExtra("themes")) {
+            themes = intent.getSerializableExtra("themes") as Array<RecipeDTO.Themes>
+            for(i in themes.indices) {
+                Log.d("filter", themes[i].id + " " + themes[i].name)
+            }
+        }
     }
 
     private fun clickPrevButton() {
@@ -88,7 +111,7 @@ class UploadActivity2 : AppCompatActivity() {
     private fun clickNextButton() {
         makeTagList()
 
-        if(checkPermissionNextButton()) {
+        if (checkPermissionNextButton()) {
             val intent = Intent(this, UploadActivity3::class.java)
             intent.putExtra("recipeTitle", recipeTitle)
             intent.putExtra("filter", saveFilterList)
@@ -96,6 +119,7 @@ class UploadActivity2 : AppCompatActivity() {
             intent.putExtra("mainfood", mainFoodTagList)
             intent.putExtra("subfood", subFoodTagList)
             intent.putExtra("time", timeString)
+            intent.putExtra("subtitle", subTitle)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
             startActivity(intent)
@@ -104,8 +128,10 @@ class UploadActivity2 : AppCompatActivity() {
 
     private fun clickCancelButton() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("나중에 올릴 땐 다시 작성해야해요\n" +
-                "작성을 멈추시겠어요?")
+        builder.setMessage(
+            "나중에 올릴 땐 다시 작성해야해요\n" +
+                    "작성을 멈추시겠어요?"
+        )
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -122,35 +148,48 @@ class UploadActivity2 : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    thumbnail = data?.data
-                    try {
-                        Glide.with(App.instance)
-                            .load(thumbnail)
-                            .placeholder(R.drawable.gallery)
-                            .into(iv_upload_gallery)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    tempThumb = data?.data
+                    imageUploadToServer(PathUtils.getPath(App.instance, tempThumb))
                 }
             }
         }
     }
 
     private fun pickFromGallery() {
-        val intent = Intent()
-        intent.apply {
-            type = "image/*"
-            action = Intent.ACTION_GET_CONTENT
+        if (Build.VERSION.SDK_INT < 19) {
+            val intent = Intent()
+            intent.apply {
+                type = "image/*"
+                action = Intent.ACTION_GET_CONTENT
+            }
+
+            startActivityForResult(intent, REQUEST_GALLERY_CODE)
+        } else {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.setType("image/*")
+            Log.d("here", "here")
+            startActivityForResult(intent, REQUEST_GALLERY_CODE)
         }
 
-        startActivityForResult(intent, REQUEST_GALLERY_CODE)
     }
 
     private fun checkPermissions() {
+        var permissions = ""
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-            requestPermissions(permissions, PERMISSION_CODE)
-        } else {
+            // val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            permissions += Manifest.permission.READ_EXTERNAL_STORAGE + " "
+
+        }
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            permissions +=  Manifest.permission.WRITE_EXTERNAL_STORAGE + " "
+        }
+
+        if(TextUtils.isEmpty(permissions) == false) {
+            ActivityCompat.requestPermissions(this,
+                permissions.trim().split(" ").toTypedArray(), PERMISSION_CODE)
+        }
+        else {
             pickFromGallery()
         }
     }
@@ -171,6 +210,7 @@ class UploadActivity2 : AppCompatActivity() {
             }
         }
     }
+
     private fun initMainFoodTagView() {
         val listener: TagItemListener? = null
         tagView_mainfood.initTagListener(listener)
@@ -190,7 +230,7 @@ class UploadActivity2 : AppCompatActivity() {
     private fun makeTagList() {
         mainFoodTagList.clear()
         subFoodTagList.clear()
-        
+
         if (tagModel != null) {
             for (i in tagModel.indices) {
                 if (tagModel[i].tagText.toString() != "") {
@@ -226,8 +266,8 @@ class UploadActivity2 : AppCompatActivity() {
                 tv_upload_time_set_value.visibility = View.INVISIBLE
             }
 
-            timeString = timeList[positionMain].timeName.substring(0,2)
-            if(Integer.parseInt(timeString) == 60) {
+            timeString = timeList[positionMain].timeName.substring(0, 2)
+            if (Integer.parseInt(timeString) == 60) {
                 timeString = "59"
             }
             Log.d("timeString adapter", timeString)
@@ -369,8 +409,8 @@ class UploadActivity2 : AppCompatActivity() {
             var hour_len = step[hour.value].length
             var min_len = step2[minute.value].length
 
-            val h = hour_time.substring(0,hour_len-2)
-            val m = min_time.substring(0,min_len-1)
+            val h = hour_time.substring(0, hour_len - 2)
+            val m = min_time.substring(0, min_len - 1)
 
             Log.d("hour_time", hour_len.toString())
             Log.d("min_time", min_len.toString())
@@ -387,9 +427,29 @@ class UploadActivity2 : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun imageUploadToServer(imagePath: String) {
+        repository.postImageUpload(imagePath,
+            success = {
+                saveImages.data = it.data
+                thumbnail = it.data
+                try {
+                    Glide.with(App.instance)
+                        .load(saveImages.data)
+                        .into(iv_upload_gallery)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            },
+            fail = {
+                Log.d("function fail", "fail")
+            }
+        )
+    }
+
     private fun checkPermissionNextButton(): Boolean {
         Log.d("timeString", timeString + "여기")
-        
+
         if (thumbnail != null && mainFoodTagList.size > 0 && subFoodTagList.size > 0 && timeString != "") {
             return true
         } else if (mainFoodTagList.size > 0 && subFoodTagList.size > 0 && timeString != "") {
