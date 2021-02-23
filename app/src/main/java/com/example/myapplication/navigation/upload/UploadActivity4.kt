@@ -14,6 +14,7 @@ import com.example.myapplication.App
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import com.example.myapplication.navigation.quote.QuoteActivity
 import kotlinx.android.synthetic.main.activity_upload2.*
 import kotlinx.android.synthetic.main.activity_upload4.*
@@ -22,14 +23,18 @@ import kotlinx.android.synthetic.main.activity_upload4.iv_upload_cancel
 class UploadActivity4 : AppCompatActivity() {
     private var select_cut: Int = 0
     private var recipeTitle : String? = null
+    private var subTitle : String? = null
     private var steps = ArrayList<RecipeDTO.Recipe>()
     private var timeString: String = ""
     private var saveFilterList = ArrayList<String>()
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
-    private var thumbnail: Uri? = null
-    private var filterList = ArrayList<RecipeDTO.Filter>()
+    private var thumbnail: String? = null
+    private var filterList = ArrayList<RecipeDTO.Themes>()
     private lateinit var adapter: UploadPreviewRecipeAdapter
+
+    private lateinit var recipePostResult : RecipeDTO.RecipeFinal
+    private val repository = Repository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,12 +64,14 @@ class UploadActivity4 : AppCompatActivity() {
         intent.putExtra("steps", steps)
         intent.putExtra("recipeTitle", recipeTitle)
         intent.putExtra("time", timeString)
+        intent.putExtra("subtitle",subTitle)
         startActivity(intent)
         finish()
     }
 
     private fun clickSubmitButton() {
-        val intent = Intent(this, QuoteActivity::class.java )
+
+        val intent = Intent(this, MainActivity::class.java )
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)
         intent.putExtra("thumbnail", thumbnail)
@@ -73,6 +80,7 @@ class UploadActivity4 : AppCompatActivity() {
         intent.putExtra("steps", steps)
         intent.putExtra("recipeTitle", recipeTitle)
         intent.putExtra("time", timeString)
+        intent.putExtra("subtitle",subTitle)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
@@ -95,15 +103,17 @@ class UploadActivity4 : AppCompatActivity() {
         steps.clear()
 
         if (intent.hasExtra("number")) {
-            select_cut = intent.getIntExtra("number", 1)
-            Log.d("select_cut", select_cut.toString())
+            // select_cut = intent.getIntExtra("number", 1)
+            recipePostResult.viewCount = intent.getIntExtra("number", 1).toString()
+            Log.d("select_cut", recipePostResult.viewCount.toString())
         }
         if (intent.hasExtra("filter")) {
-            saveFilterList = intent.getStringArrayListExtra("filter")!!
-            Log.d("savefilterList", saveFilterList.toString())
+            // saveFilterList = intent.getStringArrayListExtra("filter")!!
+            recipePostResult.themes = intent.getSerializableExtra("filter") as Array<RecipeDTO.Themes>
+            Log.d("savefilterList", recipePostResult.themes.toString())
         }
         if (intent.hasExtra("thumbnail")) {
-            thumbnail = intent.getParcelableExtra("thumbnail")
+            thumbnail = intent.getStringExtra("thumbnail")
             Log.d("thumbnail", thumbnail.toString())
         }
         if (intent.hasExtra("mainfood")) {
@@ -127,6 +137,10 @@ class UploadActivity4 : AppCompatActivity() {
             timeString = intent.getStringExtra("time")!!
             Log.d("time", timeString)
         }
+        if (intent.hasExtra("subtitle")) {
+            subTitle = intent.getStringExtra("subtitle")!!
+            Log.d("subTitle", subTitle.toString())
+        }
     }
 
 
@@ -137,5 +151,13 @@ class UploadActivity4 : AppCompatActivity() {
         rv_recipe_list.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rv_recipe_list.setHasFixedSize(true)
+    }
+
+    private fun postRecipeUpload() {
+        repository.postRecipeUpload(recipePostResult, success = {
+
+        }, fail = {
+
+        })
     }
 }
