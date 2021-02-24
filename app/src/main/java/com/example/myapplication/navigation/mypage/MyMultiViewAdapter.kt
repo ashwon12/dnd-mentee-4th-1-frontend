@@ -56,7 +56,7 @@ class MyMultiViewAdapter(
                 holder.myTitle.text = ItemsList[position].title
                 holder.myStarCount.text = ItemsList[position].starCount
                 holder.myViewCount.text = ItemsList[position].viewCount
-                holder.myTime.text = ItemsList[position].time
+                holder.myTime.text = "${ItemsList[position].time}분"
 
                 holder.itemView.setOnClickListener {
                     Toast.makeText(

@@ -38,7 +38,7 @@
                 <Spinner
                     android:id="@+id/spinner_filter1"
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-                    android:layout_width="76dp"
+                    android:layout_width="86dp"
                     android:layout_height="match_parent"
                     android:dropDownWidth="120dp"
                     android:dropDownVerticalOffset="36dp"
@@ -56,7 +56,7 @@
                 <Spinner
                     android:id="@+id/spinner_filter2"
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-                    android:layout_width="64dp"
+                    android:layout_width="74dp"
                     android:layout_height="match_parent"
                     android:dropDownWidth="80dp"
                     android:dropDownVerticalOffset="36dp"
@@ -72,7 +72,7 @@
                 <Spinner
                     android:id="@+id/spinner_filter3"
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
-                    android:layout_width="64dp"
+                    android:layout_width="74dp"
                     android:layout_height="match_parent"
                     android:dropDownWidth="140dp"
                     android:dropDownVerticalOffset="36dp"
