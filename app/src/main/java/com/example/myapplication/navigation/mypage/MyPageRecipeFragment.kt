@@ -45,7 +45,8 @@ class MyPageRecipeFragment : Fragment() {
                 it.run {
                     val data = it.list
                     myRecipeList.addAll(data!!)
-                    rv_my_recipe.adapter = HomeMultiViewAdapter(1,myRecipeList)
+                    rv_my_recipe.adapter = MyMultiViewAdapter(1,myRecipeList)
+                    tv_my_recipie_count.text = "전체 ${data.size}개"
                 }
             },
             fail = {

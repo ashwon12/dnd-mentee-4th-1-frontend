@@ -20,7 +20,7 @@ class MyMultiViewAdapter(
     lateinit var view : View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType) {
+        return when (type) {
             1 -> {
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.mypage_recipie_item, parent, false)
