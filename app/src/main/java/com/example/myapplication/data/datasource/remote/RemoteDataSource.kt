@@ -8,9 +8,12 @@ import android.widget.Toast
 import com.example.myapplication.App
 import com.example.myapplication.data.datasource.remote.api.RecipeApi
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.google.gson.JsonObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,8 +55,8 @@ class RemoteDataSource {
         success: (RecipeDTO.APIresponse) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        val callGetRandomRecipes = recipeApi.getRandomRecipes("search","수배")
-        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse>{
+        val callGetRandomRecipes = recipeApi.getRandomRecipes("search", "수배")
+        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse> {
             override fun onResponse(
                 call: Call<RecipeDTO.APIresponse>,
                 response: Response<RecipeDTO.APIresponse>
@@ -62,6 +65,7 @@ class RemoteDataSource {
                     success(it)
                 }
             }
+
             override fun onFailure(call: Call<RecipeDTO.APIresponse>, t: Throwable) {
                 Log.e("/posts", "RandomRecipes 가져오기 실패 : " + t)
                 fail(t)
@@ -74,18 +78,19 @@ class RemoteDataSource {
         success: (RecipeDTO.APIresponse) -> Unit,
         fail: (Throwable) -> Unit,
         queryType: String,
-        order : String
+        order: String
     ) {
-        val callHomeRecipes = recipeApi.getHomeRecipes(queryType,order)
-        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse>{
-                override fun onResponse(
+        val callHomeRecipes = recipeApi.getHomeRecipes(queryType, order)
+        callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIresponse> {
+            override fun onResponse(
                 call: Call<RecipeDTO.APIresponse>,
                 response: Response<RecipeDTO.APIresponse>
             ) {
-                response.body()?.let{
+                response.body()?.let {
                     success(it)
                 }
             }
+
             override fun onFailure(call: Call<RecipeDTO.APIresponse>, t: Throwable) {
                 Log.e("queryType=viewTop", "홈 데이터 가져오기 실패 : " + t)
             }
@@ -152,31 +157,17 @@ class RemoteDataSource {
         })
     }
 
+
     fun postRecipeUpload(
-        recipeInfo : (RecipeDTO.RecipeFinal),
-        success: (RecipeDTO.RecipeFinal) -> Unit,
+        recipeInfo: RecipeDTO.UploadRecipe,
+        success: (RecipeDTO.UploadRecipe) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        var data :HashMap<String, Any> = HashMap<String, Any>()
-        data.put("themeIds", recipeInfo.themes)
-        data.put("thumbnail", recipeInfo.thumbnail.toString())
-        data.put("starCount", recipeInfo.starCount.toString())
-        data.put("mainIngredients", recipeInfo.mainIngredients)
-        data.put("subIngredients", recipeInfo.subIngredients)
-        data.put("id", recipeInfo.id.toString())
-        data.put("time", recipeInfo.time.toString())
-        data.put("viewCount", recipeInfo.viewCount.toString())
-        data.put("writerId", recipeInfo.writer.toString())
-        data.put("title", recipeInfo.title.toString())
-        data.put("subtitle", recipeInfo.subtitle.toString())
-        data.put("wishCount", recipeInfo.wishCount.toString())
-        data.put("steps", recipeInfo.steps.toString())
-        
-        val callPostRecipeUpload = recipeApi.postRecipeUpload(data)
-        callPostRecipeUpload.enqueue(object : Callback<RecipeDTO.RecipeFinal> {
+        val callPostRecipeUpload = recipeApi.postRecipeUpload(recipeInfo)
+        callPostRecipeUpload.enqueue(object : Callback<RecipeDTO.UploadRecipe> {
             override fun onResponse(
-                call: Call<RecipeDTO.RecipeFinal>,
-                response: Response<RecipeDTO.RecipeFinal>
+                call: Call<RecipeDTO.UploadRecipe>,
+                response: Response<RecipeDTO.UploadRecipe>
             ) {
                 if (response?.isSuccessful) {
                     Toast.makeText(App.instance, "레시피 업로드 성공!", Toast.LENGTH_SHORT).show()
@@ -190,7 +181,7 @@ class RemoteDataSource {
                 }
             }
 
-            override fun onFailure(call: Call<RecipeDTO.RecipeFinal>, t: Throwable) {
+            override fun onFailure(call: Call<RecipeDTO.UploadRecipe>, t: Throwable) {
                 Log.d("recipe upload fail!!", t.message.toString())
             }
         })
