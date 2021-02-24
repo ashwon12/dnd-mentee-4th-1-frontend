@@ -27,10 +27,7 @@ class HomeMultiViewAdapter(
 
     lateinit var view : View
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> {
                 view = LayoutInflater.from(parent.context)
