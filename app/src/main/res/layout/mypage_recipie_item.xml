@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintCircleRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        android:weightSum="3">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_my_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:riv_corner_radius_top_left="12dp"
+            app:riv_corner_radius_top_right="12dp"
+            app:riv_oval="false" />
+
+        <TextView
+            style="@style/FontBody2"
+            android:id="@+id/tv_my_recipie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical"
+            android:text="타이틀" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="0.5">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="12dp"
+                android:layout_height="11dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                app:srcCompat="@drawable/ic_filled_star"
+                />
+
+            <TextView
+                android:id="@+id/tv_my_star_count"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#8E8E93" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="14.12dp"
+                android:layout_height="10dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_views"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/tv_my_views_count"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2.88dp"
+                android:layout_weight="1"
+                android:text="21"
+                android:textColor="#8E8E93" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="12.6dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_alarm" />
+
+            <TextView
+                android:id="@+id/tv_my_time"
+                style="@style/FontCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4.7dp"
+                android:layout_weight="1"
+                android:text="2021.02.20"
+                android:textColor="#8E8E93" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
