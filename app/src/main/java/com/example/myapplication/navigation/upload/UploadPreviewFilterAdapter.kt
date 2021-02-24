@@ -10,7 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.filter_list_item.view.*
 
-class UploadPreviewFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
+class UploadPreviewFilterAdapter(val filterList: ArrayList<RecipeDTO.Themes>) :
     RecyclerView.Adapter<UploadPreviewFilterAdapter.UploadPreviewFilterHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : UploadPreviewFilterAdapter.UploadPreviewFilterHolder {
@@ -23,7 +23,7 @@ class UploadPreviewFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
     }
 
     override fun onBindViewHolder(holder: UploadPreviewFilterAdapter.UploadPreviewFilterHolder, position: Int) {
-        holder.name.setText(filterList[position].filterName)
+        holder.name.setText(filterList[position].name)
         holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.no_select_border_layout)
         holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#FF8C4B"))
     }

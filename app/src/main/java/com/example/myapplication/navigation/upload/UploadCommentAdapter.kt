@@ -70,6 +70,11 @@ class UploadCommentAdapter(
 
                 override fun afterTextChanged(p0: Editable?) {
                     commentList[adapterPosition].comment = p0.toString()
+                    if(commentList[adapterPosition].comment!!.length > 0) {
+                        number.setBackgroundResource(R.drawable.ic_select_oval)
+                    } else {
+                        number.setBackgroundResource(R.drawable.ic_oval)
+                    }
                 }
             })
         }
