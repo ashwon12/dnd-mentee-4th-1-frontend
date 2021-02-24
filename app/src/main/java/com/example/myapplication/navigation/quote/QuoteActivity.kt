@@ -181,7 +181,7 @@ class QuoteActivity : AppCompatActivity() {
         }
 
         for (i in saveFilterList.indices) {
-            filterList.add(RecipeDTO.Themes("21", saveFilterList[i]))
+            filterList.add(RecipeDTO.Themes(21, saveFilterList[i]))
         }
     }
 
