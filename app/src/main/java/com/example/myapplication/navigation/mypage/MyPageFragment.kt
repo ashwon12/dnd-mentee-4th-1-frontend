@@ -2,6 +2,7 @@ package com.example.myapplication.navigation.mypage
 
 import MyPageFollowerFragment
 import MyPageFollowingFragment
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ class MyPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         return inflater.inflate(R.layout.fragment_mypage, container, false)
     }
 
@@ -32,6 +34,16 @@ class MyPageFragment : Fragment() {
         updateKaKaoLoginUi()
         updateGoogleLoginUi()
         initTabs()
+        settingButton()
+    }
+
+    private fun settingButton() {
+        ib_settings.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, SettingActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun initTabs() {

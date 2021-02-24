@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".navigation.mypage.SettingActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -26,29 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".navigation.quote.QuoteActivity"></activity>
-        <activity android:name=".navigation.Login.LoginActivity">
-
-        </activity>
+        <activity android:name=".navigation.quote.QuoteActivity" />
+        <activity android:name=".navigation.Login.LoginActivity"></activity>
         <activity
             android:name=".navigation.upload.UploadActivity"
-            android:screenOrientation="portrait" >
-
-        </activity>
-        <activity
-            android:name=".navigation.upload.UploadActivity2"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".navigation.upload.UploadActivity2"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".navigation.upload.UploadActivity3"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".navigation.upload.UploadActivity4"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <!-- 카카오 리다이렉트 URI 가져오기 -->
+            android:screenOrientation="portrait"></activity> <!-- 카카오 리다이렉트 URI 가져오기 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -63,4 +54,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
