@@ -54,7 +54,13 @@ class MyMultiViewAdapter(
             }
 
             2 -> {
+                Glide.with(App.instance)
+                    .load(ItemsList[position].thumbnail)
+                    .placeholder(R.drawable.ic_no_image)
+                    .circleCrop()
+                    .into((holder as MyMultiViewAdapter.UserViewHolder).followProfile)
 
+                holder.followName.text = ItemsList[position].writer!!.name
             }
         }
     }
@@ -68,6 +74,7 @@ class MyMultiViewAdapter(
     }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-
+        val followProfile = itemView.findViewById<ImageView>(R.id.iv_follow_profile)
+        val followName = itemView.findViewById<TextView>(R.id.tv_follow_name)
     }
 }
