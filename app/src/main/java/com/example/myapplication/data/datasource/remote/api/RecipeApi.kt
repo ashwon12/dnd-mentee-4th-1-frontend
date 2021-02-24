@@ -2,10 +2,12 @@ package com.example.myapplication.data.datasource.remote.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.JsonAdapter
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -39,14 +41,13 @@ interface RecipeApi {
     @Multipart
     @POST("/upload/step")
     fun postImageUpload(
-        @Part imageFile : MultipartBody.Part
+        @Part imageFile: MultipartBody.Part
     ): Call<RecipeDTO.UploadImage>
 
-    @FormUrlEncoded
     @POST("/recipes")
     fun postRecipeUpload(
-        @FieldMap recipe : HashMap<String, Any>
-    ): Call<RecipeDTO.RecipeFinal>
+        @Body data : RecipeDTO.UploadRecipe
+    ): Call<RecipeDTO.UploadRecipe>
 
     @GET("/recipes")
     fun getHomeRecipes(
@@ -68,7 +69,7 @@ interface RecipeApi {
                 return@Interceptor it.proceed(request)
             }
 
-            val gson : Gson =  GsonBuilder()
+            val gson: Gson = GsonBuilder()
                 .setLenient()
                 .create()
 
