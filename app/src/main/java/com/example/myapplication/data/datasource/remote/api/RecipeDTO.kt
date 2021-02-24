@@ -50,6 +50,41 @@ class RecipeDTO {
 //        val writer: User
     )
 
+    data class UploadImage(
+        val timestamp: String?,
+        val status: String?,
+        val error: String?,
+        val message: String?,
+        val path: String?,
+        var data: String?
+    )
+
+    data class UploadRecipe(
+        var title: String? = null,
+        var description: String? = null,
+        var thumbnail: String? = null,
+        var mainIngredients: ArrayList<MainIngredients>?,
+        var subIngredients: ArrayList<SubIngredients>?,
+        var themeIds: ArrayList<Int>?,
+        var steps: ArrayList<Steps>?,
+        var time: String? = null,
+        var pid : Int? = null,
+        var viewCount: String? = null,
+        var writerId: Int? = null
+    )
+
+    data class RequestPostLogin(
+        var email: String?,
+        var data: String?
+    )
+
+    data class RequestJoin(
+        var email: String? = null,
+        var name: String? = null,
+        var imageUrl: String? = null,
+        var data: String? = null
+    )
+
     data class Timeline(
         val id: String,
         val title: String,
