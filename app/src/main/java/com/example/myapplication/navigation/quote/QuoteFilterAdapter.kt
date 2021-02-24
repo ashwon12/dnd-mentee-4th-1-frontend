@@ -11,7 +11,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.filter_list_item.view.*
 
-class QuoteFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
+class QuoteFilterAdapter(val filterList: ArrayList<RecipeDTO.Themes>) :
     RecyclerView.Adapter<QuoteFilterAdapter.QuoteFilterHolder>() {
 
     override fun onCreateViewHolder(
@@ -29,7 +29,7 @@ class QuoteFilterAdapter(val filterList: ArrayList<RecipeDTO.Filter>) :
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: QuoteFilterAdapter.QuoteFilterHolder, position: Int) {
-        holder.name.text = filterList[position].filterName
+        holder.name.text = filterList[position].name
         holder.itemView.tv_filter_name.setTextColor(Color.parseColor("#FF8C4B"))
         holder.itemView.tv_filter_name.setBackgroundResource(R.drawable.select_border_layout)
     }

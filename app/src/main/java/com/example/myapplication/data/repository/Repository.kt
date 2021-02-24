@@ -72,7 +72,6 @@ class Repository {
     }
 
     // 이미지 s3 업로드
-
     fun postImageUpload(
         imagePath: String,
         success: (RecipeDTO.UploadImage) -> Unit,
@@ -82,7 +81,6 @@ class Repository {
     }
 
     // 레시피 등록
-
     fun postRecipeUpload(
         recipeInfo: (RecipeDTO.UploadRecipe),
 

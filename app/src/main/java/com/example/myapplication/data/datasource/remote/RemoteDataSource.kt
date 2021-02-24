@@ -26,7 +26,7 @@ class RemoteDataSource {
         fail: (Throwable) -> Unit
     ) {
         val callGetAllTimelines = recipeApi.getAllTimelines()
-        callGetAllTimelines.enqueue(object : retrofit2.Callback<RecipeDTO.PostItems>{
+        callGetAllTimelines.enqueue(object : retrofit2.Callback<RecipeDTO.PostItems> {
             override fun onResponse(
                 call: Call<RecipeDTO.PostItems>,
                 response: Response<RecipeDTO.PostItems>
@@ -34,12 +34,13 @@ class RemoteDataSource {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         success(it)
-                        val result : RecipeDTO.PostItems? = response.body()
+                        val result: RecipeDTO.PostItems? = response.body()
                         Log.d(TAG, "성공 : ${response.raw()}")
                         Log.d("result", result?.get(0)?.title.toString())
                     }
                 }
             }
+
             override fun onFailure(call: Call<RecipeDTO.PostItems>, t: Throwable) {
                 Log.e("/posts", "AlltimelinesFromRemote 가져오기 실패 : " + t)
             }
@@ -57,7 +58,7 @@ class RemoteDataSource {
                 call: Call<RecipeDTO.APIResponseList>,
                 response: Response<RecipeDTO.APIResponseList>
             ) {
-                response.body()?.let{
+                response.body()?.let {
                     success(it)
                 }
             }
@@ -95,7 +96,7 @@ class RemoteDataSource {
         success: (RecipeDTO.APIResponseList) -> Unit,
         fail: (Throwable) -> Unit,
         queryType: String,
-        order : String
+        order: String
     ) {
         val callHomeRecipes = recipeApi.getHomeRecipes(queryType,order)
         callHomeRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIResponseList>{
@@ -103,7 +104,7 @@ class RemoteDataSource {
                 call: Call<RecipeDTO.APIResponseList>,
                 response: Response<RecipeDTO.APIResponseList>
             ) {
-                response.body()?.let{
+                response.body()?.let {
                     success(it)
                 }
             }

@@ -15,13 +15,11 @@
         <ImageView
             android:id="@+id/iv_upload_cancel"
             android:layout_width="126dp"
-            android:layout_height="22dp"
+            android:layout_height="30dp"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="15dp"
-            app:srcCompat="@drawable/ic_cancel_upload"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:srcCompat="@drawable/ic_cancel_upload" />
 
         <ImageView
             android:id="@+id/iv_poster4"
@@ -71,30 +69,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_text12" />
 
+        <View
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/btn_upload_recipe_prev2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:progress="100"
+            android:progressTint="#FFB951"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
+
         <Button
             android:id="@+id/btn_upload_recipe_prev2"
-            android:layout_width="205dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
             android:layout_marginTop="80dp"
-            android:backgroundTint="@color/gray"
+            android:background="@color/gray"
+            app:backgroundTint="@null"
             android:text="레시피 수정"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_submit"
             app:layout_constraintTop_toBottomOf="@id/rv_upload_preview_recipe" />
 
         <Button
             android:id="@+id/btn_submit"
-            android:layout_width="206dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
             android:layout_marginTop="80dp"
-            android:backgroundTint="@color/orange"
+            android:background="@color/orange"
+            app:backgroundTint="@null"
             android:text="자랑하기"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_upload_recipe_prev2"
             app:layout_constraintTop_toBottomOf="@id/rv_upload_preview_recipe" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

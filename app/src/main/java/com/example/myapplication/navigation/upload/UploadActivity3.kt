@@ -21,12 +21,12 @@ import com.example.myapplication.App
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine
-import kotlinx.android.synthetic.main.activity_upload2.*
+import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.activity_upload3.*
-import kotlinx.android.synthetic.main.activity_upload3.iv_upload_cancel
 
 class UploadActivity3 : AppCompatActivity() {
 
@@ -34,16 +34,17 @@ class UploadActivity3 : AppCompatActivity() {
         private const val REQUEST_GET_IMAGE = 105
         private const val PERMISSION_CODE = 100
     }
-
+    private var themes = ArrayList<RecipeDTO.Themes>()
     private var timeString: String = ""
     private var number = 0
     private var number1 = 1
     private var count = 0
     private var recipeTitle: String? = null
+    private var subTitle: String? = null
     private var recipeList = ArrayList<RecipeDTO.Recipe>()
     private var commentList = ArrayList<RecipeDTO.Recipe>()
     private var saveFilterList = ArrayList<String>()
-    private var thumbnail: Uri? = null
+    private var thumbnail: String? = null
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
     private var positionMain = 0
@@ -52,6 +53,9 @@ class UploadActivity3 : AppCompatActivity() {
     private lateinit var adapter: UploadRecipeAdapter
     private lateinit var commentAdapter: UploadCommentAdapter
     private lateinit var itemMain: RecipeDTO.Recipe
+
+    private var saveImages = RecipeDTO.UploadImage("", "", "", "", "", "")
+    private val repository = Repository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,9 +158,11 @@ class UploadActivity3 : AppCompatActivity() {
             intent.putExtra("mainfood", mainFoodTagList)
             intent.putExtra("subfood", subFoodTagList)
             intent.putExtra("thumbnail", thumbnail)
-            intent.putExtra("number", count)
+            intent.putExtra("number", count.toString())
+            Log.d("number", count.toString() + "count here!!")
             intent.putExtra("time", timeString)
-
+            intent.putExtra("subtitle",subTitle)
+            intent.putExtra("themes",themes)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }
@@ -215,7 +221,7 @@ class UploadActivity3 : AppCompatActivity() {
             Log.d("savefilterList", saveFilterList.toString())
         }
         if (intent.hasExtra("thumbnail")) {
-            thumbnail = intent.getParcelableExtra("thumbnail")
+            thumbnail = intent.getStringExtra("thumbnail")
             Log.d("thumbnail", thumbnail.toString())
         }
         if (intent.hasExtra("mainfood")) {
@@ -233,6 +239,16 @@ class UploadActivity3 : AppCompatActivity() {
         if (intent.hasExtra("time")) {
             timeString = intent.getStringExtra("time")!!
             Log.d("time", timeString)
+        }
+        if (intent.hasExtra("subtitle")) {
+            subTitle = intent.getStringExtra("subtitle")!!
+            Log.d("subTitle", subTitle.toString())
+        }
+        if (intent.hasExtra("themes")) {
+            themes = intent.getSerializableExtra("themes") as ArrayList<RecipeDTO.Themes>
+            for(i in themes.indices) {
+                Log.d("themes", themes[i].id.toString() + " " + themes[i].name.toString() + "여기")
+            }
         }
     }
 
@@ -276,26 +292,23 @@ class UploadActivity3 : AppCompatActivity() {
                     Matisse.obtainResult(data)?.let {
                         val mSelected: List<Uri> = Matisse.obtainResult(data)
                         val size = mSelected.size
-                        Log.d("positionMain", positionMain.toString())
-                        Log.d("size", size.toString())
-                        Log.d("inner number", number.toString())
                         if (size == 1) {
-                            recipeList[positionMain].image = mSelected[0].toString()
+                            imageUploadToServer(PathUtils.getPath(App.instance, mSelected[0]))
                             addRecyclerView()
-                            Log.d("number1", number.toString())
                             if (number > 3 && positionMain >= number - 2) {
                                 addItem(
                                     rv_upload_comment.adapter!!.itemCount,
                                     RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
                                 )
                             }
-                            adapter.notifyDataSetChanged()
+                            // adapter.notifyDataSetChanged()
                         } else if (size <= 9) {
                             if (positionMain + size <= 9) {
                                 if(positionMain + size == number) {
                                     for (i in mSelected.indices) {
-                                        recipeList[positionMain + i].image = mSelected[i].toString()
-                                        adapter.notifyDataSetChanged()
+                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]), i)
+                                        // recipeList[positionMain + i].image = mSelected[i].toString()
+                                        // adapter.notifyDataSetChanged()
                                     }
                                     addRecyclerView()
                                     addItem(
@@ -304,16 +317,18 @@ class UploadActivity3 : AppCompatActivity() {
                                     )
                                 } else if (positionMain + size <= number - 1) {
                                     for (i in mSelected.indices) {
-                                        recipeList[positionMain + i].image = mSelected[i].toString()
-                                        adapter.notifyDataSetChanged()
-                                        Log.d("here!!", positionMain.toString())
+                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]), i)
+                                        // recipeList[positionMain + i].image = mSelected[i].toString()
+                                        // adapter.notifyDataSetChanged()
+                                        // Log.d("here!!", positionMain.toString())
                                     }
                                 } else {
                                     for (i in mSelected.indices) {
-                                        recipeList[positionMain + i].image = mSelected[i].toString()
+                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]),  i)
+                                        // recipeList[positionMain + i].image = mSelected[i].toString()
                                         addRecyclerView()
 
-                                        Log.d("number3", number.toString())
+                                        // Log.d("number3", number.toString())
                                         if(number > 4) {
                                             addItem(
                                                 rv_upload_comment.adapter!!.itemCount,
@@ -321,7 +336,7 @@ class UploadActivity3 : AppCompatActivity() {
                                             )
                                         }
 
-                                        adapter.notifyDataSetChanged()
+                                        // adapter.notifyDataSetChanged()
                                     }
                                 }
 
@@ -341,6 +356,7 @@ class UploadActivity3 : AppCompatActivity() {
                             ).show()
                         }
                         Log.d("number2", number.toString())
+                        Log.d("recipeList here22!!", recipeList.toString() + " 여기에요")
                     }
                 else -> finish()
             }
@@ -349,7 +365,7 @@ class UploadActivity3 : AppCompatActivity() {
 
     private fun pickUpGallery() {
         Matisse.from(this)
-            .choose(MimeType.ofAll())
+            .choose(MimeType.ofImage())
             .countable(true)
             .maxSelectable(9)
             .spanCount(3)
@@ -431,6 +447,35 @@ class UploadActivity3 : AppCompatActivity() {
         Log.d("steps", steps.toString())
     }
 
+
+    private fun imageUploadToServer(imagePath: String) {
+
+        repository.postImageUpload(imagePath,
+            success = {
+                saveImages.data = it.data
+                recipeList[positionMain].image = it.data
+                adapter.notifyDataSetChanged()
+                Log.d("recipeList here1!!", recipeList[positionMain].image.toString())
+            },
+            fail = {
+                Log.d("function fail", "fail")
+            }
+        )
+    }
+
+    private fun imageUploadToServer(imagePath: String, position: Int) {
+        repository.postImageUpload(imagePath,
+            success = {
+                saveImages.data = it.data
+                recipeList[positionMain + position].image = it.data
+                adapter.notifyDataSetChanged()
+                Log.d("recipeList here2!!", recipeList.toString())
+            },
+            fail = {
+                Log.d("function fail", "fail")
+            }
+        )
+    }
     private fun checkPermissionNextButton(): Boolean {
         if(steps.size < 3) {
             Toast.makeText(this, "최소 3장의 사진을 올려야합니다.", Toast.LENGTH_SHORT).show()
