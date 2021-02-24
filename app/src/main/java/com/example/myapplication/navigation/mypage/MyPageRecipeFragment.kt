@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
@@ -19,7 +20,6 @@ class MyPageRecipeFragment : Fragment() {
 
     private lateinit var v: View
     private var myRecipeList = ArrayList<RecipeDTO.RecipeFinal>()
-
     private lateinit var rv_my_recipe : RecyclerView
 
     private val repository = Repository()
@@ -31,8 +31,10 @@ class MyPageRecipeFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_mypage_recipe, container, false)
 
         setMyRecipe()
+
         return v
     }
+
 
     private fun setMyRecipe() {
         myRecipeList.clear()
