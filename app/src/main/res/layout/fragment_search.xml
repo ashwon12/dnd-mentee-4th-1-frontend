@@ -33,6 +33,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
                 android:completionThreshold="1"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:drawableLeft="@drawable/ic_search"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"

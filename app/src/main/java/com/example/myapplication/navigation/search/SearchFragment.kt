@@ -24,7 +24,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arasthel.spannedgridlayoutmanager.SpanSize
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 import com.example.myapplication.result.ResultFragement
 import java.util.*
@@ -53,25 +52,8 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-/*      tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(1,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(2,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(3,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(4,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(5,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(6,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(7,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(8,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(9,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(10,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(11,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(12,"R.drawable.ic_home",null,null,null,null,null,null))
-        tempRandomRecipes.add(RecipeDTO.tempRandomRecipes(13,"R.drawable.ic_home",null,null,null,null,null,null))*/
         v = inflater.inflate(R.layout.fragment_search, container, false)
-        vAutoCompleteTextView = inflater.inflate(
-            android.R.layout.simple_dropdown_item_1line,
-            container,
-            false
-        )
+        vAutoCompleteTextView = inflater.inflate(android.R.layout.simple_dropdown_item_1line,container,false)
 
         setRecyclerView()
         setAutoCompleteTextView()
@@ -235,7 +217,7 @@ class SearchFragment : Fragment() {
      * */
     private fun requestRandomRecipes() {
         searchAdapter.randomRecipes.clear()
-        repository.getRandomRecipes(//TODO : getAllTimelinesList -> getRandomRecipes
+        repository.getRandomRecipes(
             success = {
                 it.run {
                     searchAdapter.randomRecipes = it.list!!

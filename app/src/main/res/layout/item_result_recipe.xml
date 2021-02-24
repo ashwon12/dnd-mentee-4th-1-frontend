@@ -119,7 +119,7 @@
                         android:src="@drawable/ic_no_select_cut" />
 
                     <TextView
-                        android:id="@+id/tv_subscribe"
+                        android:id="@+id/tv_viewcount"
                         android:layout_width="32dp"
                         android:layout_height="match_parent"
                         android:gravity="center"

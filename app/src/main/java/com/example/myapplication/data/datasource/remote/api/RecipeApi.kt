@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -26,7 +25,12 @@ interface RecipeApi {
     fun getRandomRecipes(
         @Query("queryType") queryType: String,
         @Query("keyword") keyword: String
-    ): Call<RecipeDTO.APIresponse>
+    ): Call<RecipeDTO.APIResponseList>
+
+    @GET("/recipes/{recipeId}")
+    fun getRecipeById(
+        @Path("recipeId") recipeId: Int
+    ): Call<RecipeDTO.APIResponseData>
 
     @FormUrlEncoded
     @POST("/posts")
@@ -53,7 +57,7 @@ interface RecipeApi {
     fun getHomeRecipes(
         @Query("queryType") queryType: String,
         @Query("order") order: String
-    ): Call<RecipeDTO.APIresponse>
+    ): Call<RecipeDTO.APIResponseList>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"

@@ -97,17 +97,7 @@ class RecipeDTO {
         var timeName: String
     ) : Serializable
 
-
     // -------------- 2020. 2. 21 추가 -------------
-    data class APIresponse(
-        val timestamp: String,
-        val status: String,
-        val error: String,
-        val message: String,
-        val path: String,
-        val list: ArrayList<RecipeFinal>?
-    )
-
     data class APIResponseList(
         val timestamp: String,
         val status: String,
@@ -118,12 +108,12 @@ class RecipeDTO {
     )
 
     data class APIResponseData(
-        val timestamp: String?,
-        val status: String?,
-        val error: String?,
-        val message: String?,
-        val path: String?,
-        val data: RecipeFinal?
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val data: RecipeFinal? = null
     )
 
     data class RecipeFinal(
@@ -131,16 +121,15 @@ class RecipeDTO {
         var title: String? = null,
         var description: String? = null,
         var thumbnail: String? = null,
-        var mainIngredients: ArrayList<MainIngredients>?,
-        var subIngredients: ArrayList<SubIngredients>?,
-        var themes: ArrayList<Themes>?,
-        var steps: ArrayList<Steps>?,
+        var mainIngredients: ArrayList<MainIngredients>,
+        var subIngredients: ArrayList<SubIngredients>,
+        var themes: ArrayList<Themes>,
+        var steps: ArrayList<Steps>,
         var time: String? = null,
         var starCount: String? = null,// String -> Float 수정 필요
         var wishCount: String? = null,
         var viewCount: String? = null,
-        var writer: Writer? = null,
-        var pid : Int? = null
+        var writer: Writer? = null
     )
 
 
@@ -170,14 +159,6 @@ class RecipeDTO {
         var name: String?
     )
 
-    data class Comment(
-        val id: String?,
-        val profilePic: String?,
-        val nickname: String?,
-        val date: String?,
-        val comment: String?
-    )
-
 //    // 댓글
 //    data class Comment(
 //        val id: Int,
@@ -188,6 +169,26 @@ class RecipeDTO {
 //        val modifiedDate: String? = null,
 //        val user: User?
 //    )
+
+//    class MainIngredients {
+//        var name: String? = null
+//    }
+//
+//    class SubIngredients {
+//        var name: String? = null
+//    }
+
+
+    // 댓글
+    data class Comment(
+        val id: Int,
+        val recipeId: Int?,
+        val content: String? = null,
+        val imageUrl: String? = null,
+        val createDate: String? = null,
+        val modifiedDate: String? = null,
+        val user: User?
+    )
 
     data class User(
         val id: Int,

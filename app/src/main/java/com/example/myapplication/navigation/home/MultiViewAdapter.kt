@@ -1,5 +1,6 @@
 package com.example.myapplication.navigation.home
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,9 +101,13 @@ class MultiViewAdapter(
                 Toast.LENGTH_SHORT
             ).show()
 
-
             val activity = view.context as AppCompatActivity
             val detailFragment: Fragment = DetailFragment()
+
+            val args = Bundle()// 클릭된 Recipe의 id 전달
+            args.putInt("recipeId",ItemsList[position].id)
+
+            detailFragment.arguments = args
 
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
