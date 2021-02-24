@@ -79,7 +79,7 @@ class MultiViewAdapter(
             3 -> {
                 val mainIngredients = ItemsList[position].mainIngredients
                 val sb = StringBuilder()
-                for (text in mainIngredients) {
+                for (text in mainIngredients!!) {
                     sb.append(text.name + "\t")
                 }
                 sb.toString()
