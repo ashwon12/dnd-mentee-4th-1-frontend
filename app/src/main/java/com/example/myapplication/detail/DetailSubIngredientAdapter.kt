@@ -44,7 +44,8 @@ class DetailSubIngredientAdapter :
         }
     }
 
-    fun updateMainIngredients(subIngreds: ArrayList<RecipeDTO.SubIngredients>) {
-        subIngredients = subIngreds
+    fun updateSubIngredients(subIngreds: ArrayList<RecipeDTO.SubIngredients>) {
+        subIngredients.clear()
+        subIngredients.addAll(subIngreds)
     }
 }

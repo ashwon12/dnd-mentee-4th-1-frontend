@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.repository.Repository
 import com.google.android.material.tabs.TabLayout
@@ -40,6 +42,7 @@ class DetailFragment : Fragment() {
     private lateinit var subIngredientAdapter: DetailSubIngredientAdapter
 
     private var recipeId: Int = 0
+    private var floatRatingAvgRound: Float = 0f
 
     private val repository = Repository()
 
@@ -54,6 +57,7 @@ class DetailFragment : Fragment() {
 
         getRecipeIdFromBeforeFragment()
         requestRecipeById(recipeId)
+        requestCommentById(recipeId)
 
         setViewPagerPics()
         setStarRatingButton()
@@ -81,22 +85,26 @@ class DetailFragment : Fragment() {
                     val tvRating = v.findViewById<TextView>(R.id.tv_star_rating2)
                     val tvTime = v.findViewById<TextView>(R.id.tv_time)
 
+                    setProfilePic(it.data?.writer?.imageUrl)
 
                     tvNickname.text = it.data?.writer?.name
                     tvTitle.text = it.data?.title
                     tvDescription.text = it.data?.description
-                    tvStarAverage.text = it.data?.starCount.toString()
                     tvViewCount.text = it.data?.viewCount
-                    tvRating.text = "이 레시피는 ${it.data?.starCount}점 이에요!"
-                    //it.data?.starCount?.let { it1 -> setRatingBar(it1) }
                     tvTime.text = it.data?.time
+
+                    setRatingBar(it.data?.starCount!!)
+                    tvRating.text = "이 레시피는 ${floatRatingAvgRound}점 이에요!"
+                    tvStarAverage.text = floatRatingAvgRound.toString()
+
+
 
                     // 어댑터 설정
                     picsAdapter.updateRecipeImage(it.data?.steps!!)
                     StepDescriptionAdapter.updateDescription(it.data?.steps!!)
                     tagAdapter.updateThemes(it.data?.themes)
                     mainIngredientAdapter.updateMainIngredients(it.data?.mainIngredients)
-                    subIngredientAdapter.updateMainIngredients(it.data?.subIngredients)
+                    subIngredientAdapter.updateSubIngredients(it.data?.subIngredients)
 
                     picsAdapter.notifyDataSetChanged()
                     StepDescriptionAdapter.notifyDataSetChanged()
@@ -106,9 +114,42 @@ class DetailFragment : Fragment() {
                 }
             },
             fail = {
-                Log.d("fail", "fail fail fail")
+                Log.e("getRecipeById", "DetailFragment")
             }
         )
+    }
+
+    private fun requestCommentById(recipeId: Int) {
+        repository.getCommentsById(
+            1,//TODO : recipeId로 변경 나중에
+            success = {
+                it.run {
+                    commentAdapter.updateComments(it.list!!)
+
+                    commentAdapter.notifyDataSetChanged()
+                }
+            },
+            fail = {
+                Log.e("getCommentById", "DetailFragment")
+            }
+
+        )
+    }
+
+    private fun setProfilePic(imageUrl: String?) {
+        val profilePic = v.findViewById<ImageView>(R.id.iv_uploader_profile)
+        Glide.with(App.instance)
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_face)
+            .into(profilePic)
+    }
+
+    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
+        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
+        Glide.with(App.instance)
+            .load(this)
+            .placeholder(R.drawable.ic_face)
+            .into(commentProfilePic)
     }
 
     /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
@@ -117,11 +158,13 @@ class DetailFragment : Fragment() {
     }
 
 
-    private fun setRatingBar(ratingAverage: Float) {
-        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
-        val stars = ratingBar.progressDrawable as LayerDrawable
+    private fun setRatingBar(ratingAverage: Double) {
+        val floatRatingAvg = ratingAverage.toFloat()
+        val ratingBar2 = v.findViewById(R.id.ratingbar2) as RatingBar
+        val stars = ratingBar2.progressDrawable as LayerDrawable
         stars.getDrawable(2).setTint(Color.rgb(255,217,81))
-        ratingBar.rating= ratingAverage
+        floatRatingAvgRound = Math.round(floatRatingAvg*10)/10f
+        ratingBar2.rating= floatRatingAvgRound
     }
 
     /**  매인 재료 RecyclerView  **/
@@ -138,7 +181,7 @@ class DetailFragment : Fragment() {
         subIngredientAdapter = DetailSubIngredientAdapter()
 
         val rvSubIngredient = v.findViewById<RecyclerView>(R.id.rv_sub_ingredient)
-        rvSubIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
+        rvSubIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL, false)
         rvSubIngredient.setHasFixedSize(true)
         rvSubIngredient.adapter = subIngredientAdapter
     }
@@ -185,7 +228,7 @@ class DetailFragment : Fragment() {
             dialog.setContentView(R.layout.dialogue_star_rating)
             dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
-            val rating : RatingBar = dialog.findViewById(R.id.ratingbar);
+            val rating : RatingBar = dialog.findViewById(R.id.ratingbar_dialogue);
             val btn_ok : Button = dialog.findViewById(R.id.btn_ok);
             val btn_cancel : Button = dialog.findViewById(R.id.btn_cancel)
 

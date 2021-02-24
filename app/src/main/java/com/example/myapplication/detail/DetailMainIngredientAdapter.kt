@@ -46,6 +46,7 @@ class DetailMainIngredientAdapter :
     }
 
     fun updateMainIngredients(mainIngreds: ArrayList<RecipeDTO.MainIngredients>) {
-        mainIngredients = mainIngreds
+        mainIngredients.clear()
+        mainIngredients.addAll(mainIngreds)
     }
 }

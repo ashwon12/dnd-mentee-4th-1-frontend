@@ -34,6 +34,7 @@ class DetailTagAdapter : RecyclerView.Adapter<DetailTagViewHolder>() {
     }
 
     fun updateThemes(themes: ArrayList<RecipeDTO.Themes>) {
-        tags = themes
+        tags.clear()
+        tags.addAll(themes)
     }
 }

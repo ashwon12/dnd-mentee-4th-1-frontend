@@ -30,21 +30,26 @@
 
             <TextView
                 android:id="@+id/tv_uploader_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
                 android:layout_marginLeft="6dp"
                 android:gravity="center_vertical"
                 android:hint="userid"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <Button
                 android:id="@+id/btn_follow"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:background="@android:color/transparent"
+                android:gravity="right"
                 android:text="팔로우"
                 android:textColor="#FF7051"
                 android:textSize="18dp"
@@ -121,7 +126,6 @@
                 android:id="@+id/tv_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
                 android:textSize="16dp" />
 
         </LinearLayout>
@@ -131,27 +135,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginVertical="4dp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tag"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="24dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -230,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
 
@@ -251,8 +255,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_sub_ingredient"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -311,6 +314,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:stepSize="0.1"
                 android:progressTint="@color/LightGray"
                 android:rating="3" />
         </LinearLayout>
@@ -330,21 +334,21 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <View style="@style/Divider" />
+        <View style="@style/Divider2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="12dp"
-                android:text="후 기"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:paddingLeft="12dp"-->
+<!--                android:text="후 기"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="bold" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
