@@ -1,15 +1,21 @@
 package com.example.myapplication.navigation.mypage
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.detail.DetailFragment
 
 class MyMultiViewAdapter(
     private var type: Int,
@@ -51,6 +57,31 @@ class MyMultiViewAdapter(
                 holder.myStarCount.text = ItemsList[position].starCount
                 holder.myViewCount.text = ItemsList[position].viewCount
                 holder.myTime.text = ItemsList[position].time
+
+                holder.itemView.setOnClickListener {
+                    Toast.makeText(
+                        App.instance,
+                        "ID : ${this.ItemsList[position].id} " +
+                                "Title : ${this.ItemsList[position].title}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    val activity = view.context as AppCompatActivity
+                    val detailFragment: Fragment = DetailFragment()
+
+                    val args = Bundle()// 클릭된 Recipe의 id 전달
+                    args.putInt("recipeId",ItemsList[position].id)
+
+                    detailFragment.arguments = args
+
+                    val manager: FragmentManager = activity.supportFragmentManager
+                    manager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fl_container, detailFragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
 
             2 -> {
