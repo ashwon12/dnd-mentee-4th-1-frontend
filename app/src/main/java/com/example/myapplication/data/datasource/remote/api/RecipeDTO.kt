@@ -117,7 +117,7 @@ class RecipeDTO {
     )
 
     data class RecipeFinal(
-        var id: Int?,
+        var id: Int,
         var title: String? = null,
         var description: String? = null,
         var thumbnail: String? = null,
@@ -135,7 +135,7 @@ class RecipeDTO {
 
     data class Writer(
         var name: String? = null,
-        var id: Int?,
+        var id: Int,
         var email: String? = null
     )
 
@@ -147,7 +147,7 @@ class RecipeDTO {
     )
 
     data class Themes(
-        var id: Int?,
+        var id: Int,
         var name: String?
     ) : Serializable
 
