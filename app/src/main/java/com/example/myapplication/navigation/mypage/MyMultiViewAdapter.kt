@@ -46,6 +46,11 @@ class MyMultiViewAdapter(
                     .load(ItemsList[position].thumbnail)
                     .placeholder(R.drawable.ic_no_image)
                     .into((holder as MyMultiViewAdapter.GridViewHolder).myThumbnail)
+
+                holder.myTitle.text = ItemsList[position].title
+                holder.myStarCount.text = ItemsList[position].starCount
+                holder.myViewCount.text = ItemsList[position].viewCount
+                holder.myTime.text = ItemsList[position].time
             }
 
             2 -> {
