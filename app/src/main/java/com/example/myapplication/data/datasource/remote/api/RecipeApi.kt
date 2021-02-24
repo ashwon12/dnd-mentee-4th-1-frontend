@@ -1,6 +1,7 @@
 package com.example.myapplication.data.datasource.remote.api
 
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -36,11 +37,36 @@ interface RecipeApi {
         @Field("comment") comments: List<String>
     ): Call<RecipeDTO.PostItems>
 
+    @Multipart
+    @POST("/upload/step")
+    fun postImageUpload(
+        @Part imageFile: MultipartBody.Part
+    ): Call<RecipeDTO.UploadImage>
+
+    @POST("/recipes")
+    fun postRecipeUpload(
+        @Body data : RecipeDTO.UploadRecipe
+    ): Call<RecipeDTO.UploadRecipe>
+
+    @POST("/login")
+    fun postLoginInfo(
+        @Header("token") token : String,
+        @Body email : RecipeDTO.RequestPostLogin
+    ) : Call<RecipeDTO.RequestPostLogin>
+
+    @POST("/join")
+    fun postJoinInfo(
+        @Header("token") token : String,
+        @Body joinInfo : RecipeDTO.RequestJoin
+    ) : Call<RecipeDTO.RequestJoin>
+
+
     @GET("/recipes")
     fun getHomeRecipes(
         @Query("queryType") queryType: String,
         @Query("order") order: String
     ): Call<RecipeDTO.APIResponseList>
+
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
