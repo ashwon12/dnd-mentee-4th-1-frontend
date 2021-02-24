@@ -34,7 +34,7 @@ class UploadActivity3 : AppCompatActivity() {
         private const val REQUEST_GET_IMAGE = 105
         private const val PERMISSION_CODE = 100
     }
-    private var themes : Array<RecipeDTO.Themes> = emptyArray()
+    private var themes = ArrayList<RecipeDTO.Themes>()
     private var timeString: String = ""
     private var number = 0
     private var number1 = 1
@@ -158,9 +158,11 @@ class UploadActivity3 : AppCompatActivity() {
             intent.putExtra("mainfood", mainFoodTagList)
             intent.putExtra("subfood", subFoodTagList)
             intent.putExtra("thumbnail", thumbnail)
-            intent.putExtra("number", count)
+            intent.putExtra("number", count.toString())
+            Log.d("number", count.toString() + "count here!!")
             intent.putExtra("time", timeString)
             intent.putExtra("subtitle",subTitle)
+            intent.putExtra("themes",themes)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }
@@ -241,6 +243,12 @@ class UploadActivity3 : AppCompatActivity() {
         if (intent.hasExtra("subtitle")) {
             subTitle = intent.getStringExtra("subtitle")!!
             Log.d("subTitle", subTitle.toString())
+        }
+        if (intent.hasExtra("themes")) {
+            themes = intent.getSerializableExtra("themes") as ArrayList<RecipeDTO.Themes>
+            for(i in themes.indices) {
+                Log.d("themes", themes[i].id.toString() + " " + themes[i].name.toString() + "여기")
+            }
         }
     }
 

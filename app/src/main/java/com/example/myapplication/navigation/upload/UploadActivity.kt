@@ -17,24 +17,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
     private var recipeTitle: String = ""
     private var filterList = ArrayList<RecipeDTO.Themes>()
-    private var themes: Array<RecipeDTO.Themes> = arrayOf(
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes(""),
-        RecipeDTO.Themes("")
-    )
+    private var themes = ArrayList<RecipeDTO.Themes>()
     private var numberList = ArrayList<String>()
     private var saveFilterList = ArrayList<String>()
     private var subTitle: String = ""
+    private val repository = Repository()
+    private var recipePostResult = ArrayList<RecipeDTO.APIResponseData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,18 +81,18 @@ class UploadActivity : AppCompatActivity() {
             GridLayoutManager(this, 4)
         rv_upload_filter.setHasFixedSize(true)
 
-        rv_upload_filter.adapter = UploadFilterAdapter(filterList, numberList, saveFilterList)
+        rv_upload_filter.adapter = UploadFilterAdapter(filterList, themes, saveFilterList)
     }
 
     private fun filterAdd() {
-        filterList.add(RecipeDTO.Themes("20", "혼밥"))
-        filterList.add(RecipeDTO.Themes("21", "간식"))
-        filterList.add(RecipeDTO.Themes("22", "굽기"))
-        filterList.add(RecipeDTO.Themes("23", "파티"))
-        filterList.add(RecipeDTO.Themes("24", "술안주"))
-        filterList.add(RecipeDTO.Themes("25", "간편식"))
-        filterList.add(RecipeDTO.Themes("26", "베이킹"))
-        filterList.add(RecipeDTO.Themes("27", "든든한끼"))
+        filterList.add(RecipeDTO.Themes(20, "혼밥"))
+        filterList.add(RecipeDTO.Themes(21,"간식"))
+        filterList.add(RecipeDTO.Themes(22, "굽기"))
+        filterList.add(RecipeDTO.Themes(23, "파티"))
+        filterList.add(RecipeDTO.Themes(24, "술안주"))
+        filterList.add(RecipeDTO.Themes(25, "간편식"))
+        filterList.add(RecipeDTO.Themes(26, "베이킹"))
+        filterList.add(RecipeDTO.Themes(27, "든든한끼"))
     }
 
     private fun textWatcher() {
@@ -124,8 +118,7 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun checkPermissionNextButton(): Boolean {
-        makeThemes()
-        // Log.d("saveFilterList", saveFilterList.size.toString())
+        Log.d("filter", themes[0].name.toString() + " " + themes[1].name.toString() + " ")
         if (recipeTitle.isNotEmpty() && saveFilterList.size > 0 && subTitle.isNotEmpty()) {
             return true
         } else if (saveFilterList.size < 0) {
@@ -143,24 +136,6 @@ class UploadActivity : AppCompatActivity() {
         }
 
         return false
-    }
-
-    private fun makeThemes() {
-        for (i in numberList.indices) {
-            themes[i] = RecipeDTO.Themes(numberList[i], saveFilterList[i])
-            // Log.d("filter", filter[i].id + " " + filter[i].name)
-        }
-        for (i in themes.indices) {
-            if (themes[i].id == null || themes[i].name == null) {
-                themes.slice(0 until 1)
-                break
-            }
-
-            //  Log.d("filter", filter[i].id + " " + filter[i].name)
-        }
-        for (i in themes.indices) {
-            Log.d("filter", themes[i].id + " " + themes[i].name)
-        }
     }
 
     fun setStatusBarTransparent() {

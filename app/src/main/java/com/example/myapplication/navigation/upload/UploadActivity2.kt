@@ -39,7 +39,7 @@ class UploadActivity2 : AppCompatActivity() {
         private const val REQUEST_GALLERY_CODE = 100
         private const val PERMISSION_CODE = 100
     }
-    private var themes : Array<RecipeDTO.Themes> = emptyArray()
+    private var themes = ArrayList<RecipeDTO.Themes>()
     private var subTitle: String = ""
     private var recipeTitle: String = ""
     private var saveFilterList = ArrayList<String>()
@@ -99,9 +99,9 @@ class UploadActivity2 : AppCompatActivity() {
             Log.d("subTitle", subTitle)
         }
         if (intent.hasExtra("themes")) {
-            themes = intent.getSerializableExtra("themes") as Array<RecipeDTO.Themes>
+            themes = intent.getSerializableExtra("themes") as ArrayList<RecipeDTO.Themes>
             for(i in themes.indices) {
-                Log.d("filter", themes[i].id + " " + themes[i].name)
+                Log.d("themes", themes[i].id.toString() + " " + themes[i].name.toString())
             }
         }
     }
@@ -124,6 +124,7 @@ class UploadActivity2 : AppCompatActivity() {
             intent.putExtra("subfood", subFoodTagList)
             intent.putExtra("time", timeString)
             intent.putExtra("subtitle", subTitle)
+            intent.putExtra("themes", themes)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
             startActivity(intent)
