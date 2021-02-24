@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_upload4.*
 import org.json.JSONObject
 
 class UploadActivity4 : AppCompatActivity() {
-    private var data = HashMap<String, Any>()
     private var themes = ArrayList<RecipeDTO.Themes>()
     private var select_cut: String? = null
     private var recipeTitle: String? = null
@@ -32,16 +31,8 @@ class UploadActivity4 : AppCompatActivity() {
     private var mainFoodTagList = ArrayList<String>()
     private var subFoodTagList = ArrayList<String>()
     private var thumbnail: String? = null
-    private var filterList = ArrayList<RecipeDTO.Themes>()
     private lateinit var adapter: UploadPreviewRecipeAdapter
-    private var obj = JSONObject()
     val recipeResult = RecipeDTO.UploadRecipe(null, null, null, ArrayList<RecipeDTO.MainIngredients>(),ArrayList<RecipeDTO.SubIngredients>(), ArrayList<Int>(), ArrayList<RecipeDTO.Steps>(),null,null,null,null)
-    val recipePostResult = RecipeDTO.APIResponseData(
-        null, null, null, null, null,
-        RecipeDTO.RecipeFinal(null, "", "", "",
-            ArrayList<RecipeDTO.MainIngredients>(),ArrayList<RecipeDTO.SubIngredients>(), null, null, null, "", "", "", null, null)
-    )
-    // private lateinit var recipePostResult : RecipeDTO.APIResponseData
 
     private val repository = Repository()
 
@@ -83,7 +74,7 @@ class UploadActivity4 : AppCompatActivity() {
 
     private fun clickSubmitButton() {
         setResult()
-        
+
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("number", select_cut)
         intent.putExtra("filter", saveFilterList)

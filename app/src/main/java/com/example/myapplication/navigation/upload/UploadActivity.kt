@@ -24,11 +24,8 @@ class UploadActivity : AppCompatActivity() {
     private var recipeTitle: String = ""
     private var filterList = ArrayList<RecipeDTO.Themes>()
     private var themes = ArrayList<RecipeDTO.Themes>()
-    private var numberList = ArrayList<String>()
     private var saveFilterList = ArrayList<String>()
     private var subTitle: String = ""
-    private val repository = Repository()
-    private var recipePostResult = ArrayList<RecipeDTO.APIResponseData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
