@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.filter_list_item.view.*
 
 class UploadFilterAdapter(
     val filterList: ArrayList<RecipeDTO.Themes>,
-    val numberList : ArrayList<String>,
+    val themes : ArrayList<RecipeDTO.Themes>,
     val saveList: ArrayList<String>
 ) :
     RecyclerView.Adapter<UploadFilterAdapter.UploadFilterHolder>() {
@@ -39,12 +39,12 @@ class UploadFilterAdapter(
         holder.itemView.setOnClickListener {
             if (!saveList.contains(filterList[position].name)) {
                 saveList.add(filterList[position].name.toString())
-                numberList.add(filterList[position].id.toString())
+                themes.add(RecipeDTO.Themes(filterList[position].id, filterList[position].name))
                 holder.name.setTextColor(Color.parseColor("#FF7051"))
                 holder.name.setBackgroundResource(R.drawable.select_border_layout)
             } else {
                 saveList.remove(filterList[position].name)
-                numberList.remove(filterList[position].id)
+                themes.remove(RecipeDTO.Themes(filterList[position].id, filterList[position].name))
                 holder.name.setTextColor(Color.parseColor("#777777"))
                 holder.name.setBackgroundResource(R.drawable.no_select_border_layout)
             }
