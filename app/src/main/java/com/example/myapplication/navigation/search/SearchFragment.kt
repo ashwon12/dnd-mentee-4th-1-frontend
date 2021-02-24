@@ -220,9 +220,8 @@ class SearchFragment : Fragment() {
         repository.getRandomRecipes(
             success = {
                 it.run {
-                    searchAdapter.randomRecipes = it.list!!
 
-                    searchAdapter.updateRandomRecipeList(searchAdapter.randomRecipes)
+                    searchAdapter.randomRecipes = it.list!!
                     searchAdapter.notifyDataSetChanged()
                 }
             },

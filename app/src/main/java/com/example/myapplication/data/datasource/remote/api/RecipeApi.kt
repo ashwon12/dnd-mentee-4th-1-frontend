@@ -17,14 +17,29 @@ interface RecipeApi {
 
     @GET("/recipes")
     fun getRandomRecipes(
+        //@Header("X-AUTH-TOKEN")
+        @Query("queryType") queryType: String,
+        @Query("keyword") keyword: String,
+        @Query("limit") limit: Int
+    ): Call<RecipeDTO.APIResponseRecipeList>
+
+    @GET("/recipes")
+    fun getResultRecipes(
+        //@Header("X-AUTH-TOKEN")
         @Query("queryType") queryType: String,
         @Query("keyword") keyword: String
-    ): Call<RecipeDTO.APIResponseList>
+    ): Call<RecipeDTO.APIResponseRecipeList>
 
     @GET("/recipes/{recipeId}")
     fun getRecipeById(
         @Path("recipeId") recipeId: Int
-    ): Call<RecipeDTO.APIResponseData>
+    ): Call<RecipeDTO.APIResponseRecipeData>
+
+    @GET("recipes/{recipeId}/comments")
+    fun getCommentsById(
+        @Path("recipeId") recipeId: Int
+    ): Call<RecipeDTO.APIResponseCommentList>
+
 
     @FormUrlEncoded
     @POST("/posts")

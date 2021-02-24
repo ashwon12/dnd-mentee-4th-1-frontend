@@ -33,16 +33,8 @@ class ResultFragement : Fragment() {
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
     private var spinnerData1 = mutableListOf<String>("최신순", "별순", "조회순")
-    private var spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷","컷수")
-    private var spinnerData3 = mutableListOf<String>(
-        "15분 이내",
-        "30분 이내",
-        "45분 이내",
-        "60분 이내",
-        "60분 이상",
-        "시간"
-    )
-
+    private var spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷", "컷수")
+    private var spinnerData3 = mutableListOf<String>("15분 이내","30분 이내","45분 이내","60분 이내","60분 이상","시간")
 
     private var inputTextFromSearchFragment: String? = ""
 
@@ -55,13 +47,39 @@ class ResultFragement : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_result, container, false)
 
+
         setButtonSearch()
         setAutoCompleteTextView()
         setAutoCompleteTextViewClearButton()
         setResultRecyclerView()
         setSpinner()
 
+        requestResultRecipe(inputTextFromSearchFragment!!)
+
         return v
+    }
+
+    /** 검색결과 레시피 API Data 요청
+     *
+     *  http://13.209.68.130:8080/recipes?queryType=search&keyword=inputTextFromSearchFragment
+     **/
+    private fun requestResultRecipe(word: String) {
+        repository.getResultRecipes(
+            word,
+            success = {
+                it.run {
+                    val resultCount = v.findViewById<TextView>(R.id.tv_result_count)
+
+                    resultCount.text = it.list?.size.toString()
+
+                    resultAdapter.resultRecipes = it.list!!
+
+                    resultAdapter.notifyDataSetChanged()
+                }
+            }, fail = {
+
+            })
+
     }
 
     /**  [X] 버튼 클릭 리스너  */
@@ -124,54 +142,6 @@ class ResultFragement : Fragment() {
 
     private fun setResultRecyclerView() {
         resultAdapter = ResultAdapter()
-        resultAdapter.addSampleResult(
-            RecipeDTO.tempResultRecipes(
-                1,
-                "R.drawable.ic_home",
-                "간단한 햄버거 만들기",
-                null,
-                null,
-                null,
-                4.3,
-                22
-            )
-        )
-        resultAdapter.addSampleResult(
-            RecipeDTO.tempResultRecipes(
-                2,
-                "R.drawable.ic_home",
-                "간단한 햄버거 만들기",
-                null,
-                null,
-                null,
-                4.3,
-                22
-            )
-        )
-        resultAdapter.addSampleResult(
-            RecipeDTO.tempResultRecipes(
-                3,
-                "R.drawable.ic_home",
-                "간단한 햄버거 만들기",
-                null,
-                null,
-                null,
-                4.3,
-                22
-            )
-        )
-        resultAdapter.addSampleResult(
-            RecipeDTO.tempResultRecipes(
-                4,
-                "R.drawable.ic_home",
-                "간단한 햄버거 만들기",
-                null,
-                null,
-                null,
-                4.3,
-                22
-            )
-        )
 
         rvResults = v.findViewById<RecyclerView>(R.id.rv_result_recipe)
         rvResults.layoutManager =
@@ -183,44 +153,48 @@ class ResultFragement : Fragment() {
     private fun setSpinner() {
 
         var adapter1 = ArrayAdapter(v.context, R.layout.spinner_item, spinnerData1)
-        val adapter2 = object : ArrayAdapter<String>(v.context, R.layout.spinner_item, spinnerData2) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val adapter2 =
+            object : ArrayAdapter<String>(v.context, R.layout.spinner_item, spinnerData2) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-                val v = super.getView(position, convertView, parent)
-                if (position == count) {
-                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-                    (v.findViewById<View>(R.id.tv_spinner_item) as TextView).text = ""
-                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-                    (v.findViewById<View>(R.id.tv_spinner_item) as TextView).hint = getItem(count)
+                    val v = super.getView(position, convertView, parent)
+                    if (position == count) {
+                        //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
+                        (v.findViewById<View>(R.id.tv_spinner_item) as TextView).text = ""
+                        //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
+                        (v.findViewById<View>(R.id.tv_spinner_item) as TextView).hint =
+                            getItem(count)
+                    }
+                    return v
                 }
-                return v
-            }
 
-            override fun getCount(): Int {
-                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-                return super.getCount() - 1
-            }
-
-        }
-        val adapter3 = object : ArrayAdapter<String>(v.context, R.layout.spinner_item, spinnerData3) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-
-                val v = super.getView(position, convertView, parent)
-                if (position == count) {
-                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-                    (v.findViewById<View>(R.id.tv_spinner_item) as TextView).text = ""
-                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-                    (v.findViewById<View>(R.id.tv_spinner_item) as TextView).hint = getItem(count)
+                override fun getCount(): Int {
+                    //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
+                    return super.getCount() - 1
                 }
-                return v
-            }
 
-            override fun getCount(): Int {
-                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-                return super.getCount() - 1
             }
+        val adapter3 =
+            object : ArrayAdapter<String>(v.context, R.layout.spinner_item, spinnerData3) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-        }
+                    val v = super.getView(position, convertView, parent)
+                    if (position == count) {
+                        //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
+                        (v.findViewById<View>(R.id.tv_spinner_item) as TextView).text = ""
+                        //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
+                        (v.findViewById<View>(R.id.tv_spinner_item) as TextView).hint =
+                            getItem(count)
+                    }
+                    return v
+                }
+
+                override fun getCount(): Int {
+                    //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
+                    return super.getCount() - 1
+                }
+
+            }
 
         val spinner1 = v.findViewById<Spinner>(R.id.spinner_filter1)
         val spinner2 = v.findViewById<Spinner>(R.id.spinner_filter2)
@@ -235,23 +209,44 @@ class ResultFragement : Fragment() {
         spinner3.setSelection(adapter3.count)// "시간" 제목 설정
 
         // Spinner 클릭 리스너
-        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
+        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("")
             }
         }
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
-            (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
-        }
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+            }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("")
             }
         }
-        spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
-            (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
-        }
+        spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+            }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 println("")
             }

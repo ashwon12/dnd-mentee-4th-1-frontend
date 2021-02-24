@@ -15,7 +15,7 @@ import com.example.myapplication.detail.DetailFragment
 
 class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
 
-    var resultRecipes = ArrayList<RecipeDTO.tempResultRecipes>()
+    var resultRecipes = ArrayList<RecipeDTO.RecipeFinal>()
 
     private lateinit var view: View
 
@@ -58,7 +58,8 @@ class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
         return resultRecipes.size
     }
 
-    fun addSampleResult(data: RecipeDTO.tempResultRecipes) {
-        resultRecipes.add(data)
+    fun updateResultRecipes(data: ArrayList<RecipeDTO.RecipeFinal>) {
+        resultRecipes.clear()
+        resultRecipes.addAll(data)
     }
 }

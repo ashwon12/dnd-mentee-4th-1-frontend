@@ -10,7 +10,7 @@ class Repository {
     private val remoteMovieDataSourceImpl = RemoteDataSource()
 
     fun getRandomRecipes(
-        success: (RecipeDTO.APIResponseList) -> Unit,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRandomRecipes(
@@ -19,12 +19,36 @@ class Repository {
         )
     }
 
+    fun getResultRecipes(
+        word: String,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getResultRecipes(
+            word,
+            success,
+            fail
+        )
+    }
+
     fun getRecipeById(
         recipeId: Int,
-        success: (RecipeDTO.APIResponseData) -> Unit,
+        success: (RecipeDTO.APIResponseRecipeData) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRecipeById(
+            recipeId,
+            success,
+            fail
+        )
+    }
+
+    fun getCommentsById(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseCommentList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getCommentsById(
             recipeId,
             success,
             fail
