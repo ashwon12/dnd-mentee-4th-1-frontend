@@ -34,10 +34,10 @@ class UploadActivity3 : AppCompatActivity() {
         private const val REQUEST_GET_IMAGE = 105
         private const val PERMISSION_CODE = 100
     }
+
     private var themes = ArrayList<RecipeDTO.Themes>()
     private var timeString: String = ""
-    private var number = 0
-    private var number1 = 1
+    private var number = 1
     private var count = 0
     private var recipeTitle: String? = null
     private var subTitle: String? = null
@@ -87,25 +87,20 @@ class UploadActivity3 : AppCompatActivity() {
     }
 
     private fun addButtonClick() {
-        if (count < 9) {
-            Log.d("click", "클릭됨")
-            Log.d("commentList", commentList.toString())
-            addItem(
-                rv_upload_comment.adapter!!.itemCount,
-                RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
-            )
-            addRecyclerView()
-            adapter.notifyDataSetChanged()
-
-        } else {
-            Toast.makeText(this, "9개 이상 추가할 수 없습니다.", Toast.LENGTH_SHORT).show()
-        }
+        Log.d("click", "클릭됨")
+        Log.d("commentList", commentList.toString())
+        addItem(
+            rv_upload_comment.adapter!!.itemCount,
+            RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+        )
+        addRecyclerView()
+        adapter.notifyDataSetChanged()
     }
 
     private fun itemTouch() {
         val item = object : UploadSwapDelete(this, 0, ItemTouchHelper.LEFT) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if(count > 3) {
+                if (count > 3) {
                     commentAdapter.deleteItem(viewHolder.adapterPosition)
                     Log.d("id", viewHolder.itemId.toString())
                     Log.d("position", viewHolder.adapterPosition.toString())
@@ -115,11 +110,12 @@ class UploadActivity3 : AppCompatActivity() {
                     adapter.deleteItem(viewHolder.layoutPosition)
                     number--
                     count--
-                    if (viewHolder.layoutPosition == 8) {
-                        addRecyclerView()
-                    }
                 } else {
-                    Toast.makeText(App.instance, "사진은 최소 3장 업로드 해야합니다.\n사진을 눌러 변경해주세요.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        App.instance,
+                        "사진은 최소 3장 업로드 해야합니다.\n사진을 눌러 변경해주세요.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     commentAdapter.notifyDataSetChanged()
                 }
 
@@ -131,11 +127,10 @@ class UploadActivity3 : AppCompatActivity() {
     }
 
     private fun addItem(position: Int, data: RecipeDTO.Recipe) {
-        if (count < 9) {
-            commentList.add(position, data)
-            commentAdapter.notifyDataSetChanged()
-            count++
-        }
+        commentList.add(position, data)
+        commentAdapter.notifyDataSetChanged()
+        count++
+
     }
 
     private fun clickPrevButton() {
@@ -161,8 +156,8 @@ class UploadActivity3 : AppCompatActivity() {
             intent.putExtra("number", count.toString())
             Log.d("number", count.toString() + "count here!!")
             intent.putExtra("time", timeString)
-            intent.putExtra("subtitle",subTitle)
-            intent.putExtra("themes",themes)
+            intent.putExtra("subtitle", subTitle)
+            intent.putExtra("themes", themes)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }
@@ -187,30 +182,25 @@ class UploadActivity3 : AppCompatActivity() {
 
     private fun makeRecyclerView() {
         recipeList.clear()
-        recipeList.add(RecipeDTO.Recipe(number1.toString(), null, null))
+        recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
 
-        for(i in 0..2) {
-            number1++
-            recipeList.add(RecipeDTO.Recipe(number1.toString(), null, null))
+        for (i in 0..2) {
+            number++
+            recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
             addItem(
                 rv_upload_comment.adapter!!.itemCount,
                 RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
             )
         }
-        number1--
-        Log.d("RecyclerView number", number1.toString())
+
+        Log.d("RecyclerView number", number.toString())
     }
 
     private fun addRecyclerView() {
-        if(number1 < 7) {
-            number1++
-            number++
-        }
-        if (number < 9 && number > 3) {
+        if (number >= 3) {
             number++
             recipeList.add(RecipeDTO.Recipe(number.toString(), null, null))
         }
-        Log.d("RecyclerView number111", number1.toString())
         Log.d("RecyclerView number", number.toString())
         Log.d("recipeList", recipeList.toString())
     }
@@ -246,7 +236,7 @@ class UploadActivity3 : AppCompatActivity() {
         }
         if (intent.hasExtra("themes")) {
             themes = intent.getSerializableExtra("themes") as ArrayList<RecipeDTO.Themes>
-            for(i in themes.indices) {
+            for (i in themes.indices) {
                 Log.d("themes", themes[i].id.toString() + " " + themes[i].name.toString() + "여기")
             }
         }
@@ -294,69 +284,49 @@ class UploadActivity3 : AppCompatActivity() {
                         val size = mSelected.size
                         if (size == 1) {
                             imageUploadToServer(PathUtils.getPath(App.instance, mSelected[0]))
-                            addRecyclerView()
-                            if (number > 3 && positionMain >= number - 2) {
+                            if (number >= 3 && positionMain >= number - 1) {
+                                addRecyclerView()
                                 addItem(
                                     rv_upload_comment.adapter!!.itemCount,
                                     RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
                                 )
                             }
-                            // adapter.notifyDataSetChanged()
-                        } else if (size <= 9) {
-                            if (positionMain + size <= 9) {
-                                if(positionMain + size == number) {
-                                    for (i in mSelected.indices) {
-                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]), i)
-                                        // recipeList[positionMain + i].image = mSelected[i].toString()
-                                        // adapter.notifyDataSetChanged()
-                                    }
-                                    addRecyclerView()
-                                    addItem(
-                                        rv_upload_comment.adapter!!.itemCount,
-                                        RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+                        } else {
+                            Log.d("positionMain", positionMain.toString())
+                            Log.d("size", size.toString())
+                            Log.d("number", number.toString())
+                            if (positionMain + size <= number) {
+                                for (i in mSelected.indices) {
+                                    imageUploadToServer(
+                                        PathUtils.getPath(
+                                            App.instance,
+                                            mSelected[i]
+                                        ), i
                                     )
-                                } else if (positionMain + size <= number - 1) {
-                                    for (i in mSelected.indices) {
-                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]), i)
-                                        // recipeList[positionMain + i].image = mSelected[i].toString()
-                                        // adapter.notifyDataSetChanged()
-                                        // Log.d("here!!", positionMain.toString())
-                                    }
-                                } else {
-                                    for (i in mSelected.indices) {
-                                        imageUploadToServer(PathUtils.getPath(App.instance, mSelected[i]),  i)
-                                        // recipeList[positionMain + i].image = mSelected[i].toString()
+                                }
+                            } else if (positionMain + size > number) {
+                                for (i in mSelected.indices) {
+                                    imageUploadToServer(
+                                        PathUtils.getPath(
+                                            App.instance,
+                                            mSelected[i]
+                                        ), i
+                                    )
+                                    if (positionMain + i >= number - 1) {
                                         addRecyclerView()
-
-                                        // Log.d("number3", number.toString())
-                                        if(number > 4) {
-                                            addItem(
-                                                rv_upload_comment.adapter!!.itemCount,
-                                                RecipeDTO.Recipe(Integer.toString(count + 1), "", "")
+                                        addItem(
+                                            rv_upload_comment.adapter!!.itemCount,
+                                            RecipeDTO.Recipe(
+                                                Integer.toString(count + 1),
+                                                "",
+                                                ""
                                             )
-                                        }
-
-                                        // adapter.notifyDataSetChanged()
+                                        )
                                     }
                                 }
-
-                            } else if (number >= 9) {
-                                Toast.makeText(
-                                    App.instance,
-                                    "사진을 9개 이상 전송할 수 없습니다.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
 
-                        } else {
-                            Toast.makeText(
-                                App.instance,
-                                "사진을 9개 이상 전송할 수 없습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
-                        Log.d("number2", number.toString())
-                        Log.d("recipeList here22!!", recipeList.toString() + " 여기에요")
                     }
                 else -> finish()
             }
@@ -408,17 +378,18 @@ class UploadActivity3 : AppCompatActivity() {
                 if ((positionMain < count) && count > 3) {
                     adapter.deleteItem(positionMain)
                     commentAdapter.deleteItem(positionMain)
-                    if(positionMain == 4) {
+                    if (positionMain == 4) {
                         addRecyclerView()
                     }
                     count--
                     number--
-                    if (positionMain == 8) {
-                        addRecyclerView()
-                    }
                 } else {
-                    if(count <= 3){
-                        Toast.makeText(this, "사진은 최소 3장 업로드 해야합니다.\n사진을 눌러 변경해주세요.", Toast.LENGTH_SHORT).show()
+                    if (count <= 3) {
+                        Toast.makeText(
+                            this,
+                            "사진은 최소 3장 업로드 해야합니다.\n사진을 눌러 변경해주세요.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         Toast.makeText(this, "삭제하실 수 없습니다.", Toast.LENGTH_SHORT).show()
                     }
@@ -476,8 +447,9 @@ class UploadActivity3 : AppCompatActivity() {
             }
         )
     }
+
     private fun checkPermissionNextButton(): Boolean {
-        if(steps.size < 3) {
+        if (steps.size < 3) {
             Toast.makeText(this, "최소 3장의 사진을 올려야합니다.", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -499,13 +471,15 @@ class UploadActivity3 : AppCompatActivity() {
 
         return true
     }
+
     /**  StatusBar 투명하게 만들기(1)  **/
     fun setStatusBarTransparent() {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
         if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         if (Build.VERSION.SDK_INT >= 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)

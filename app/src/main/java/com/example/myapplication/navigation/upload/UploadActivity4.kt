@@ -169,7 +169,7 @@ class UploadActivity4 : AppCompatActivity() {
         } else {
             recipeResult.writerId = Integer.parseInt(App.sharedPrefs.getGoogleId())
         }
-        
+
         recipeResult.pid = 1
 
         recipeUpload()
