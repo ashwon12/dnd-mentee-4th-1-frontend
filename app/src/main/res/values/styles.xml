@@ -20,6 +20,7 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    
     <!-- EditText -->
     <style name="TextLabel" parent="TextAppearance.AppCompat">
         <!-- Hint color and label color in FALSE state -->
@@ -29,10 +30,14 @@
 <!--        <item name="colorAccent">@color/Color Name</item>-->
 <!--        <item name="colorControlNormal">@color/Color Name</item>-->
 <!--        <item name="colorControlActivated">@color/Color Name</item>-->
+        <!--        &lt;!&ndash; Label color in TRUE state and bar color FALSE and TRUE State &ndash;&gt;-->
+        <!--        <item name="colorAccent">@color/Color Name</item>-->
+        <!--        <item name="colorControlNormal">@color/Color Name</item>-->
+        <!--        <item name="colorControlActivated">@color/Color Name</item>-->
     </style>
 
+    
     <!--    폰트스타일-->
-<!--    폰트스타일-->
 
     <style name="FontHeadLine">
         <item name="android:textSize">28sp</item>
@@ -66,6 +71,12 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="FontSubHeading3">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
     <style name="FontBody1">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
@@ -78,7 +89,7 @@
     </style>
 
     <style name="FontCaption">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 

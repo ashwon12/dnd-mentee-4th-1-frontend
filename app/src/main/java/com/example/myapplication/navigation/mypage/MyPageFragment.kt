@@ -2,6 +2,7 @@ package com.example.myapplication.navigation.mypage
 
 import MyPageFollowerFragment
 import MyPageFollowingFragment
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -23,8 +24,7 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        // updateKaKaoLoginUi()
+
 
         return inflater.inflate(R.layout.fragment_mypage, container, false)
     }
@@ -34,6 +34,16 @@ class MyPageFragment : Fragment() {
         updateKaKaoLoginUi()
         updateGoogleLoginUi()
         initTabs()
+        settingButton()
+    }
+
+    private fun settingButton() {
+        ib_settings.setOnClickListener {
+            activity?.let{
+                val intent = Intent(context, SettingActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun initTabs() {
@@ -51,8 +61,7 @@ class MyPageFragment : Fragment() {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Log.e("kakao", "사용자 정보 요청 실패", error)
-            }
-            else if (user != null) {
+            } else if (user != null) {
                 Log.i(
                     "kakao", "사용자 정보 요청 성공" +
                             "\n회원번호: ${user.id}" +
@@ -78,7 +87,10 @@ class MyPageFragment : Fragment() {
             val personId = acct?.id
             val personPhoto: Uri? = acct?.photoUrl
 
-            Log.d("google", personName + "," + personGivenName + "," + personFamilyName + "," + personEmail + "," + personId + "," + acct.idToken)
+            Log.d(
+                "google",
+                personName + "," + personGivenName + "," + personFamilyName + "," + personEmail + "," + personId + "," + acct.idToken
+            )
             tv_user_id.setText(personGivenName)
             Glide.with(App.instance)
                 .load(personPhoto)

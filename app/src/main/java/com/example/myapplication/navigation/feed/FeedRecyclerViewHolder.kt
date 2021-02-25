@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.example.myapplication.navigation.home.MultiViewAdapter
 import me.relex.circleindicator.CircleIndicator3
 
 class FeedRecyclerViewHolder(
