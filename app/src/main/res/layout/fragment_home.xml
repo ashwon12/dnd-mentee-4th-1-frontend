@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".navigation.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -174,7 +173,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
