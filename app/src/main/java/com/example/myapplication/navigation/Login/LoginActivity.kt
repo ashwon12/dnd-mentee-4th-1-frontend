@@ -116,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
 //                )
 
                 userEmail = user.id.toString() + "@kakao"
-                // userEmail ="sdfsfsf@kakao"
+                // userEmail = "sdfsfs3231ddaf@kakao"
                 userName = user.kakaoAccount?.profile?.nickname.toString()
                 userImage = user.kakaoAccount?.profile?.profileImageUrl.toString()
 
@@ -184,8 +184,9 @@ class LoginActivity : AppCompatActivity() {
 
 
             val split = personEmail!!.split("@")
-            userEmail = split[0] + "@google"
-           //  userEmail = "12345@google"
+            // userEmail = split[0] + "@google"
+            userEmail = personEmail.toString()
+            // userEmail = "123456@gmail.com"
 
             Log.d("userEmail", userEmail)
             userInfo.email = userEmail
@@ -207,16 +208,17 @@ class LoginActivity : AppCompatActivity() {
                     it.run {
                         val data = it.data
                         // App.sharedPrefs.saveKakaoId(data.toString())
+                        App.sharedPrefs.saveToken(data.toString())
                         Log.d("data", it.data.toString())
                     }
                 }, fail = {
-                    App.sharedPrefs.saveKakaoId(null)
+                    // App.sharedPrefs.saveKakaoId(null)
                 })
-
+            Log.d("get token", App.sharedPrefs.getToken().toString())
             Log.d("kakao data1", App.sharedPrefs.getEmail().toString())
             Log.d("kakao data2", App.sharedPrefs.getKakaoId().toString())
 
-            if (App.sharedPrefs.getKakaoId() == null) {
+            if (App.sharedPrefs.getKakaoId() == null || App.sharedPrefs.getToken() == "") {
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 1)
                 App.sharedPrefs.saveFlag("1")
@@ -247,6 +249,7 @@ class LoginActivity : AppCompatActivity() {
                     it.run {
                         val data = it.data
                         // App.sharedPrefs.saveGoogleId(data.toString())
+                        App.sharedPrefs.saveToken(data.toString())
                         Log.d("shared_id", App.sharedPrefs.getGoogleId().toString())
                     }
                 }, fail = {
@@ -257,7 +260,7 @@ class LoginActivity : AppCompatActivity() {
             Log.d("google data1", App.sharedPrefs.getEmail().toString())
             Log.d("google data2", App.sharedPrefs.getGoogleId().toString())
 
-            if (App.sharedPrefs.getGoogleId() == null) {
+            if (App.sharedPrefs.getGoogleId() == null || App.sharedPrefs.getToken() == "") {
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 1)
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
