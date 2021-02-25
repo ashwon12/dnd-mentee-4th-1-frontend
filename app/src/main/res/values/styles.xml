@@ -30,25 +30,6 @@
 <!--        <item name="colorControlNormal">@color/Color Name</item>-->
 <!--        <item name="colorControlActivated">@color/Color Name</item>-->
     </style>
-    <style name="WhiteAccent" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@android:color/white</item>
-        <item name="colorControlActivated">@android:color/white</item>
-        <item name="colorControlHighlight">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="colorControlNormal">#c5c5c5</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-    </style>
-
-    <style name="WhiteAccent2" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorAccent">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="colorControlNormal">@color/orange</item>
-        <item name="colorControlActivated">@color/orange</item>
-        <item name="colorControlHighlight">@color/orange</item>
-    </style>
 
     <!--    폰트스타일-->
 <!--    폰트스타일-->
