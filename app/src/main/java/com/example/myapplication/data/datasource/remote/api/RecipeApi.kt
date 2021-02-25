@@ -48,20 +48,20 @@ interface RecipeApi {
 
     @POST("/recipes")
     fun postRecipeUpload(
-        @Body data : RecipeDTO.UploadRecipe
+        @Body data: RecipeDTO.UploadRecipe
     ): Call<RecipeDTO.UploadRecipe>
 
     @POST("/login")
     fun postLoginInfo(
-        @Header("token") token : String,
-        @Body email : RecipeDTO.RequestPostLogin
-    ) : Call<RecipeDTO.RequestPostLogin>
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body email: RecipeDTO.RequestPostLogin
+    ): Call<RecipeDTO.RequestPostLogin>
 
     @POST("/join")
     fun postJoinInfo(
-        @Header("token") token : String,
-        @Body joinInfo : RecipeDTO.RequestJoin
-    ) : Call<RecipeDTO.RequestJoin>
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body joinInfo: RecipeDTO.RequestJoin
+    ): Call<RecipeDTO.RequestJoin>
 
     @GET("/recipes")
     fun getHomeRecipes(
@@ -69,6 +69,10 @@ interface RecipeApi {
         @Query("order") order: String
     ): Call<RecipeDTO.APIResponseList>
 
+    @GET("/recipes")
+    fun getQuoteRecipe(
+        @Query("id") id: Int
+    ): Call<RecipeDTO.UploadRecipe>
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
