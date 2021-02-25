@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private var joinInfo = RecipeDTO.RequestJoin("", "", "")
     private var flag = 1
+    private var cancel = 0
     private val repository = Repository()
     private var token = App.sharedPrefs.getToken()
     private var name = ""
@@ -46,14 +47,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         getItems()
 
-        if(flag == 1) {
+        if(flag == 1 && (App.sharedPrefs.getKakaoId() == null || App.sharedPrefs.getGoogleId() == null)) {
             showDialog()
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         setStatusBarTransparent()
-
-
         initBottomNavigation()
     }
 
@@ -61,6 +60,9 @@ class MainActivity : AppCompatActivity() {
         if(intent.hasExtra("join")) {
             flag = intent.getIntExtra("join", -1)
             Log.d("flag", flag.toString())
+        }
+        if(intent.hasExtra("cancel")) {
+            cancel = intent.getIntExtra("cancel", -1)
         }
     }
 
