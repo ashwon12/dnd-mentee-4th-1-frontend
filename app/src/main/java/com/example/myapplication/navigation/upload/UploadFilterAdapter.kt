@@ -2,6 +2,7 @@ package com.example.myapplication.navigation.upload
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,12 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.filter_list_item.view.*
 
 class UploadFilterAdapter(
-    val filterList: ArrayList<RecipeDTO.Filter>,
+    val filterList: ArrayList<RecipeDTO.Themes>,
+    val themes : ArrayList<RecipeDTO.Themes>,
     val saveList: ArrayList<String>
 ) :
     RecyclerView.Adapter<UploadFilterAdapter.UploadFilterHolder>() {
-
+    var count = 0
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -32,18 +34,21 @@ class UploadFilterAdapter(
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: UploadFilterAdapter.UploadFilterHolder, position: Int) {
-        holder.name.text = filterList[position].filterName
+        holder.name.text = filterList[position].name
 
         holder.itemView.setOnClickListener {
-            if (!saveList.contains(filterList[position].filterName)) {
-                saveList.add(filterList[position].filterName)
+            if (!saveList.contains(filterList[position].name)) {
+                saveList.add(filterList[position].name.toString())
+                themes.add(RecipeDTO.Themes(filterList[position].id, filterList[position].name))
                 holder.name.setTextColor(Color.parseColor("#FF7051"))
                 holder.name.setBackgroundResource(R.drawable.select_border_layout)
             } else {
-                saveList.remove(filterList[position].filterName)
+                saveList.remove(filterList[position].name)
+                themes.remove(RecipeDTO.Themes(filterList[position].id, filterList[position].name))
                 holder.name.setTextColor(Color.parseColor("#777777"))
                 holder.name.setBackgroundResource(R.drawable.no_select_border_layout)
             }
+
         }
     }
 

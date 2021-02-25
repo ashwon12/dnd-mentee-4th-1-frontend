@@ -17,12 +17,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {
     private var recipeTitle: String = ""
-    private var filterList = ArrayList<RecipeDTO.Filter>()
+    private var filterList = ArrayList<RecipeDTO.Themes>()
+    private var themes = ArrayList<RecipeDTO.Themes>()
     private var saveFilterList = ArrayList<String>()
+    private var subTitle: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,8 @@ class UploadActivity : AppCompatActivity() {
             intent.putExtra("recipeTitle", recipeTitle)
             intent.putExtra("filter", saveFilterList)
             intent.putExtra("originFilter", filterList)
+            intent.putExtra("subtitle", subTitle)
+            intent.putExtra("themes", themes)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         } else {
@@ -73,18 +78,18 @@ class UploadActivity : AppCompatActivity() {
             GridLayoutManager(this, 4)
         rv_upload_filter.setHasFixedSize(true)
 
-        rv_upload_filter.adapter = UploadFilterAdapter(filterList, saveFilterList)
+        rv_upload_filter.adapter = UploadFilterAdapter(filterList, themes, saveFilterList)
     }
 
     private fun filterAdd() {
-        filterList.add(RecipeDTO.Filter("혼밥"))
-        filterList.add(RecipeDTO.Filter("간식"))
-        filterList.add(RecipeDTO.Filter("굽기"))
-        filterList.add(RecipeDTO.Filter("파티"))
-        filterList.add(RecipeDTO.Filter("술안주"))
-        filterList.add(RecipeDTO.Filter("간편식"))
-        filterList.add(RecipeDTO.Filter("베이킹"))
-        filterList.add(RecipeDTO.Filter("든든한끼"))
+        filterList.add(RecipeDTO.Themes(20, "혼밥"))
+        filterList.add(RecipeDTO.Themes(21,"간식"))
+        filterList.add(RecipeDTO.Themes(22, "굽기"))
+        filterList.add(RecipeDTO.Themes(23, "파티"))
+        filterList.add(RecipeDTO.Themes(24, "술안주"))
+        filterList.add(RecipeDTO.Themes(25, "간편식"))
+        filterList.add(RecipeDTO.Themes(26, "베이킹"))
+        filterList.add(RecipeDTO.Themes(27, "든든한끼"))
     }
 
     private fun textWatcher() {
@@ -98,20 +103,34 @@ class UploadActivity : AppCompatActivity() {
             }
         })
 
+        et_recipe_subtitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                subTitle = p0.toString()
+            }
+        })
     }
 
     private fun checkPermissionNextButton(): Boolean {
-        // Log.d("saveFilterList", saveFilterList.size.toString())
-        if (recipeTitle.isNotEmpty() && saveFilterList.size > 0) {
+        Log.d("filter", themes[0].name.toString() + " " + themes[1].name.toString() + " ")
+        if (recipeTitle.isNotEmpty() && saveFilterList.size > 0 && subTitle.isNotEmpty()) {
             return true
-        } else if (recipeTitle.isNotEmpty()) {
+        } else if (saveFilterList.size < 0) {
             Toast.makeText(this, "필터를 선택해주세요", Toast.LENGTH_SHORT).show()
             return false
-        } else {
+        } else if (subTitle.isEmpty()) {
+            Toast.makeText(this, "레시피를 간단하게 설명해주세요.", Toast.LENGTH_SHORT).show()
+            return false
+        } else if (recipeTitle.isEmpty()) {
             Toast.makeText(this, "레시피 제목을 입력해주세요", Toast.LENGTH_SHORT).show()
             return false
+        } else {
+            Toast.makeText(this, "항목을 채워주세요.", Toast.LENGTH_SHORT).show()
+            return false
         }
-        Toast.makeText(this, "모든 항목을 입력하지 않았습니다.", Toast.LENGTH_SHORT).show()
 
         return false
     }
@@ -121,7 +140,8 @@ class UploadActivity : AppCompatActivity() {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         }
         if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         if (Build.VERSION.SDK_INT >= 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)

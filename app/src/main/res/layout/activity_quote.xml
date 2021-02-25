@@ -15,13 +15,11 @@
         <ImageView
             android:id="@+id/iv_upload_cancel"
             android:layout_width="126dp"
-            android:layout_height="22dp"
+            android:layout_height="30dp"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="15dp"
-            app:srcCompat="@drawable/ic_cancel_upload"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:srcCompat="@drawable/ic_cancel_upload" />
 
         <ImageView
             android:id="@+id/iv_quote_poster"
@@ -264,24 +262,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_quote_add_comment" />
 
-        <Button
-            android:id="@+id/btn_quote_recipe_thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iv_quote_recipe_result"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="#F8F8F8"
-            android:drawableLeft="@drawable/ic_camera"
-            android:gravity="start|center_vertical"
-            android:paddingStart="120dp"
-            android:text="사진 업로드하기"
-            android:textColor="@color/orange"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:scaleType="center"
+            android:background="@drawable/no_select_border_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_quote_textView6" />
+            app:layout_constraintTop_toBottomOf="@id/tv_quote_textView6"
+            app:srcCompat="@drawable/ic_upload_image" />
 
         <Button
             android:id="@+id/btn_quote_submit"
@@ -293,7 +285,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_quote_recipe_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/iv_quote_recipe_result"
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
