@@ -3,7 +3,9 @@
  */
 package com.example.myapplication.data.datasource.remote.api
 
+import android.net.Uri
 import java.io.Serializable
+import java.sql.Timestamp
 
 class RecipeDTO {
 
@@ -50,6 +52,29 @@ class RecipeDTO {
 //        val writer: User
     )
 
+    data class UploadImage(
+        val timestamp: String?,
+        val status: String?,
+        val error: String?,
+        val message: String?,
+        val path: String?,
+        var data: String?
+    )
+
+    data class UploadRecipe(
+        var title: String? = null,
+        var description: String? = null,
+        var thumbnail: String? = null,
+        var mainIngredients: ArrayList<MainIngredients>?,
+        var subIngredients: ArrayList<SubIngredients>?,
+        var themeIds: ArrayList<Int>?,
+        var steps: ArrayList<Steps>?,
+        var time: String? = null,
+        var pid : Int? = null,
+        var viewCount: String? = null,
+        var writerId: Int? = null
+    )
+
     data class Timeline(
         val id: String,
         val title: String,
@@ -63,9 +88,10 @@ class RecipeDTO {
         var image: String?
     ) : Serializable
 
-    data class Filter(
-        var filterName: String
-    ) : Serializable
+//    data class Filter(
+//        var id: String,
+//        var filterName: String
+//    ) : Serializable
 
     data class Time(
         var timeName: String
@@ -119,32 +145,56 @@ class RecipeDTO {
         var writer: Writer? = null
     )
 
-    class Writer(
+
+
+
+
+    data class Writer(
+        var name: String? = null,
         var id: Int,
         var name: String? = null,
         var email: String? = null,
         val imageUrl: String? = null
     )
 
-    class Steps(
+    data class Steps(
+        var id: Int?,
+        var description: String?,
+        var imageUrl: String?,
+        var sequence: String?
+    )
+
+    data class Themes(
         var id: Int,
-        var description: String,
-        var imageUrl: String? = null,
-        var sequence: String
+        var name: String?
+    ) : Serializable
+
+    data class MainIngredients (
+        var name: String?
     )
 
-    class Themes(
-        var name: String? = null,
-        var id: Int
+    data class SubIngredients(
+        var name: String?
     )
 
-    class MainIngredients {
-        var name: String? = null
-    }
+//    // 댓글
+//    data class Comment(
+//        val id: Int,
+//        val recipeId: Int?,
+//        val content: String? = null,
+//        val imageUrl: String? = null,
+//        val createDate: String? = null,
+//        val modifiedDate: String? = null,
+//        val user: User?
+//    )
 
-    class SubIngredients {
-        var name: String? = null
-    }
+//    class MainIngredients {
+//        var name: String? = null
+//    }
+//
+//    class SubIngredients {
+//        var name: String? = null
+//    }
 
 
     // 댓글

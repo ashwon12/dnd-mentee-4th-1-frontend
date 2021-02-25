@@ -1,8 +1,11 @@
 package com.example.myapplication.data.repository
 
+import android.net.Uri
 import com.example.myapplication.data.datasource.local.LocalDataSource
 import com.example.myapplication.data.datasource.remote.RemoteDataSource
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import okhttp3.MultipartBody
+import org.json.JSONObject
 
 class Repository {
 
@@ -62,6 +65,7 @@ class Repository {
         )
     }
 
+
     fun getRecipeById(
         recipeId: Int,
         success: (RecipeDTO.APIResponseRecipeData) -> Unit,
@@ -74,6 +78,7 @@ class Repository {
         )
     }
 
+
     fun getCommentsById(
         recipeId: Int,
         success: (RecipeDTO.APIResponseCommentList) -> Unit,
@@ -83,6 +88,20 @@ class Repository {
             recipeId,
             success,
             fail
+
+
+    fun getHomeRecipes(
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        order : String
+    ) {
+        remoteMovieDataSourceImpl.getHomeRecipes(
+            success,
+            fail,
+            queryType,
+            order
+
         )
     }
 
@@ -111,4 +130,25 @@ class Repository {
     }
 
 
+
+    // 이미지 s3 업로드
+
+    fun postImageUpload(
+        imagePath: String,
+        success: (RecipeDTO.UploadImage) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.postImageUpload(imagePath, success, fail)
+    }
+
+    // 레시피 등록
+
+    fun postRecipeUpload(
+        recipeInfo: (RecipeDTO.UploadRecipe),
+
+        success: (RecipeDTO.UploadRecipe) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.postRecipeUpload(recipeInfo, success, fail)
+    }
 }

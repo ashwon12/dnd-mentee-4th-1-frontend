@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
-
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +12,8 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -34,19 +34,28 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/iv_settings"
+            <ImageButton
+                android:id="@+id/ib_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="#00000000"
                 android:scaleType="fitEnd"
                 app:srcCompat="@drawable/ic_settings" />
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/mypage_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabTextColor="@color/editGray"
+            app:tabSelectedTextColor="@color/orange"
+            app:tabIndicatorColor="@color/orange"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="4dp"
+            app:tabTextAppearance="@style/FontSubHeading2"
             android:layout_marginTop="20dp">
 
             <com.google.android.material.tabs.TabItem
@@ -55,6 +64,7 @@
                 android:text="레시피" />
 
             <com.google.android.material.tabs.TabItem
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="팔로워" />
@@ -66,10 +76,12 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:id="@+id/mypage_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:layout_marginBottom="80dp" />
 
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
