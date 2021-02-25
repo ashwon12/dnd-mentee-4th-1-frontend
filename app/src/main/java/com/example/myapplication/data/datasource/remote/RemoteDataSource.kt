@@ -172,7 +172,6 @@ class RemoteDataSource {
         })
     }
 
-
     fun postRecipeUpload(
         recipeInfo: RecipeDTO.UploadRecipe,
         success: (RecipeDTO.UploadRecipe) -> Unit,
@@ -221,12 +220,6 @@ class RemoteDataSource {
                     }
                 } else {
                     Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
-                    if(App.sharedPrefs.getFlag() == "1") {
-                        App.sharedPrefs.saveKakaoId(null)
-                    }  else {
-                        App.sharedPrefs.saveGoogleId(null)
-                    }
-                    Log.d("login fail....", response.message())
                     fail
                 }
             }
