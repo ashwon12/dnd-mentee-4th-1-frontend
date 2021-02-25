@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -28,7 +27,6 @@ import com.example.myapplication.navigation.mypage.MyPageFragment
 import com.example.myapplication.navigation.search.SearchFragment
 import com.example.myapplication.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_nickname.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -71,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
         val edialog = LayoutInflater.from(this)
         val mView = edialog.inflate(R.layout.dialog_nickname, null)
         val dialogText1 = mView.findViewById<TextView>(R.id.tv_nickname_title)
@@ -81,10 +80,14 @@ class MainActivity : AppCompatActivity() {
 
         dialog.setContentView(mView)
         submitButton.setOnClickListener {
-            App.sharedPrefs.saveName(name)
-            postJoinInfo()
-            dialog.cancel()
-            Toast.makeText(App.instance, "누름", Toast.LENGTH_SHORT).show()
+            if(name.length >= 1) {
+                App.sharedPrefs.saveName(name)
+                postJoinInfo()
+                dialog.cancel()
+                Toast.makeText(App.instance, "누름", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(App.instance, "한 글자 이상 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
         nickname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,6 +117,7 @@ class MainActivity : AppCompatActivity() {
                         val data= it.data
                         if(App.sharedPrefs.getFlag() == "1") {
                             App.sharedPrefs.saveKakaoId(data!!)
+                            Log.d("join id", App.sharedPrefs.getKakaoId().toString())
                         } else {
                             App.sharedPrefs.saveGoogleId(data!!)
                         }

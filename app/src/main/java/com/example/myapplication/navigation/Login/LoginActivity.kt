@@ -79,7 +79,6 @@ class LoginActivity : AppCompatActivity() {
                 userToken = token.accessToken
                 App.sharedPrefs.saveToken(userToken)
                 updateKaKaoLoginUi()
-                postKakaoLoginInfo()
             }
         }
 
@@ -117,10 +116,13 @@ class LoginActivity : AppCompatActivity() {
 //                )
 
                 userEmail = user.id.toString() + "@kakao"
+                // userEmail ="sdfsfsf@kakao"
                 userName = user.kakaoAccount?.profile?.nickname.toString()
                 userImage = user.kakaoAccount?.profile?.profileImageUrl.toString()
 
                 App.sharedPrefs.saveInfo(userEmail, userImage)
+                Log.d("userEmail", App.sharedPrefs.getEmail().toString())
+                postKakaoLoginInfo()
             }
         }
     }
@@ -183,6 +185,7 @@ class LoginActivity : AppCompatActivity() {
 
             val split = personEmail!!.split("@")
             userEmail = split[0] + "@google"
+           //  userEmail = "12345@google"
 
             Log.d("userEmail", userEmail)
             userInfo.email = userEmail
@@ -197,17 +200,22 @@ class LoginActivity : AppCompatActivity() {
     private fun postKakaoLoginInfo() {
         if (userToken != null && userEmail != null) {
             userInfo.email = App.sharedPrefs.getEmail()
+            App.sharedPrefs.saveFlag("1")
+            Log.d("userInfo email", userInfo.email.toString())
             repository.postLoginInfo(userToken, userInfo,
                 success = {
                     it.run {
                         val data = it.data
-                        App.sharedPrefs.saveKakaoId(data.toString())
+                        // App.sharedPrefs.saveKakaoId(data.toString())
                         Log.d("data", it.data.toString())
                     }
                 }, fail = {
+                    App.sharedPrefs.saveKakaoId(null)
                 })
 
-            Log.d("id", App.sharedPrefs.getKakaoId().toString())
+            Log.d("kakao data1", App.sharedPrefs.getEmail().toString())
+            Log.d("kakao data2", App.sharedPrefs.getKakaoId().toString())
+
             if (App.sharedPrefs.getKakaoId() == null) {
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 1)
@@ -223,6 +231,7 @@ class LoginActivity : AppCompatActivity() {
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
+                Log.d("Id data", App.sharedPrefs.getKakaoId().toString())
                 Log.d("카카오로그인 성공 !!", "카카오 로그인 성공!")
             }
         }
@@ -230,17 +239,23 @@ class LoginActivity : AppCompatActivity() {
 
     private fun postGoogleLoginInfo() {
         if (App.sharedPrefs.getToken() != null && userEmail != null) {
+            App.sharedPrefs.saveFlag("2")
             userInfo.email = App.sharedPrefs.getEmail()
             userToken = App.sharedPrefs.getToken()!!
             repository.postLoginInfo(userToken, userInfo,
                 success = {
                     it.run {
                         val data = it.data
-                        App.sharedPrefs.saveGoogleId(data.toString())
+                        // App.sharedPrefs.saveGoogleId(data.toString())
                         Log.d("shared_id", App.sharedPrefs.getGoogleId().toString())
                     }
                 }, fail = {
+                    App.sharedPrefs.saveGoogleId(null)
                 })
+
+
+            Log.d("google data1", App.sharedPrefs.getEmail().toString())
+            Log.d("google data2", App.sharedPrefs.getGoogleId().toString())
 
             if (App.sharedPrefs.getGoogleId() == null) {
                 val intent = Intent(App.instance, MainActivity::class.java)

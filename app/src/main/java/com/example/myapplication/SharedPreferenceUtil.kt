@@ -3,7 +3,6 @@ package com.example.myapplication
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import org.json.JSONArray
 
 class SharedPreferenceUtil(context: Context) {
@@ -22,12 +21,12 @@ class SharedPreferenceUtil(context: Context) {
     }
     
     // 사용자 카카오 번호
-    fun saveKakaoId(id : String) {
+    fun saveKakaoId(id: String?) {
         editor.putString("k_id", id).apply()
     }
     
     // 사용자 구글 번호
-    fun saveGoogleId(id: String) {
+    fun saveGoogleId(id: String?) {
         editor.putString("g_id", id).apply()
     }
 
