@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.filter_list_item.view.*
 class QuoteFilterAdapter(val filterList: ArrayList<RecipeDTO.Themes>) :
     RecyclerView.Adapter<QuoteFilterAdapter.QuoteFilterHolder>() {
 
+    var tags = ArrayList<String>()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
