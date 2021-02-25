@@ -69,11 +69,6 @@ interface RecipeApi {
         @Query("order") order: String
     ): Call<RecipeDTO.APIResponseList>
 
-    @GET("/recipes")
-    fun getQuoteRecipe(
-        @Query("id") id: Int
-    ): Call<RecipeDTO.UploadRecipe>
-
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 
