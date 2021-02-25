@@ -2,12 +2,10 @@ package com.example.myapplication.data.datasource.remote.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.JsonAdapter
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -50,8 +48,20 @@ interface RecipeApi {
 
     @POST("/recipes")
     fun postRecipeUpload(
-        @Body data : RecipeDTO.UploadRecipe
+        @Body data: RecipeDTO.UploadRecipe
     ): Call<RecipeDTO.UploadRecipe>
+
+    @POST("/login")
+    fun postLoginInfo(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body email: RecipeDTO.RequestPostLogin
+    ): Call<RecipeDTO.RequestPostLogin>
+
+    @POST("/join")
+    fun postJoinInfo(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body joinInfo: RecipeDTO.RequestJoin
+    ): Call<RecipeDTO.RequestJoin>
 
     @GET("/recipes")
     fun getHomeRecipes(
