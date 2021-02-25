@@ -1,7 +1,5 @@
 package com.example.myapplication.data.datasource.remote.api
 
-import com.example.myapplication.App
-import com.example.myapplication.SharedPreferenceUtil
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -73,7 +71,6 @@ interface RecipeApi {
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
-        private var X_AUTH_TOKEN = SharedPreferenceUtil(App.instance).getToken()
 
         fun create(): RecipeApi {
 
@@ -82,7 +79,6 @@ interface RecipeApi {
             val headerInterceptor = Interceptor {
                 val request = it.request()
                     .newBuilder()
-                    .addHeader("X-AUTH-TOKEN", X_AUTH_TOKEN)
                     .build()
                 return@Interceptor it.proceed(request)
             }
