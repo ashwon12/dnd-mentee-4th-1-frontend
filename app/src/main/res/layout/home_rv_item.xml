@@ -29,26 +29,27 @@
 
         <TextView
             android:id="@+id/tv_home_title"
-            style="@style/FontBody2"
+            style="@style/FontSubHeading1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="제목" />
 
         <TextView
             android:id="@+id/tv_home_content"
-            style="@style/FontBody2"
+            style="@style/FontSubHeading3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:maxLength="40"
             android:text="주요재료 고구마 30개 설탕 40스푼, 인내심과 참을성과 강아지..."
-            android:textColor="#646568" />
+            android:textColor="#7F7F7F" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="7dp"
             android:orientation="horizontal">
 
         </androidx.recyclerview.widget.RecyclerView>
