@@ -69,6 +69,22 @@ interface RecipeApi {
         @Query("order") order: String
     ): Call<RecipeDTO.APIResponseList>
 
+    @GET("/recipes")
+    fun getMyRecipes(
+        @Query("queryType") queryType: String,
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.APIResponseList>
+
+    @GET("/followers")
+    fun getFollowerList(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.UserResponse>
+
+    @GET("/followings")
+    fun getFollowingList(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.UserResponse>
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 

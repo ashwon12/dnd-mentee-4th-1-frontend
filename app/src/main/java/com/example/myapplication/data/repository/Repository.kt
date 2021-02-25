@@ -19,7 +19,6 @@ class Repository {
         )
     }
 
-
     fun getRecipeById(
         recipeId: Int,
         success: (RecipeDTO.APIResponseData) -> Unit,
@@ -32,7 +31,6 @@ class Repository {
         )
     }
 
-
     fun getHomeRecipes(
         success: (RecipeDTO.APIResponseList) -> Unit,
         fail: (Throwable) -> Unit,
@@ -44,6 +42,20 @@ class Repository {
             fail,
             queryType,
             order
+        )
+    }
+
+    fun getMyRecipes(
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        token : String
+    ) {
+        remoteMovieDataSourceImpl.getMyRecipes(
+            success,
+            fail,
+            queryType,
+            token
         )
     }
 
@@ -106,5 +118,22 @@ class Repository {
         fail : (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.postJoinInfo(token, joinInfo, success, fail)
+    }
+
+    //팔로워 리스트
+    fun getFollower(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollower(token,success,fail)
+    }
+
+    fun getFollowing(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollowing(token,success,fail)
     }
 }
