@@ -43,6 +43,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {
 
             val args = Bundle()// 클릭된 Recipe의 id 전달
             args.putInt("recipeId", data.id)
+            args.putString("thumbnail", data.thumbnail)
 
             val detailFragment: Fragment = DetailFragment()
             detailFragment.arguments = args
