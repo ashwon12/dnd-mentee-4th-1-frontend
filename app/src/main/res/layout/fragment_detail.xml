@@ -74,6 +74,11 @@
                     android:layout_height="match_parent"
                     android:background="#FAECC5"
                     android:transitionName="@string/transition_random_to_detail" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20dp" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
@@ -104,7 +109,7 @@
 
             <TextView
                 android:id="@+id/tv_detail_title"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="serif"
                 android:gravity="center_vertical"
@@ -162,20 +167,21 @@
                     android:id="@+id/ll_star_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical">
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/iv_like"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_select_cut" />
+                        android:background="@null"
+                        android:src="@drawable/rating_star_default" />
 
                     <TextView
                         android:id="@+id/tv_star_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:hint="123"
                         android:textSize="14dp" />
 
                 </LinearLayout>
@@ -187,9 +193,9 @@
 
                     <ImageView
                         android:id="@+id/iv_subscribe"
-                        android:layout_width="wrap_content"
+                        android:layout_width="22dp"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_no_select_cut" />
+                        android:src="@drawable/watch" />
 
                     <TextView
                         android:id="@+id/tv_viewcount"
@@ -197,20 +203,32 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:gravity="center_vertical"
-                        android:hint="123"
                         android:textSize="14dp" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="4dp"
-                    android:ellipsize="marquee"
-                    android:text="7시간전"
-                    android:textSize="14dp" />
+                    <ImageView
+                        android:id="@+id/iv_calendar"
+                        android:layout_width="22dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/calendar" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="4dp"
+                        android:ellipsize="marquee"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
