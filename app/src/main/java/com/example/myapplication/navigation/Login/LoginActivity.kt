@@ -116,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
 //                )
 
                 userEmail = user.id.toString() + "@kakao"
-                // userEmail = "sdfsfs3231ddaf@kakao"
+                // userEmail = "test11@kakao"
                 userName = user.kakaoAccount?.profile?.nickname.toString()
                 userImage = user.kakaoAccount?.profile?.profileImageUrl.toString()
 
@@ -210,6 +210,9 @@ class LoginActivity : AppCompatActivity() {
                         // App.sharedPrefs.saveKakaoId(data.toString())
                         App.sharedPrefs.saveToken(data.toString())
                         Log.d("data", it.data.toString())
+                        val intent = Intent(App.instance, MainActivity::class.java)
+                        intent.putExtra("join",0)
+                        startActivity(intent)
                     }
                 }, fail = {
                     // App.sharedPrefs.saveKakaoId(null)
