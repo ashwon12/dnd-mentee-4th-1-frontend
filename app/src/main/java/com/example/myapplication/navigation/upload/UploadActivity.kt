@@ -65,6 +65,7 @@ class UploadActivity : AppCompatActivity() {
         )
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("cancel", 1)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             })
@@ -83,9 +84,9 @@ class UploadActivity : AppCompatActivity() {
 
     private fun filterAdd() {
         filterList.add(RecipeDTO.Themes(20, "혼밥"))
-        filterList.add(RecipeDTO.Themes(21,"간식"))
-        filterList.add(RecipeDTO.Themes(22, "굽기"))
-        filterList.add(RecipeDTO.Themes(23, "파티"))
+        filterList.add(RecipeDTO.Themes(21,"든든"))
+        filterList.add(RecipeDTO.Themes(22, "간단"))
+        filterList.add(RecipeDTO.Themes(23, "분위기"))
         filterList.add(RecipeDTO.Themes(24, "술안주"))
         filterList.add(RecipeDTO.Themes(25, "간편식"))
         filterList.add(RecipeDTO.Themes(26, "베이킹"))

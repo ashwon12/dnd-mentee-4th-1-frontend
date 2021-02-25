@@ -3,9 +3,7 @@
  */
 package com.example.myapplication.data.datasource.remote.api
 
-import android.net.Uri
 import java.io.Serializable
-import java.sql.Timestamp
 
 class RecipeDTO {
 
@@ -73,6 +71,18 @@ class RecipeDTO {
         var pid : Int? = null,
         var viewCount: String? = null,
         var writerId: Int? = null
+    )
+
+    data class RequestPostLogin(
+        var email: String?,
+        var data: String?
+    )
+
+    data class RequestJoin(
+        var email: String? = null,
+        var name: String? = null,
+        var imageUrl: String? = null,
+        var data: String? = null
     )
 
     data class Timeline(

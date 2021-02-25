@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_nickname_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_nickname_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center"
+        android:text="요리조리에서 사용할 닉네임을 정해주세요."
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_nickname_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nickname_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="영문 / 한글 / 숫자 포함 8자 이내, 확인 후 변경 불가"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/et_user_nickname"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_nickname_subtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/no_select_border_layout"
+        android:gravity="center"
+        android:hint="닉네임을 입력해주세요."
+        android:maxLength="8"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_nickname_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_user_nickname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="다른 분이 사용하고 있는 닉네임이에요."
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btn_user_nickname_submit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/tv_nickname_warning"
+        android:background="@drawable/top_border"
+        app:backgroundTint="@null"
+        android:text="확인"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+</RelativeLayout>
