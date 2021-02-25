@@ -18,7 +18,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.detail.DetailFragment
 
-class MultiViewAdapter(
+class HomeMultiViewAdapter(
 
     private var type: Int,
     private var ItemsList: ArrayList<RecipeDTO.RecipeFinal>
@@ -27,10 +27,7 @@ class MultiViewAdapter(
 
     lateinit var view : View
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> {
                 view = LayoutInflater.from(parent.context)

@@ -188,7 +188,6 @@
             android:layout_width="12dp"
             android:layout_height="11dp"
             android:layout_gravity="center_horizontal|center_vertical"
-
             app:srcCompat="@drawable/ic_filled_star"
             tools:layout_editor_absoluteX="38dp" />
 
@@ -208,7 +207,7 @@
             android:layout_height="10dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_views"
-            tools:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:id="@+id/tv_feed_views_count"

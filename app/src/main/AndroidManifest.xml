@@ -52,6 +52,8 @@
 
         </activity>
 
+        <activity android:name=".navigation.mypage.SettingActivity"/>
+
         <!-- 카카오 리다이렉트 URI 가져오기 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
@@ -66,5 +68,8 @@
                     android:scheme="kakao7c0ae88d49666eca35738b64bba94021" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".navigation.mypage.SettingActivity"/>
     </application>
 </manifest>
+
