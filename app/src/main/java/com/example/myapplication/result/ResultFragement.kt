@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 
 
@@ -24,21 +23,36 @@ class ResultFragement : Fragment() {
     private lateinit var v: View
 
     internal lateinit var rvResults: RecyclerView
-    private lateinit var resultAdapter: ResultAdapter
     private lateinit var autoTextview: AutoCompleteTextView
     private lateinit var btnSearch: Button
     private lateinit var btnClear: Button
     private lateinit var tvResultCount: TextView
 
+    private lateinit var spinnerData1: MutableList<String>
+    private lateinit var spinnerData2: MutableList<String>
+    private lateinit var spinnerData3: MutableList<String>
+
+    private lateinit var resultAdapter: ResultAdapter
+
     private var searchHistoryArrayList = ArrayList<String>()// 검색어 저장 List
 
-    private var spinnerData1 = mutableListOf<String>("최신순", "별순", "조회순")
-    private var spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷", "컷수")
-    private var spinnerData3 = mutableListOf<String>("15분 이내","30분 이내","45분 이내","60분 이내","60분 이상","시간")
+    private var queryType: String = "search"
+    private var stepStart: Int? = null
+    private var stepEnd: Int? = null
+    private var time: Int? = null
+    private var startDate: String? = null
+    private var endDate: String? = null
+    private var order: String = "latest"
+    private var keyword: String = ""
+    private var limit: String? = null
+    private var offset: String? = null
 
     private var inputTextFromSearchFragment: String? = ""
 
     private val repository = Repository()
+
+    private var searchedWord: String = ""
+    private var searchedCount: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,14 +61,14 @@ class ResultFragement : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_result, container, false)
 
+        spinnerData1 = mutableListOf<String>("최신순", "별점순", "조회순", "찜순")
+        spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷", "10컷+", "컷수", "컷수")
+        spinnerData3 = mutableListOf<String>("15분 이내", "30분 이내", "45분 이내", "60분 이내", "60분 이상", "시간","시간")
 
         setButtonSearch()
         setAutoCompleteTextView()
-        setAutoCompleteTextViewClearButton()
         setResultRecyclerView()
         setSpinner()
-
-        requestResultRecipe(inputTextFromSearchFragment!!)
 
         return v
     }
@@ -63,17 +77,35 @@ class ResultFragement : Fragment() {
      *
      *  http://13.209.68.130:8080/recipes?queryType=search&keyword=inputTextFromSearchFragment
      **/
-    private fun requestResultRecipe(word: String) {
+    private fun requestResultRecipe(keyword: String) {
+        this.keyword = keyword
         repository.getResultRecipes(
-            word,
+            queryType,
+            stepStart,
+            stepEnd,
+            time,
+            startDate,
+            endDate,
+            order,
+            this.keyword,
+            limit,
+            offset,
             success = {
                 it.run {
-                    val resultCount = v.findViewById<TextView>(R.id.tv_result_count)
 
-                    resultCount.text = it.list?.size.toString()
+                    if (it.list?.size!! > 0) {
 
-                    resultAdapter.resultRecipes = it.list!!
+                        saveCount(it.list?.size)
+                        tvResultCount.text = it.list?.size!!.toString() + "개"
 
+                    } else {// 검색결과 없을 때
+                        Toast.makeText(v.context, "검색결과 개수 0개", Toast.LENGTH_SHORT).show()
+                        tvResultCount.text = ""
+                        val llResultItem = v.findViewById<LinearLayout>(R.id.ll_result_item_list)
+                        //llResultItem.setBackgroundDrawable(R.drawable)
+
+                    }
+                    resultAdapter.updateResultRecipes(it.list!!)
                     resultAdapter.notifyDataSetChanged()
                 }
             }, fail = {
@@ -82,45 +114,26 @@ class ResultFragement : Fragment() {
 
     }
 
-    /**  [X] 버튼 클릭 리스너  */
-    private fun setAutoCompleteTextViewClearButton() {
-
-        searchHistoryArrayList = repository.getSavedSearchList()
-
-        val adapter = ArrayAdapter<String>(
-            v.context,
-            android.R.layout.simple_dropdown_item_1line,
-            searchHistoryArrayList
-        )
-/*        val adapter = object : ArrayAdapter<String>(
-            v.context,
-            android.R.layout.simple_dropdown_item_1line,
-            R.id.tv_auto_complete_item,
-            searchHistoryArrayList
-        )*/
-        autoTextview.setAdapter(adapter)
-
-        btnClear = v.findViewById<Button>(R.id.btn_clear)
-        btnClear.setOnClickListener {
-
-            autoTextview.setText("")//Edittext 값 Null 초기화
-            autoTextview.setTextColor(Color.parseColor("#000000"))
-
-            setVisibility()
-        }
+    private fun saveCount(count: Int) {
+        searchedCount = count.toString()
     }
 
     private fun setAutoCompleteTextView() {
+
         inputTextFromSearchFragment = arguments?.getString("input_search")// arguments로 Bundle 받아옴
+        searchedWord = inputTextFromSearchFragment!!
 
         autoTextview = v.findViewById<AutoCompleteTextView>(R.id.actv_recipe_in_result)
-        autoTextview.setText(inputTextFromSearchFragment, TextView.BufferType.EDITABLE);
+        autoTextview.setText(searchedWord, TextView.BufferType.EDITABLE);
         autoTextview.setTextColor(Color.parseColor("#7A7A7A"))
+
+        resultAdapter = ResultAdapter()
+        resultAdapter.keyword = inputTextFromSearchFragment!!//상세레시피 -> 검색결과로 전환 시 이전 검색어 보여주기
 
         btnSearch.visibility = View.INVISIBLE// 초기 검색화면 Setting : [검색] 버튼 비활성화
 
         tvResultCount = v.findViewById(R.id.tv_result_count)
-        tvResultCount.text = "3개"
+            tvResultCount.text = searchedCount + "개"
 
         autoTextview.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -141,13 +154,15 @@ class ResultFragement : Fragment() {
 
 
     private fun setResultRecyclerView() {
-        resultAdapter = ResultAdapter()
-
         rvResults = v.findViewById<RecyclerView>(R.id.rv_result_recipe)
-        rvResults.layoutManager =
-            LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
+        val llManager = LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
+        rvResults.layoutManager = llManager
         rvResults.setHasFixedSize(true)
         rvResults.adapter = resultAdapter
+
+        val mLayoutManager = LinearLayoutManager(activity)
+        mLayoutManager.reverseLayout = true
+        mLayoutManager.stackFromEnd = true
     }
 
     private fun setSpinner() {
@@ -216,6 +231,24 @@ class ResultFragement : Fragment() {
                 position: Int,
                 id: Long
             ) {
+                when (position) {
+                    0 -> {
+                        order = "latest" // 최신순
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    1 -> {
+                        order = "star"// 별순
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    2 -> {
+                        order = "view"// 조회순
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    3 -> {
+                        order = "label"// 찜순
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                }
                 (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
             }
 
@@ -230,11 +263,38 @@ class ResultFragement : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                when (position) {
+                    0 -> {
+                        stepStart = 1
+                        stepEnd = 3// 3컷
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    1 -> {
+                        stepStart = 4
+                        stepEnd = 6// 6컷
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    2 -> {
+                        stepStart = 7
+                        stepEnd = 9// 9컷
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    3 -> {
+                        stepStart = 10
+                        stepEnd = 350// 10컷 이상
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    else -> {
+                        // [컷수] 선택을 위한 설정
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("")
             }
         }
         spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -244,7 +304,35 @@ class ResultFragement : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                when (position) {
+                    0 -> {
+                        time = 15 // 15분 이내
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    1 -> {
+                        time = 30// 30분 이내
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    2 -> {
+                        time = 45// 45분 이내
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    3 -> {
+                        time = 59// 60분 이내
+                        (view as? TextView)?.setTextColor(Color.rgb(255, 112, 81))
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    4 -> {
+                        time = 60 // 60분 이상
+                        requestResultRecipe(inputTextFromSearchFragment!!)
+                    }
+                    else -> {
+                        //[시간] Title 설정
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -278,8 +366,9 @@ class ResultFragement : Fragment() {
     }
 
     private fun setVisibility() {
-        btnSearch.visibility = View.VISIBLE
+        btnClear = v.findViewById(R.id.btn_clear)
         btnClear.visibility = View.INVISIBLE
+        btnSearch.visibility = View.VISIBLE
         tvResultCount.visibility = View.INVISIBLE
     }
 }

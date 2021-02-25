@@ -3,20 +3,23 @@ package com.example.myapplication.result
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.detail.ResultMainIngredientAdapter
 import kotlinx.android.synthetic.main.item_result_recipe.view.*
 
 class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val imageViewResultRecipe: ImageView = itemView.iv_result_image
 
-    private val tvRecipeName: TextView = itemView.tv_recipe_name
-    private val tv_description: TextView = itemView.tv_description
+    private lateinit var resultMainIngredientAdapter: ResultMainIngredientAdapter
 
+    private val tvRecipeName: TextView = itemView.tv_recipe_name
+    private val rvMainIngredientInItem = itemView.findViewById<RecyclerView>(R.id.rv_result_main_ingredient)
     private val tvRating: TextView = itemView.tv_star_rating
     private val tvViewCount: TextView = itemView.tv_viewcount
     private val ivProfileImage: ImageView = itemView.iv_result_profile
@@ -35,7 +38,7 @@ class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         tvRecipeName.text = data.title
-        tv_description.text = data.description
+        setMainIngredientRecyclerView(data.mainIngredients)
 
         val floatRatingAvgRound = Math.round(data.starCount!! * 10) / 10f
         tvRating.text = floatRatingAvgRound.toString()
@@ -47,5 +50,13 @@ class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .into(ivProfileImage);
         tvNickname.text = data.writer?.name
         tvCalendar.text = data.time
+    }
+
+    private fun setMainIngredientRecyclerView(mainIngredients: ArrayList<RecipeDTO.MainIngredients>) {
+        resultMainIngredientAdapter = ResultMainIngredientAdapter()
+        rvMainIngredientInItem.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+        rvMainIngredientInItem.setHasFixedSize(true)
+        rvMainIngredientInItem.adapter = resultMainIngredientAdapter
+        resultMainIngredientAdapter.resultMainIngredients = mainIngredients
     }
 }
