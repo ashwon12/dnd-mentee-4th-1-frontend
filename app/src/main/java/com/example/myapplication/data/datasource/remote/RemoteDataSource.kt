@@ -373,7 +373,7 @@ class RemoteDataSource {
         fail: (Throwable) -> Unit
     ){
         val calldeleteRecipes = recipeApi.deleteRecipe(recipeId)
-)
+
     }
 
 }

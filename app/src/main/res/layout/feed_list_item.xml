@@ -93,8 +93,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_feed_title" />
 
-    <LinearLayout
-        android:id="@+id/ll_feed_theme"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_feed_theme"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="11dp"
@@ -103,37 +104,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_feed_contents">
 
-        <TextView
-            android:id="@+id/tv_home_theme1"
-            style="@style/FontCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/theme_radius"
-            android:text="3컷"
-            android:textColor="@color/PrimaryColor" />
+    </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/tv_home_theme2"
-            style="@style/FontCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/theme_radius"
-            android:text="태그"
-            android:textColor="@color/PrimaryColor" />
-
-        <TextView
-            android:id="@+id/tv_home_theme3"
-            style="@style/FontCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/theme_radius"
-            android:text="태그"
-            android:textColor="@color/PrimaryColor" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_feed_more_set"
@@ -142,9 +114,9 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/feed_more_button"
+        android:elevation="2dp"
         android:orientation="vertical"
         android:visibility="invisible"
-        android:elevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -181,7 +153,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_feed_theme">
+        app:layout_constraintTop_toBottomOf="@id/rv_feed_theme">
 
         <ImageView
             android:id="@+id/imageView"
@@ -205,9 +177,9 @@
             android:id="@+id/imageView2"
             android:layout_width="14.12dp"
             android:layout_height="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_views"
-            android:layout_marginLeft="10dp" />
+            app:srcCompat="@drawable/ic_views" />
 
         <TextView
             android:id="@+id/tv_feed_views_count"
