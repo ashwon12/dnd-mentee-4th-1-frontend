@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
@@ -87,6 +88,11 @@ class HomeMultiViewAdapter(
                     .load(ItemsList[position].thumbnail)
                     .placeholder(R.drawable.ic_no_image)
                     .into(holder.recentImage)
+
+                val themeList = ItemsList[position].themes
+                val themesAdapter = ThemesAdapter(themeList)
+                holder.rv_theme.layoutManager = LinearLayoutManager(App.instance, RecyclerView.HORIZONTAL, false)
+                holder.rv_theme.adapter = themesAdapter
             }
         }
 
@@ -128,6 +134,7 @@ class HomeMultiViewAdapter(
         val recentImage: ImageView = itemView.findViewById(R.id.iv_recent_item)
         val recentTitle: TextView = itemView.findViewById(R.id.tv_home_title)
         val recentContent: TextView = itemView.findViewById(R.id.tv_home_content)
+        val rv_theme : RecyclerView = itemView.findViewById(R.id.rv_theme)
     }
 }
 
