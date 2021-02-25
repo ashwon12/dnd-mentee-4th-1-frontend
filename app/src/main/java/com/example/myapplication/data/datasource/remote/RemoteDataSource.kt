@@ -339,5 +339,41 @@ class RemoteDataSource {
         })
     }
 
+    fun getFollowingFeeds(
+        token : String,
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val callfollowingFeedsList = recipeApi.getfollowingFeeds(token)
+        callfollowingFeedsList.enqueue(object: Callback<RecipeDTO.APIResponseList> {
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseList>,
+                response: Response<RecipeDTO.APIResponseList>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "피드 리스트 가져오기", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+
+                } else {
+                    Log.d("피드 리스트 가져오기 실패", response.message())
+                    fail
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseList>, t: Throwable) {
+
+            }
+        })
+    }
+
+    fun deleteRecipe(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseData) -> Unit,
+        fail: (Throwable) -> Unit
+    ){
+        val calldeleteRecipes = recipeApi.deleteRecipe(recipeId)
+)
+    }
 
 }

@@ -85,6 +85,16 @@ interface RecipeApi {
         @Header("X-AUTH-TOKEN") token: String
     ): Call<RecipeDTO.UserResponse>
 
+    @GET("/followingFeeds")
+    fun getfollowingFeeds(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.APIResponseList>
+
+    @DELETE("/recipes/{recipeId}")
+    fun deleteRecipe(
+        @Path("recipeId") recipeId: Int
+    )
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 

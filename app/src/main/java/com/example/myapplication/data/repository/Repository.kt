@@ -129,11 +129,29 @@ class Repository {
         remoteMovieDataSourceImpl.getFollower(token,success,fail)
     }
 
+    //팔로잉 리스트
     fun getFollowing(
         token : String,
         success: (RecipeDTO.UserResponse) -> Unit,
         fail : (Throwable) -> Unit
     ){
         remoteMovieDataSourceImpl.getFollowing(token,success,fail)
+    }
+
+    //피드 리스트
+    fun getFollowingFeeds(
+        token : String,
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollowingFeeds(token,success,fail)
+    }
+
+    fun deleteRecipes(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseData) -> Unit,
+        fail: (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.deleteRecipe(recipeId,success,fail)
     }
 }
