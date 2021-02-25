@@ -13,19 +13,50 @@ class Repository {
         success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        remoteMovieDataSourceImpl.getRandomRecipes(
+        remoteMovieDataSourceImpl.getRandomRecipesInFeed(
             success,
             fail
         )
     }
 
-    fun getResultRecipes(
-        word: String,
+    fun getRandomRecipesInSearchFragment(
+        randomCut: Int,
         success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        remoteMovieDataSourceImpl.getResultRecipes(
-            word,
+        remoteMovieDataSourceImpl.getRandomRecipesInSearchFragment(
+            randomCut,
+            success,
+            fail
+        )
+    }
+
+
+    fun getResultRecipes(
+        queryType: String,
+        stepStart: Int?,
+        stepEnd: Int?,
+        time: Int?,
+        startDate: String?,
+        endDate: String?,
+        order: String?,
+        keyword: String?,
+        limit: String?,
+        offset: String?,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getResultRecipesLatest(
+            queryType,
+            stepStart,
+            stepEnd,
+            time,
+            startDate,
+            endDate,
+            order,
+            keyword,
+            limit,
+            offset,
             success,
             fail
         )

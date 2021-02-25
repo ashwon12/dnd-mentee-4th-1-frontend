@@ -20,6 +20,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 import com.google.android.material.tabs.TabLayout
 
@@ -31,8 +32,7 @@ class DetailFragment : Fragment() {
     internal lateinit var viewPagerPics: ViewPager
     internal lateinit var rvSteps: RecyclerView
     internal lateinit var tabLayout: TabLayout
-    internal lateinit var ibRating:ImageButton
-    internal lateinit var llStarRating:LinearLayout
+    internal lateinit var ibRating:ImageView
 
     private lateinit var picsAdapter: DetailViewPagerPicsAdapter
     private lateinit var StepDescriptionAdapter: DetailStepsAdapter
@@ -42,6 +42,8 @@ class DetailFragment : Fragment() {
     private lateinit var subIngredientAdapter: DetailSubIngredientAdapter
 
     private var recipeId: Int = 0
+    private var thumbnailURL: String = ""
+    private var historyWord: String? = ""
     private var floatRatingAvgRound: Float = 0f
 
     private val repository = Repository()
@@ -56,8 +58,6 @@ class DetailFragment : Fragment() {
 
 
         getRecipeIdFromBeforeFragment()
-        requestRecipeById(recipeId)
-        requestCommentById(recipeId)
 
         setViewPagerPics()
         setStarRatingButton()
@@ -67,14 +67,43 @@ class DetailFragment : Fragment() {
         setCommentRecyclerView()
         setViewPagerSteps()
 
+        requestRecipeById(recipeId)
+        requestCommentById(recipeId)
+
         return v
     }
 
+   /* override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val bundle = Bundle()
+                bundle.putString("input_search", historyWord)
+
+                val activity = v.context as AppCompatActivity
+                val transaction = activity.supportFragmentManager.beginTransaction()
+                val resultFragment: Fragment = ResultFragement()
+                resultFragment.arguments = bundle
+
+                transaction.replace(R.id.fl_container, resultFragment)
+                transaction.setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right
+                )
+                transaction.addToBackStack(null)
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                transaction.commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }*/
 
     /**  API Reciep Data 요청(id로) **/
     private fun requestRecipeById(recipeId: Int) {
         repository.getRecipeById(
-            1,//TODO : recipeId로 변경 나중에
+            recipeId,
             success = {
                 it.run {
                     val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
@@ -100,7 +129,8 @@ class DetailFragment : Fragment() {
 
 
                     // 어댑터 설정
-                    picsAdapter.updateRecipeImage(it.data?.steps!!)
+                    picsAdapter.recipeImages.add(RecipeDTO.Steps(555, "plzplzplz",thumbnailURL, "plzplzplzplz"))
+                    picsAdapter.recipeImages.addAll(it.data?.steps!!)
                     StepDescriptionAdapter.updateDescription(it.data?.steps!!)
                     tagAdapter.updateThemes(it.data?.themes)
                     mainIngredientAdapter.updateMainIngredients(it.data?.mainIngredients)
@@ -121,7 +151,7 @@ class DetailFragment : Fragment() {
 
     private fun requestCommentById(recipeId: Int) {
         repository.getCommentsById(
-            1,//TODO : recipeId로 변경 나중에
+            recipeId,
             success = {
                 it.run {
                     commentAdapter.updateComments(it.list!!)
@@ -155,6 +185,8 @@ class DetailFragment : Fragment() {
     /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
     private fun getRecipeIdFromBeforeFragment() {
         recipeId = arguments!!.getInt("recipeId") // 전달한 key 값
+        thumbnailURL = arguments!!.getString("thumbnail")!!
+        historyWord = arguments!!.getString("history")
     }
 
 
@@ -219,7 +251,7 @@ class DetailFragment : Fragment() {
 
 
     private fun setStarRatingButton() {
-        ibRating = v.findViewById<ImageButton>(R.id.iv_like)
+        ibRating = v.findViewById<ImageView>(R.id.iv_like)
         ibRating.setOnClickListener {//평점주기 버튼 클릭 리스너
 
             val dialog = Dialog(v.context);
@@ -241,7 +273,7 @@ class DetailFragment : Fragment() {
 
             btn_ok.setOnClickListener {
                 dialog.dismiss()
-                ibRating.setBackgroundResource(R.drawable.ic_home);
+                ibRating.setBackgroundResource(R.drawable.rating_star_clicked);
                 //TODO : 서버 요청
             }
             btn_cancel.setOnClickListener {

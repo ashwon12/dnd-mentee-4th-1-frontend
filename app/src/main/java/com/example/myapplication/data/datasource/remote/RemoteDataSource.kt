@@ -38,7 +38,7 @@ class RemoteDataSource {
     }
 
 
-    fun getRandomRecipes(
+    fun getRandomRecipesInFeed(
         success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
@@ -59,12 +59,43 @@ class RemoteDataSource {
         })
     }
 
-    fun getResultRecipes(
-        word: String,
+    fun getRandomRecipesInSearchFragment(
+        randomCut: Int,
         success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        val callGetRandomRecipes = recipeApi.getResultRecipes("search", word)
+        val callGetRandomRecipes = recipeApi.getRandomRecipesInSearchFragment("search",randomCut-2,randomCut, 9)
+        callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIResponseRecipeList>{
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseRecipeList>,
+                responseRecipe: Response<RecipeDTO.APIResponseRecipeList>
+            ) {
+                responseRecipe.body()?.let{
+                    success(it)
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseRecipeList>, t: Throwable) {
+                Log.e("/posts", "RandomRecipes 가져오기 실패 : " + t)
+                fail(t)
+            }
+        })
+    }
+
+    fun getResultRecipesLatest(
+        quertType: String,//"search" 많이 씀
+        stepStart: Int?,
+        stepEnd: Int?,
+        time: Int?,
+        startDate: String?,
+        endDate: String?,
+        order: String?,
+        keyword: String?,
+        limit:String?,
+        offset: String?,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        val callGetRandomRecipes = recipeApi.getResultRecipesLatest(quertType,stepStart, stepEnd, time, startDate, endDate, order, keyword, limit, offset)
         callGetRandomRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIResponseRecipeList>{
             override fun onResponse(
                 call: Call<RecipeDTO.APIResponseRecipeList>,

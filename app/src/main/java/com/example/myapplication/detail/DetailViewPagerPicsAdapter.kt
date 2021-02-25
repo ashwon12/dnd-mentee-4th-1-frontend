@@ -31,7 +31,6 @@ class DetailViewPagerPicsAdapter(val context: Context) : PagerAdapter() {
         val v = layoutInflater!!.inflate(R.layout.fragment_image_slide, null)
 
         val imageView = v.findViewById<ImageView>(R.id.iv_image_slide)
-        //imageView.setImageURI(recipeImages[position])//TODO : 서버에서 URL 받아올 경우 setImageURL로 변경
 
         recipeImages[position].imageUrl?.let {
             if (it.isNotEmpty()) {
