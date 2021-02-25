@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
-class FeedViewPagerAdapter(private val Images : ArrayList<String>) :
+class FeedViewPagerAdapter(private val Images : ArrayList<RecipeDTO.Steps>) :
     RecyclerView.Adapter<FeedViewPagerAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewPagerAdapter.Holder {
@@ -29,7 +30,6 @@ class FeedViewPagerAdapter(private val Images : ArrayList<String>) :
 
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
         val thumbnail = itemView!!.findViewById<ImageView>(R.id.iv_top3_image_item)
-
     }
 
 }
