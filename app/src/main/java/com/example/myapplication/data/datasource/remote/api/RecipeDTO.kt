@@ -190,7 +190,8 @@ class RecipeDTO {
         var starCount: Double? = null,// String -> Float 수정 필요
         var wishCount: String? = null,
         var viewCount: String? = null,
-        var writer: Writer? = null
+        var writer: Writer? = null,
+        var createdDate: String?
     )
 
     data class Writer(

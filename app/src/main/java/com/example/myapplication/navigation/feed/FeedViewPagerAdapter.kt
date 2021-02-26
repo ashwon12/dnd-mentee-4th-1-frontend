@@ -23,7 +23,7 @@ class FeedViewPagerAdapter(private val Images : ArrayList<RecipeDTO.Steps>) :
 
     override fun onBindViewHolder(holder: FeedViewPagerAdapter.Holder, position: Int) {
         Glide.with(App.instance)
-            .load(Images[position])
+            .load(Images[position].imageUrl)
             .placeholder(R.drawable.ic_no_image)
             .into(holder.thumbnail)
     }

@@ -46,12 +46,14 @@ class FeedRecyclerViewHolder(
     fun bind(data: RecipeDTO.RecipeFinal) {
         title.text = data.title
         starCount.text = data.starCount.toString()
-        userName.text = SharedPreferenceUtil(App.instance).getName().toString()
+        userName.text = data.writer?.name
         contentsText.text = data.description
         viewCount.text = data.viewCount
+        val writeDates = data.createdDate
+        writeDate.text = writeDates?.substring(writeDates?.indexOf("T")- 1)
 
         Glide.with(App.instance)
-            .load(data.thumbnail)
+            .load(data.writer?.imageUrl)
             .placeholder(R.drawable.ic_no_image)
             .circleCrop()
             .into(profile)
