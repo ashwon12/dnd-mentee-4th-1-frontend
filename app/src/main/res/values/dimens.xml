@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--pagerMargin, pagerHeight 정확한 의미 파악 필요-->
+    <dimen name="pageMargin">0dp</dimen>
+    <dimen name="pagerHeight">20dp</dimen>
+</resources>

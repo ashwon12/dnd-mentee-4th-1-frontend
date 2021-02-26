@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/li_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="20dp"
+        android:elevation="20dp"
+        app:cardBackgroundColor="#F8F8F8"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_quote_textView1">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_upload_preview_photo"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius_bottom_left="6dp"
+            app:riv_corner_radius_bottom_right="6dp"
+            app:riv_corner_radius_top_left="6dp"
+            app:riv_corner_radius_top_right="6dp" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_upload_preview_number"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_select_oval"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="#F8F8F8"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/et_upload_comment"
+            app:layout_constraintEnd_toStartOf="@id/et_upload_comment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_upload_preview_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:textColor="#464646"
+            android:gravity="center_vertical"
+            android:text="설명부분" />
+
+    </LinearLayout>
+
+</LinearLayout>

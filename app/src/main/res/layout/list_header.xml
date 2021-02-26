@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_steps"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_steps"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_gravity="center"
+        android:background="@drawable/transparent_button"
+        android:drawableRight="@drawable/ic_search"
+        android:gravity="center"
+        android:paddingHorizontal="140dp"
+        android:text="레시피 전체보기"
+        android:textColor="#FF7051"
+        android:textSize="15dp" />
+</LinearLayout>
