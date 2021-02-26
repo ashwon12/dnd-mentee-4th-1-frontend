@@ -59,6 +59,15 @@ class RecipeDTO {
         var data: String?
     )
 
+    data class userFollow(
+        val timestamp: String?,
+        val status: String?,
+        val error: String?,
+        val message: String?,
+        val path: String?,
+        var data: String?
+    )
+
     data class UploadRecipe(
         var title: String? = null,
         var description: String? = null,
@@ -107,6 +116,26 @@ class RecipeDTO {
         var timeName: String
     ) : Serializable
 
+
+    data class APIResponseList(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<RecipeFinal>? = null
+    )
+
+    data class APIResponseData(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val data: RecipeFinal? = null
+    )
+
+
     /**    2. 24.(수) 이후 수정   **/
 
     // Recipe List로 받을 때
@@ -127,6 +156,15 @@ class RecipeDTO {
         val message: String,
         val path: String,
         val data: RecipeFinal? = null
+    )
+
+    data class UserResponse(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<User>? = null
     )
 
     // Comment List로 받을 때
@@ -152,16 +190,12 @@ class RecipeDTO {
         var starCount: Double? = null,// String -> Float 수정 필요
         var wishCount: String? = null,
         var viewCount: String? = null,
-        var writer: Writer? = null
+        var writer: Writer? = null,
+        var createdDate: String?
     )
-
-
-
-
 
     data class Writer(
         var id: Int,
-        var name: String? = null,
         var email: String? = null,
         val imageUrl: String? = null
     )
@@ -218,9 +252,10 @@ class RecipeDTO {
     )
 
     data class User(
+        val email: String,
         val id: Int,
-        val name: String,
-        val email: String
+        val imgUrl : String,
+        val name: String
     )
 }
 

@@ -21,11 +21,14 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.navigation.mypage.FollowAdapter
 import com.example.myapplication.navigation.quote.QuoteActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.fragment_mypage_follower.*
 
 
 class DetailFragment : Fragment() {
@@ -52,6 +55,8 @@ class DetailFragment : Fragment() {
 
     private val repository = Repository()
 
+    private lateinit var btn_follow : Button
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,32 +82,33 @@ class DetailFragment : Fragment() {
         return v
     }
 
-   /* override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val bundle = Bundle()
-                bundle.putString("input_search", historyWord)
 
-                val activity = v.context as AppCompatActivity
-                val transaction = activity.supportFragmentManager.beginTransaction()
-                val resultFragment: Fragment = ResultFragement()
-                resultFragment.arguments = bundle
+    /* override fun onAttach(context: Context) {
+         super.onAttach(context)
+         callback = object : OnBackPressedCallback(true) {
+             override fun handleOnBackPressed() {
+                 val bundle = Bundle()
+                 bundle.putString("input_search", historyWord)
 
-                transaction.replace(R.id.fl_container, resultFragment)
-                transaction.setCustomAnimations(
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right,
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right
-                )
-                transaction.addToBackStack(null)
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                transaction.commit()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }*/
+                 val activity = v.context as AppCompatActivity
+                 val transaction = activity.supportFragmentManager.beginTransaction()
+                 val resultFragment: Fragment = ResultFragement()
+                 resultFragment.arguments = bundle
+
+                 transaction.replace(R.id.fl_container, resultFragment)
+                 transaction.setCustomAnimations(
+                     R.anim.enter_from_left,
+                     R.anim.exit_to_right,
+                     R.anim.enter_from_left,
+                     R.anim.exit_to_right
+                 )
+                 transaction.addToBackStack(null)
+                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                 transaction.commit()
+             }
+         }
+         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+     }*/
 
     /**  API Reciep Data 요청(id로) **/
     private fun requestRecipeById(recipeId: Int) {
@@ -110,6 +116,10 @@ class DetailFragment : Fragment() {
             recipeId,
             success = {
                 it.run {
+                    val userId = it.data?.writer?.id
+                    val userProfile = it.data?.writer?.imageUrl
+                    callFollow(userId!!)
+                    setProfilePic(userProfile!!)
                     val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
                     val tvTitle = v.findViewById<TextView>(R.id.tv_detail_title)
                     val tvDescription = v.findViewById<TextView>(R.id.tv_introduction)
@@ -119,7 +129,6 @@ class DetailFragment : Fragment() {
 
                     val tvTime = v.findViewById<TextView>(R.id.tv_time)
 
-                    setProfilePic(it.data?.writer?.imageUrl)
 
                     val btnQuote = v.findViewById<Button>(R.id.btn_quote)
 
@@ -181,30 +190,46 @@ class DetailFragment : Fragment() {
         )
     }
 
-    private fun setProfilePic(imageUrl: String?) {
+    private fun setProfilePic(userProfile : String ) {
         val profilePic = v.findViewById<ImageView>(R.id.iv_uploader_profile)
         Glide.with(App.instance)
-            .load(imageUrl)
+            .load(userProfile)
+            .circleCrop()
             .placeholder(R.drawable.ic_face)
             .into(profilePic)
     }
 
-    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
-        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
-        Glide.with(App.instance)
-            .load(this)
-            .placeholder(R.drawable.ic_face)
-            .into(commentProfilePic)
+    private fun callFollow(userID : Int) {
+        btn_follow = v.findViewById(R.id.btn_follow)
+        btn_follow.setOnClickListener {
+            repository.userFollow(
+                success = {
+                    it.run {
+                        Log.d("Detial Fragment","${userID}번 유저 팔로우 성공!")
+                    }
+                },
+                fail = {
+                    Log.d("fail", "fail fail fail")
+                },
+                token = SharedPreferenceUtil(App.instance).getToken().toString(),
+                followingId =userID
+            )
+        }
     }
+
+//    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
+//        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
+//        Glide.with(App.instance)
+//            .load(this)
+//            .placeholder(R.drawable.ic_face)
+//            .into(commentProfilePic)
+//    }
 
     /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
     private fun getRecipeIdFromBeforeFragment() {
         recipeId = arguments!!.getInt("recipeId") // 전달한 key 값
-        thumbnailURL = arguments!!.getString("thumbnail")!!
         historyWord = arguments!!.getString("history")
     }
-
-
 
     private fun setRatingBar(ratingAverage: Double) {
         val floatRatingAvg = ratingAverage.toFloat()

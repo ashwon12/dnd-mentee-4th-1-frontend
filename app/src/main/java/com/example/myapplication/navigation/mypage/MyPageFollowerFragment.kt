@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
-import com.example.myapplication.navigation.home.HomeMultiViewAdapter
+import com.example.myapplication.navigation.mypage.FollowAdapter
 import com.example.myapplication.navigation.mypage.MyMultiViewAdapter
 import kotlinx.android.synthetic.main.fragment_mypage_follower.*
 
@@ -18,11 +19,10 @@ class MyPageFollowerFragment : Fragment() {
 
     private lateinit var v : View
 
-    private var followerList = ArrayList<RecipeDTO.RecipeFinal>()
+    private var followerList = ArrayList<RecipeDTO.User>()
     private lateinit var rv_my_follower : RecyclerView
 
     private val repository = Repository()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,21 +41,21 @@ class MyPageFollowerFragment : Fragment() {
         rv_my_follower = v.findViewById(R.id.rv_my_follower)
         rv_my_follower.layoutManager = LinearLayoutManager(App.instance, RecyclerView.VERTICAL, false)
 
-        repository.getHomeRecipes(
+        repository.getFollower(
             success = {
                 it.run {
                     val data = it.list
                     followerList.addAll(data!!)
-                    rv_my_follower.adapter = MyMultiViewAdapter(2,followerList)
+                    rv_my_follower.adapter = FollowAdapter(followerList)
 
-                    tv_my_follower_count.text = "전체 ${data.size}개"
+                    tv_my_follower_count.text = "전체 ${followerList.size}개"
                 }
             },
             fail = {
                 Log.d("fail", "fail fail fail")
             },
-            queryType = "search",
-            order = "latest"
+            token = SharedPreferenceUtil(App.instance).getToken().toString()
         )
     }
 }
+

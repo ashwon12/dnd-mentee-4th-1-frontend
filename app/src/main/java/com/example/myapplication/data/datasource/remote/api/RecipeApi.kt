@@ -61,7 +61,6 @@ interface RecipeApi {
         @Path("recipeId") recipeId: Int
     ): Call<RecipeDTO.APIResponseCommentList>
 
-
     @FormUrlEncoded
     @POST("/posts")
     fun postTimeline(
@@ -100,6 +99,44 @@ interface RecipeApi {
         @Query("queryType") queryType: String,
         @Query("order") order: String
     ): Call<RecipeDTO.APIResponseRecipeList>
+
+    @GET("/recipes")
+    fun getMyRecipes(
+        @Query("queryType") queryType: String,
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.APIResponseList>
+
+    @GET("/followers")
+    fun getFollowerList(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.UserResponse>
+
+    @GET("/followings")
+    fun getFollowingList(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.UserResponse>
+
+    @GET("/followingFeeds")
+    fun getfollowingFeeds(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<RecipeDTO.APIResponseList>
+
+    @DELETE("/recipes/{recipeId}")
+    fun deleteRecipe(
+        @Path("recipeId") recipeId: Int
+    )
+
+    @POST("/follow/{followingId}")
+    fun userFollow(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Path("followingId") followingId : Int
+    ):Call<RecipeDTO.userFollow>
+
+    @DELETE("/follow/{followingId}")
+    fun userUnFollow(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Path("followingId") followingId : Int
+    )
 
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"

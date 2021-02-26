@@ -62,7 +62,6 @@ class Repository {
         )
     }
 
-
     fun getRecipeById(
         recipeId: Int,
         success: (RecipeDTO.APIResponseRecipeData) -> Unit,
@@ -74,7 +73,6 @@ class Repository {
             fail
         )
     }
-
 
     fun getCommentsById(
         recipeId: Int,
@@ -88,7 +86,6 @@ class Repository {
         )
     }
 
-
     fun getHomeRecipes(
         success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit,
@@ -100,7 +97,20 @@ class Repository {
             fail,
             queryType,
             order
+        )
+    }
 
+    fun getMyRecipes(
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        token : String
+    ) {
+        remoteMovieDataSourceImpl.getMyRecipes(
+            success,
+            fail,
+            queryType,
+            token
         )
     }
 
@@ -163,5 +173,60 @@ class Repository {
         fail : (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.postJoinInfo(token, joinInfo, success, fail)
+    }
+
+    //유저 팔로우하기
+    fun userFollow(
+        token: String,
+        followingId : Int,
+        success : (RecipeDTO.userFollow) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.userFollow(token,followingId,success,fail)
+    }
+
+    //유저 언팔로우하기
+    fun userUnFollow(
+        token: String,
+        followingId : Int,
+        success : (RecipeDTO.userFollow) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.userUnFollow(token,followingId,success,fail)
+    }
+
+    //팔로워 리스트
+    fun getFollower(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollower(token,success,fail)
+    }
+
+    //팔로잉 리스트
+    fun getFollowing(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollowing(token,success,fail)
+    }
+
+    //피드 리스트
+    fun getFollowingFeeds(
+        token : String,
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.getFollowingFeeds(token,success,fail)
+    }
+
+    fun deleteRecipes(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseData) -> Unit,
+        fail: (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.deleteRecipe(recipeId,success,fail)
     }
 }
