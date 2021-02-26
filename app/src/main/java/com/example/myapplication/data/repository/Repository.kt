@@ -185,6 +185,7 @@ class Repository {
         remoteMovieDataSourceImpl.userFollow(token,followingId,success,fail)
     }
 
+
     //유저 언팔로우하기
     fun userUnFollow(
         token: String,
@@ -194,6 +195,7 @@ class Repository {
     ){
         remoteMovieDataSourceImpl.userUnFollow(token,followingId,success,fail)
     }
+
 
     //팔로워 리스트
     fun getFollower(

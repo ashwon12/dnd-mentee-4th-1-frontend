@@ -23,9 +23,9 @@
 
             <ImageView
                 android:id="@+id/iv_uploader_profile"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/ic_face" />
 
             <TextView
@@ -33,8 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
+                android:layout_marginBottom="3dp"
                 android:gravity="center_vertical"
-                android:hint="userid"
+                android:text="userid"
+                android:textColor="#222222"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -72,28 +74,28 @@
                     android:id="@+id/vp_recipes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#FAECC5"
+                    android:background="@color/bgGray"
                     android:transitionName="@string/transition_random_to_detail" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="20dp" />
 
-                <com.google.android.material.tabs.TabLayout
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
                     android:id="@+id/tab_layout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="@android:color/transparent"
-                    app:tabBackground="@drawable/tab_selector"
-                    app:tabIndicatorFullWidth="true"
-                    app:tabIndicatorGravity="bottom"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMaxWidth="50dp"
-                    app:tabPaddingBottom="8dp"
-                    app:tabPaddingEnd="10dp"
-                    app:tabPaddingStart="10dp" />
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="10dp"
+                    app:dotsColor="@color/white"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="16dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/white" />
 
             </FrameLayout>
 
@@ -103,59 +105,60 @@
             android:id="@+id/ll_today_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="serif"
                 android:gravity="center_vertical"
-                android:hint="레시피 이름"
+                android:text="레시피 이름"
+                android:textColor="@color/black"
                 android:textSize="24dp"
-                android:textStyle="bold"
-                android:typeface="monospace" />
-
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="15dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_introduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명.요리에 대한 간단한 설명."
+                android:textColor="#464646"
                 android:textSize="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_add_tag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -166,23 +169,25 @@
                 <LinearLayout
                     android:id="@+id/ll_star_rating"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/iv_like"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:src="@drawable/rating_star_default" />
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_star" />
 
                     <TextView
                         android:id="@+id/tv_star_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="3dp"
                         android:gravity="center_vertical"
-                        android:textSize="14dp" />
+                        android:text="123"
+                        android:textColor="#969393"
+                        android:textSize="16dp" />
 
                 </LinearLayout>
 
@@ -193,40 +198,51 @@
 
                     <ImageView
                         android:id="@+id/iv_subscribe"
-                        android:layout_width="22dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/watch" />
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_view" />
 
                     <TextView
                         android:id="@+id/tv_viewcount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="3dp"
+                        android:gravity="center_vertical"
+                        android:text="123"
+                        android:textColor="#969393"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_calendar"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_calendar" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:gravity="center_vertical"
                         android:textSize="14dp" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_gravity="center_vertical">
-
-                    <ImageView
-                        android:id="@+id/iv_calendar"
-                        android:layout_width="22dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/calendar" />
-
                     <TextView
                         android:id="@+id/tv_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:layout_marginLeft="4dp"
-                        android:ellipsize="marquee"
-                        android:textSize="14dp" />
+                        android:layout_marginLeft="3dp"
+                        android:gravity="center_vertical"
+                        android:text="7시간전"
+                        android:textColor="#969393"
+                        android:textSize="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -237,13 +253,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="15dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="필수 재료"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
@@ -251,7 +268,11 @@
                 android:id="@+id/rv_main_ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="horizontal"
+                android:text="당근 1개, 마늘 30쪽, 파스타면"
+                android:textColor="@color/black"
+                android:textSize="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
@@ -259,7 +280,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -267,35 +288,43 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="부가 재료"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_sub_ingredient"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="올리브유, 소고기, 허브"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginBottom="8dp"
                 android:text="조리 방법"
+                android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/rl_show"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_steps"
@@ -322,9 +351,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:gravity="center"
-                android:hint="이 레시피는 3점이에요!"
-                android:letterSpacing="0.1"
-                android:textSize="16dp" />
+                android:text="이 레시피는 3점이에요!"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/ratingbar2"
@@ -332,9 +362,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:stepSize="0.1"
-                android:progressTint="@color/LightGray"
-                android:rating="3" />
+                android:progressTint="#FFD951"
+                android:rating="3"
+                android:stepSize="0.1" />
+
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -357,46 +388,57 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:orientation="vertical">
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="32dp"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:paddingLeft="12dp"-->
-<!--                android:text="후 기"-->
-<!--                android:textSize="18dp"-->
-<!--                android:textStyle="bold" />-->
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="32dp"-->
+            <!--                android:gravity="center_vertical"-->
+            <!--                android:paddingLeft="12dp"-->
+            <!--                android:text="후 기"-->
+            <!--                android:textSize="18dp"-->
+            <!--                android:textStyle="bold" />-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:text="후 기"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginTop="8dp"
-            android:background="#F6F6F6"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
             android:elevation="10dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="22dp">
 
             <ImageView
                 android:id="@+id/iv_comment_profile"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_face" />
 
             <EditText
                 android:id="@+id/edt_comment"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="4dp"
                 android:layout_weight="5"
                 android:backgroundTint="@color/orange"
@@ -405,9 +447,10 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="16dp" />
 
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_comment_confirm"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
