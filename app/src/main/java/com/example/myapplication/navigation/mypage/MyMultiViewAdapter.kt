@@ -53,6 +53,7 @@ class MyMultiViewAdapter(
                 holder.myViewCount.text = myRecipeList[position].viewCount
                 holder.myTime.text = "${myRecipeList[position].time}분"
 
+
                 holder.itemView.setOnClickListener {
                     Toast.makeText(
                         App.instance,

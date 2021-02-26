@@ -98,7 +98,7 @@ interface RecipeApi {
     fun getHomeRecipes(
         @Query("queryType") queryType: String,
         @Query("order") order: String
-    ): Call<RecipeDTO.APIResponseList>
+    ): Call<RecipeDTO.APIResponseRecipeList>
 
     @GET("/recipes")
     fun getMyRecipes(
