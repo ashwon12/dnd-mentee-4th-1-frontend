@@ -57,7 +57,7 @@ class QuoteActivity : AppCompatActivity() {
     private var recipeId = 0
     private var positionMain = -1
 
-    lateinit var parentRecipe: RecipeDTO.APIResponseData
+    lateinit var parentRecipe: RecipeDTO.APIResponseRecipeData
     private lateinit var itemMain: RecipeDTO.Recipe
     private lateinit var imageAdapter: QuoteImageAdapter
     private lateinit var commentAdapter: QuoteCommentAdapter
@@ -74,7 +74,7 @@ class QuoteActivity : AppCompatActivity() {
         requestRecipeById(recipeId)
         itemTouch()
     }
-    private fun getResponse(recipe : RecipeDTO.APIResponseData) {
+    private fun getResponse(recipe : RecipeDTO.APIResponseRecipeData) {
         parentRecipe = recipe
     }
 

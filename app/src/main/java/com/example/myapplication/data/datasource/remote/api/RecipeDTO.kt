@@ -160,7 +160,6 @@ class RecipeDTO {
 
 
     data class Writer(
-        var name: String? = null,
         var id: Int,
         var name: String? = null,
         var email: String? = null,

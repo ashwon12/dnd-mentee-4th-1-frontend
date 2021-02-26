@@ -54,7 +54,7 @@ class MyMultiViewAdapter(
                     .into((holder as MyMultiViewAdapter.GridViewHolder).myThumbnail)
 
                 holder.myTitle.text = ItemsList[position].title
-                holder.myStarCount.text = ItemsList[position].starCount
+                holder.myStarCount.text = ItemsList[position].starCount.toString()
                 holder.myViewCount.text = ItemsList[position].viewCount
                 holder.myTime.text = "${ItemsList[position].time}분"
 
