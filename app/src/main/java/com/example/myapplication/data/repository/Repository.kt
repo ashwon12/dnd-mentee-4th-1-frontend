@@ -186,14 +186,14 @@ class Repository {
     }
 
     //유저 언팔로우하기
-    fun userUnFollow(
-        token: String,
-        followingId : Int,
-        success : (RecipeDTO.userFollow) -> Unit,
-        fail : (Throwable) -> Unit
-    ){
-        remoteMovieDataSourceImpl.userUnFollow(token,followingId,success,fail)
-    }
+//    fun userUnFollow(
+//        token: String,
+//        followingId : Int,
+//        success : (RecipeDTO.userFollow) -> Unit,
+//        fail : (Throwable) -> Unit
+//    ){
+//        remoteMovieDataSourceImpl.userUnFollow(token,followingId,success,fail)
+//    }
 
     //팔로워 리스트
     fun getFollower(

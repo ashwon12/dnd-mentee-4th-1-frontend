@@ -51,20 +51,20 @@ class FollowAdapter(
             .into(holder.followProfile)
 
         holder.followName.text = userList[position].name
-        holder.followButton.setOnClickListener {
-            repository.userUnFollow(
-                success = {
-                    it.run {
-                        Log.d("MyPage Fragment","${userID}번 유저 언팔로우 성공!")
-                    }
-                },
-                fail = {
-                    Log.d("fail", "fail fail fail")
-                },
-                token = SharedPreferenceUtil(App.instance).getToken().toString(),
-                followingId =userID
-            )
-        }
+//        holder.followButton.setOnClickListener {
+//            repository.userUnFollow(
+//                success = {
+//                    it.run {
+//                        Log.d("MyPage Fragment","${userID}번 유저 언팔로우 성공!")
+//                    }
+//                },
+//                fail = {
+//                    Log.d("fail", "fail fail fail")
+//                },
+//                token = SharedPreferenceUtil(App.instance).getToken().toString(),
+//                followingId =userID
+//            )
+//        }
     }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

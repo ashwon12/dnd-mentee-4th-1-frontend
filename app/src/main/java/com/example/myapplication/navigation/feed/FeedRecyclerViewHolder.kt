@@ -50,7 +50,7 @@ class FeedRecyclerViewHolder(
         contentsText.text = data.description
         viewCount.text = data.viewCount
         val writeDates = data.createdDate.toString()
-        writeDate.text = writeDates.substring(0,10)
+       // writeDate.text = writeDates.substring(0,10)
 
         Glide.with(App.instance)
             .load(data.writer?.imageUrl)
