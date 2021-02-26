@@ -61,7 +61,6 @@ interface RecipeApi {
         @Path("recipeId") recipeId: Int
     ): Call<RecipeDTO.APIResponseCommentList>
 
-
     @FormUrlEncoded
     @POST("/posts")
     fun postTimeline(
