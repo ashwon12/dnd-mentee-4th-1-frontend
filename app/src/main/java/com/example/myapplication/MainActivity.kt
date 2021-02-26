@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         getItems()
 
+        Log.d("cancel", cancel + "here")
         if(flag == 1 && cancel.equals("0")) {
             showDialog()
         }
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
         if(intent.hasExtra("cancel")) {
             cancel = intent.getStringExtra("cancel")!!
+            Log.d("cancel", cancel + "fsdfsdfsd")
         }
     }
 
