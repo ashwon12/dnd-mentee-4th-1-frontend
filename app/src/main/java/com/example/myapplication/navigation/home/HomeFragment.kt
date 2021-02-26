@@ -5,7 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +18,8 @@ import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.detail.DetailFragment
+import com.example.myapplication.result.ResultFragement
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {
@@ -39,7 +45,6 @@ class HomeFragment : Fragment() {
         requestTop3Recipe()
         requestPopularRecipe()
         setRecent()
-
         return v
     }
 
@@ -77,14 +82,16 @@ class HomeFragment : Fragment() {
             success = {
                 it.run {
                     val data = it.list
-                    popularImagesList.addAll(data!!)
+                    for(i in 0..8){
+                        popularImagesList.add(data!!.get(i))
+                    }
                     rv_popular.adapter = HomeMultiViewAdapter(2,popularImagesList)
                 }
             },
             fail = {
                 Log.d("fail", "fail fail fail")
             },
-            queryType = "labelTop",
+            queryType = "viewTop",
             order = ""
         )
     }
