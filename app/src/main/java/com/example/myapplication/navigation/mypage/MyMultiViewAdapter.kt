@@ -1,12 +1,11 @@
 package com.example.myapplication.navigation.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -14,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.data.repository.Repository
 import com.example.myapplication.detail.DetailFragment
 
 class MyMultiViewAdapter(
@@ -24,6 +25,7 @@ class MyMultiViewAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     lateinit var view : View
+    private val repository = Repository()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (type) {
@@ -78,6 +80,27 @@ class MyMultiViewAdapter(
                         .addToBackStack(null)
                         .commit()
                 }
+
+                holder.btn_more.setOnClickListener {
+                    when (holder.moreSet.visibility) {
+                        View.VISIBLE -> holder.moreSet.visibility = View.INVISIBLE
+                        View.INVISIBLE -> holder.moreSet.visibility = View.VISIBLE
+                    }
+                }
+
+                holder.btn_delete.setOnClickListener {
+                    repository.deleteRecipes(
+                        recipeId = myRecipeList.get(position).id,
+                        success = {
+                            it.run {
+                            }
+                        },
+                        fail = {
+                        }
+                    )
+
+                }
+
             }
         }
     }
@@ -88,6 +111,9 @@ class MyMultiViewAdapter(
         val myStarCount = itemView.findViewById<TextView>(R.id.tv_my_star_count)
         val myViewCount = itemView.findViewById<TextView>(R.id.tv_my_views_count)
         val myTime = itemView.findViewById<TextView>(R.id.tv_my_time)
+        val btn_more = itemView.findViewById<ImageButton>(R.id.ib_my_more)
+        val btn_delete = itemView.findViewById<Button>(R.id.btn_feed_delete)
+        val moreSet = itemView.findViewById<LinearLayout>(R.id.ll_feed_more_set)
     }
 
 }

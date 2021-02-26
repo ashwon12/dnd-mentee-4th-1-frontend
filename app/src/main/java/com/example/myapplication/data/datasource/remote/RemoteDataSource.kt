@@ -505,7 +505,23 @@ class RemoteDataSource {
         success: (RecipeDTO.APIResponseData) -> Unit,
         fail: (Throwable) -> Unit
     ){
-        val calldeleteRecipes = recipeApi.deleteRecipe(recipeId)
+        val deleteRecipes = recipeApi.deleteRecipe(recipeId)
+        deleteRecipes.enqueue(object : Callback<RecipeDTO.APIResponseData> {
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseData>,
+                response: Response<RecipeDTO.APIResponseData>
+            ) {
+                if (response?.isSuccessful) {
+                    response.body()?.let {
+                        success(it)
+                    }
+                } else {
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseData>, t: Throwable) {
+                Log.d("user unfollow fail!!", t.message.toString())
+            }
+        })
 
     }
 

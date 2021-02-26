@@ -124,7 +124,7 @@ interface RecipeApi {
     @DELETE("/recipes/{recipeId}")
     fun deleteRecipe(
         @Path("recipeId") recipeId: Int
-    )
+    ): Call<RecipeDTO.APIResponseData>
 
     @POST("/follow/{followingId}")
     fun userFollow(
