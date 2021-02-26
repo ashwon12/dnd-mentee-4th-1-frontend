@@ -59,6 +59,15 @@ class RecipeDTO {
         var data: String?
     )
 
+    data class userFollow(
+        val timestamp: String?,
+        val status: String?,
+        val error: String?,
+        val message: String?,
+        val path: String?,
+        var data: String?
+    )
+
     data class UploadRecipe(
         var title: String? = null,
         var description: String? = null,

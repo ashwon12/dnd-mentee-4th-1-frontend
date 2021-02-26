@@ -175,6 +175,16 @@ class Repository {
         remoteMovieDataSourceImpl.postJoinInfo(token, joinInfo, success, fail)
     }
 
+    //유저 팔로우하기
+    fun userFollow(
+        token: String,
+        followingId : Int,
+        success : (RecipeDTO.userFollow) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        remoteMovieDataSourceImpl.userFollow(token,followingId,success,fail)
+    }
+
     //팔로워 리스트
     fun getFollower(
         token : String,

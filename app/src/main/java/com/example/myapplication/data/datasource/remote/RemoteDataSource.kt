@@ -14,6 +14,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Path
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -221,6 +222,33 @@ class RemoteDataSource {
 //    ) {
 //
 //    }
+
+    fun userFollow(
+        token: String,
+        followingId : Int,
+        success: (RecipeDTO.userFollow) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val postFollow = recipeApi.userFollow(token,followingId)
+        postFollow.enqueue(object : Callback<RecipeDTO.userFollow> {
+            override fun onResponse(
+                call: Call<RecipeDTO.userFollow>,
+                response: Response<RecipeDTO.userFollow>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "${followingId} 유저를 팔로우 성공!", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+                } else {
+                    Toast.makeText(App.instance, "유저 팔로우 실패...", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.userFollow>, t: Throwable) {
+                Log.d("user follow fail!!", t.message.toString())
+            }
+        })
+    }
 
     fun postImageUpload(
         imagePath: String,

@@ -126,6 +126,17 @@ interface RecipeApi {
         @Path("recipeId") recipeId: Int
     )
 
+    @POST("/follow/{followingId}")
+    fun userFollow(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Path("followingId") followingId : Int
+    ):Call<RecipeDTO.userFollow>
+
+    @DELETE("/follow/{followingId}")
+    fun userUnFollow(
+        @Header("X-AUTH-TOKEN") token: String
+    )
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 
