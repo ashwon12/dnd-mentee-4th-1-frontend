@@ -45,6 +45,7 @@ class FeedFragment : Fragment(), FeedRecyclerInterface {
 
         myAdapter = FeedRecyclerAdapter(this)
         rvFeed = v.findViewById(R.id.rv_list) as RecyclerView
+        myAdapter.notifyDataSetChanged()
 
         repository.getFollowingFeeds(
             success = {
@@ -52,7 +53,6 @@ class FeedFragment : Fragment(), FeedRecyclerInterface {
                     val data = it.list
                     feedRecipeList.addAll(data!!)
                     myAdapter.feedUpdateList(feedRecipeList)
-                    myAdapter.notifyDataSetChanged()
                     rvFeed.adapter = myAdapter
                 }
             },

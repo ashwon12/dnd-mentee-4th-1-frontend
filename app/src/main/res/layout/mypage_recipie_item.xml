@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="186dp"
     app:cardElevation="3dp"
@@ -14,9 +15,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="180dp"
         android:orientation="vertical"
-        android:weightSum="3">
+        tools:weightSum="3">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iv_my_thumbnail"
@@ -29,15 +30,58 @@
             app:riv_corner_radius_top_right="12dp"
             app:riv_oval="false" />
 
-        <TextView
-            android:id="@+id/tv_my_recipie_title"
-            style="@style/FontBody2"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical"
-            android:text="타이틀" />
+            android:layout_weight="0.5">
+
+            <TextView
+                android:id="@+id/tv_my_recipie_title"
+                style="@style/FontBody2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
+                android:gravity="center_vertical"
+                android:text="타이틀"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <ImageButton
+                android:id="@+id/ib_my_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:background="#00000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vertical_more" />
+
+            <LinearLayout
+                android:id="@+id/ll_feed_more_set"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/feed_more_button"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btn_feed_delete"
+                    style="@style/FontBody2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:text="삭제" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

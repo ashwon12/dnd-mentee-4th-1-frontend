@@ -47,8 +47,9 @@ class MyPageFollowingFragment : Fragment() {
                 it.run {
                     val data = it.list
                     followingList.addAll(data!!)
-                    rv_my_following.adapter = FollowAdapter(followingList)
-
+                    val myAdapter = FollowAdapter(followingList)
+                    myAdapter.notifyDataSetChanged()
+                    rv_my_following.adapter =myAdapter
                     tv_my_follower_count.text = "전체 ${data.size}개"
                 }
             },

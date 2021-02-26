@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.navigation.feed.FeedRecyclerAdapter
 import com.example.myapplication.navigation.mypage.FollowAdapter
 import com.example.myapplication.navigation.mypage.MyMultiViewAdapter
 import kotlinx.android.synthetic.main.fragment_mypage_follower.*
@@ -46,8 +49,9 @@ class MyPageFollowerFragment : Fragment() {
                 it.run {
                     val data = it.list
                     followerList.addAll(data!!)
-                    rv_my_follower.adapter = FollowAdapter(followerList)
-
+                    val myAdapter = FollowAdapter(followerList)
+                    myAdapter.notifyDataSetChanged()
+                    rv_my_follower.adapter = myAdapter
                     tv_my_follower_count.text = "전체 ${followerList.size}개"
                 }
             },
@@ -56,6 +60,8 @@ class MyPageFollowerFragment : Fragment() {
             },
             token = SharedPreferenceUtil(App.instance).getToken().toString()
         )
+
+
     }
 }
 
