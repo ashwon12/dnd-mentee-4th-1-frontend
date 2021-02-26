@@ -87,6 +87,7 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="10dp"
                     app:dotsColor="@color/white"
@@ -96,6 +97,7 @@
                     app:dotsWidthFactor="2.5"
                     app:progressMode="true"
                     app:selectedDotColor="@color/white" />
+
 
             </FrameLayout>
 
@@ -426,7 +428,7 @@
             android:elevation="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="22dp">
+            android:paddingBottom="24dp">
 
             <ImageView
                 android:id="@+id/iv_comment_profile"
@@ -438,9 +440,10 @@
             <EditText
                 android:id="@+id/edt_comment"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+
+                android:layout_height="48dp"
                 android:layout_marginLeft="4dp"
-                android:layout_weight="5"
+                android:layout_weight="6"
                 android:backgroundTint="@color/orange"
                 android:gravity="center_vertical"
                 android:hint="댓글 내용을 입력해주세요."
@@ -448,11 +451,11 @@
                 android:textSize="16dp" />
 
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_comment_confirm"
-                android:layout_width="wrap_content"
+                android:layout_width="28dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="올리기"

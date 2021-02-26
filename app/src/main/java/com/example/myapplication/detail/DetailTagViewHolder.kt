@@ -9,10 +9,11 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 
 class DetailTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val btnTag = itemView.findViewById<TextView>(R.id.btn_tag_button)
+    private val tvTag = itemView.findViewById<TextView>(R.id.btn_tag_button)
+
 
     fun bind(tagText: RecipeDTO.Themes) {
-        btnTag.text = tagText.name
+        tvTag.text = tagText.name
     }
 
 }

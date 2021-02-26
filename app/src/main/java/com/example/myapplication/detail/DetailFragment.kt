@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -24,12 +25,12 @@ import com.example.myapplication.R
 import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
-import com.example.myapplication.navigation.mypage.FollowAdapter
 import com.example.myapplication.navigation.quote.QuoteActivity
 import com.google.android.material.tabs.TabLayout
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_mypage_follower.*
+
 
 
 class DetailFragment : Fragment() {
@@ -76,6 +77,8 @@ class DetailFragment : Fragment() {
         setSubIngredients()
         setCommentRecyclerView()
         setViewPagerSteps()
+        setCommentProfilePic()
+        setPostComment()
 
         requestRecipeById(recipeId)
         requestCommentById(recipeId)
@@ -83,33 +86,6 @@ class DetailFragment : Fragment() {
         return v
     }
 
-
-    /* override fun onAttach(context: Context) {
-         super.onAttach(context)
-         callback = object : OnBackPressedCallback(true) {
-             override fun handleOnBackPressed() {
-                 val bundle = Bundle()
-                 bundle.putString("input_search", historyWord)
-
-                 val activity = v.context as AppCompatActivity
-                 val transaction = activity.supportFragmentManager.beginTransaction()
-                 val resultFragment: Fragment = ResultFragement()
-                 resultFragment.arguments = bundle
-
-                 transaction.replace(R.id.fl_container, resultFragment)
-                 transaction.setCustomAnimations(
-                     R.anim.enter_from_left,
-                     R.anim.exit_to_right,
-                     R.anim.enter_from_left,
-                     R.anim.exit_to_right
-                 )
-                 transaction.addToBackStack(null)
-                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                 transaction.commit()
-             }
-         }
-         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-     }*/
 
     /**  API Reciep Data 요청(id로) **/
     private fun requestRecipeById(recipeId: Int) {
@@ -120,7 +96,7 @@ class DetailFragment : Fragment() {
                     val userId = it.data?.writer?.id
                     val userProfile = it.data?.writer?.imageUrl
                     callFollow(userId!!)
-                    setProfilePic(userProfile!!)
+                    //setProfilePic(userProfile!!)
                     val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
                     val tvTitle = v.findViewById<TextView>(R.id.tv_detail_title)
                     val tvDescription = v.findViewById<TextView>(R.id.tv_introduction)
@@ -154,7 +130,7 @@ class DetailFragment : Fragment() {
                     }
 
                     // 어댑터 설정
-                    picsAdapter.recipeImages.add(RecipeDTO.Steps(555, "plzplzplz",thumbnailURL, "plzplzplzplz"))
+                    picsAdapter.recipeImages.add(RecipeDTO.Steps(555, "plzplzplz",it.data.thumbnail, "plzplzplzplz"))
                     picsAdapter.recipeImages.addAll(it.data?.steps!!)
                     StepDescriptionAdapter.updateDescription(it.data?.steps!!)
                     tagAdapter.updateThemes(it.data?.themes)
@@ -191,15 +167,6 @@ class DetailFragment : Fragment() {
         )
     }
 
-    private fun setProfilePic(userProfile : String ) {
-        val profilePic = v.findViewById<ImageView>(R.id.iv_uploader_profile)
-        Glide.with(App.instance)
-            .load(userProfile)
-            .circleCrop()
-            .placeholder(R.drawable.ic_face)
-            .into(profilePic)
-    }
-
     private fun callFollow(userID : Int) {
         btn_follow = v.findViewById(R.id.btn_follow)
         btn_follow.setOnClickListener {
@@ -218,13 +185,16 @@ class DetailFragment : Fragment() {
         }
     }
 
-//    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
-//        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
-//        Glide.with(App.instance)
-//            .load(this)
-//            .placeholder(R.drawable.ic_face)
-//            .into(commentProfilePic)
-//    }
+    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
+        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
+        Glide.with(App.instance)
+            .load(this)
+            .placeholder(R.drawable.ic_face)
+            .into(commentProfilePic)
+
+        val profilePic = v.findViewById<ImageView>(R.id.iv_uploader_profile)
+        profilePic.setImageURI(Uri.parse(SharedPreferenceUtil(App.instance).getImage()))
+    }
 
     /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
     private fun getRecipeIdFromBeforeFragment() {
@@ -351,5 +321,39 @@ class DetailFragment : Fragment() {
         intent.putExtra("recipeId", recipeId)
         intent.putExtra("number", number)
         startActivity(intent)
+    }
+
+    private fun setPostComment() {
+        val btnPostComment = v.findViewById<Button>(R.id.btn_comment_confirm)
+        val editText = v.findViewById<EditText>(R.id.edt_comment)
+
+        val commentDTO = RecipeDTO.RequestComment(1, recipeId, editText.text.toString(), "", 1)
+
+        btnPostComment.setOnClickListener {
+            repository.postComment(
+                token = SharedPreferenceUtil(App.instance).getToken().toString(),
+                commentInfo = commentDTO,
+                success = {
+                    val comment = RecipeDTO.Comment("","",
+                        1,
+                        it.content,
+                        it.imageUrl,
+                        RecipeDTO.Writer(
+                            Integer.parseInt(SharedPreferenceUtil(App.instance).getKakaoId()),
+                            SharedPreferenceUtil(App.instance).getEmail(),
+                            SharedPreferenceUtil(App.instance).getImage(),
+                            SharedPreferenceUtil(App.instance).getName()
+                        ),
+                        1
+                    )
+
+                    commentAdapter.addComment(comment)
+                    commentAdapter.notifyDataSetChanged()
+                },
+                fail = {
+                    Log.d("function fail", "fail")
+                }
+            )
+        }
     }
 }
