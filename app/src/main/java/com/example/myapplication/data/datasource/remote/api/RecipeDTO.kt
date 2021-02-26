@@ -198,8 +198,7 @@ class RecipeDTO {
         var id: Int,
         var name: String? = null,
         var email: String? = null,
-        val imageUrl: String? = null,
-        val name : String?
+        val imageUrl: String? = null
     )
 
     data class Steps(
