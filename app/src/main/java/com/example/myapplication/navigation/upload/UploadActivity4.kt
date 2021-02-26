@@ -77,15 +77,7 @@ class UploadActivity4 : AppCompatActivity() {
         setResult()
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("number", select_cut)
-        intent.putExtra("filter", saveFilterList)
-        intent.putExtra("thumbnail", thumbnail)
-        intent.putExtra("mainfood", mainFoodTagList)
-        intent.putExtra("subfood", subFoodTagList)
-        intent.putExtra("steps", steps)
-        intent.putExtra("recipeTitle", recipeTitle)
-        intent.putExtra("time", timeString)
-        intent.putExtra("subtitle", subTitle)
+        intent.putExtra("cancel", "1")
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
     }
@@ -98,7 +90,7 @@ class UploadActivity4 : AppCompatActivity() {
         )
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("cancel", 1)
+                intent.putExtra("cancel", "1")
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             })
