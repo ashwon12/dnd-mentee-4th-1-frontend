@@ -2,29 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_margin="8dp">
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_step"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="15dp"
         android:layout_weight="1"
-        style="@style/FontCaption"
-        android:hint="O번째"
         android:gravity="center"
-        android:textSize="14dp"/>
+        android:text="O번째"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
     <TextView
         android:id="@+id/tv_step_description"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="6"
-        style="@style/FontCaption"
-        android:hint="라면 봉지를 뜯어주세요!"
-        android:gravity="fill_vertical"
-        android:layout_marginRight="8dp"
-        android:textStyle="bold"
-        android:textSize="14dp"/>
+        android:text="라면 봉지를 뜯어주세요!"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
 
 
 </LinearLayout>
