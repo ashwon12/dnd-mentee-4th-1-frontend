@@ -58,8 +58,12 @@ class HomeFragment : Fragment() {
             success = {
                 it.run {
                     val data = it.list
-                    for(i in 0..2){
-                        top3ImagesList.add(data!!.get(i))
+                    if(data?.size!! < 2){
+                        popularImagesList.addAll(data!!)
+                    }else{
+                        for(i in 0..2){
+                            popularImagesList.add(data!!.get(i))
+                        }
                     }
                     vp_top3.adapter = HomeMultiViewAdapter(1,top3ImagesList)
                     indicator.setViewPager(vp_top3)
@@ -82,8 +86,12 @@ class HomeFragment : Fragment() {
             success = {
                 it.run {
                     val data = it.list
-                    for(i in 0..8){
-                        popularImagesList.add(data!!.get(i))
+                    if(data?.size!! < 8){
+                        popularImagesList.addAll(data!!)
+                    }else{
+                        for(i in 0..8){
+                            popularImagesList.add(data!!.get(i))
+                        }
                     }
                     rv_popular.adapter = HomeMultiViewAdapter(2,popularImagesList)
                 }
