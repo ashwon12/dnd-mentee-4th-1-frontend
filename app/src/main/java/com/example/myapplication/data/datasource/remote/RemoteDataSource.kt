@@ -250,6 +250,33 @@ class RemoteDataSource {
         })
     }
 
+//    fun userUnFollow(
+//        token: String,
+//        followingId : Int,
+//        success: (RecipeDTO.userFollow) -> Unit,
+//        fail : (Throwable) -> Unit
+//    ){
+//        val postUnFollow = recipeApi.userUnFollow(token,followingId)
+//        postUnFollow.enqueue(object : Callback<RecipeDTO.userFollow> {
+//            override fun onResponse(
+//                call: Call<RecipeDTO.userFollow>,
+//                response: Response<RecipeDTO.userFollow>
+//            ) {
+//                if (response?.isSuccessful) {
+//                    Toast.makeText(App.instance, "${followingId} 유저를 팔로우 성공!", Toast.LENGTH_SHORT).show()
+//                    response.body()?.let {
+//                        success(it)
+//                    }
+//                } else {
+//                    Toast.makeText(App.instance, "유저 팔로우 실패...", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            override fun onFailure(call: Call<RecipeDTO.userFollow>, t: Throwable) {
+//                Log.d("user follow fail!!", t.message.toString())
+//            }
+//        })
+//    }
+
     fun postImageUpload(
         imagePath: String,
         success: (RecipeDTO.UploadImage) -> Unit,

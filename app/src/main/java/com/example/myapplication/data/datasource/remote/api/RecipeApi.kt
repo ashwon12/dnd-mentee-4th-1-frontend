@@ -134,7 +134,8 @@ interface RecipeApi {
 
     @DELETE("/follow/{followingId}")
     fun userUnFollow(
-        @Header("X-AUTH-TOKEN") token: String
+        @Header("X-AUTH-TOKEN") token: String,
+        @Path("followingId") followingId : Int
     )
 
     companion object {

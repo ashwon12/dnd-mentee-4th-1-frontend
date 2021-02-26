@@ -20,7 +20,6 @@ class MyPageFollowerFragment : Fragment() {
     private lateinit var v : View
 
     private var followerList = ArrayList<RecipeDTO.User>()
-    private lateinit var myRecipeList: ArrayList<RecipeDTO.RecipeFinal>
     private lateinit var rv_my_follower : RecyclerView
 
     private val repository = Repository()
