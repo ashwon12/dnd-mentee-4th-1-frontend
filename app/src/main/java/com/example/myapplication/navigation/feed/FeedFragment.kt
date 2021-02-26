@@ -13,16 +13,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.detail.DetailFragment
 
 class FeedFragment : Fragment(), FeedRecyclerInterface {
 
     private lateinit var v: View
-    private var feedRecipeList =  ArrayList<RecipeDTO.tempRandomRecipes>()
+    private var feedRecipeList =  ArrayList<RecipeDTO.RecipeFinal>()
     private lateinit var myAdapter: FeedRecyclerAdapter
     private val repository = Repository()
     private lateinit var rvFeed : RecyclerView
@@ -39,19 +43,14 @@ class FeedFragment : Fragment(), FeedRecyclerInterface {
     private fun requsetRecipie() {
         feedRecipeList.clear()
 
-        feedRecipeList.add(RecipeDTO.tempRandomRecipes(0,"https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C","소고기",null,null,null,4.1,null))
-        feedRecipeList.add(RecipeDTO.tempRandomRecipes(1,"https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C","햄버거",null,null,null,4.0,null))
-        feedRecipeList.add(RecipeDTO.tempRandomRecipes(2,"https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C","감자튀김",null,null,null,4.0,null))
-        feedRecipeList.add(RecipeDTO.tempRandomRecipes(3,"https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C","레드벨벳 케이크",null,null,null,4.0,null))
-        feedRecipeList.add(RecipeDTO.tempRandomRecipes(4,"https://t1.daumcdn.net/cfile/tistory/9954B44D5B0AB2E22C","버팔로윙",null,null,null,4.0,null))
-
         myAdapter = FeedRecyclerAdapter(this)
         rvFeed = v.findViewById(R.id.rv_list) as RecyclerView
 
-        repository.getRandomRecipes(
+        repository.getFollowingFeeds(
             success = {
                 it.run {
-                    // feedRecipeList.add(it)
+                    val data = it.list
+                    feedRecipeList.addAll(data!!)
                     myAdapter.feedUpdateList(feedRecipeList)
                     myAdapter.notifyDataSetChanged()
                     rvFeed.adapter = myAdapter
@@ -59,21 +58,34 @@ class FeedFragment : Fragment(), FeedRecyclerInterface {
             },
             fail = {
                 Log.d("fail", "failfailfail")
-            }
+            },
+            token = SharedPreferenceUtil(App.instance).getToken().toString()
         )
-        myAdapter.feedUpdateList(feedRecipeList)
-        myAdapter.notifyDataSetChanged()
-        rvFeed.adapter = myAdapter
     }
-
 
     /** 게시글을 클릭했을 때 상제페이지로 이동 **/
     override fun onItemClicked(position: Int) {
         Log.d("로그", "TimeLinFragment - 클릭됨")
         Toast.makeText(
             App.instance,
-            "상세 값 : ${this.feedRecipeList[position]}",
+            "상세 값 : ${this.feedRecipeList[position].id}",
             Toast.LENGTH_SHORT
         ).show()
+
+        val activity = v.context as AppCompatActivity
+        val detailFragment: Fragment = DetailFragment()
+
+        val args = Bundle()// 클릭된 Recipe의 id 전달
+        args.putInt("recipeId",feedRecipeList[position].id)
+
+        detailFragment.arguments = args
+
+        val manager: FragmentManager = activity.supportFragmentManager
+        manager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+            .setReorderingAllowed(true)
+            .replace(R.id.fl_container, detailFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
