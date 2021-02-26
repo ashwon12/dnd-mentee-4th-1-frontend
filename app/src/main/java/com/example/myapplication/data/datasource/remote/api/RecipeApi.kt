@@ -21,14 +21,45 @@ interface RecipeApi {
 
     @GET("/recipes")
     fun getRandomRecipes(
+        //@Header("X-AUTH-TOKEN")
         @Query("queryType") queryType: String,
-        @Query("keyword") keyword: String
-    ): Call<RecipeDTO.APIResponseList>
+        @Query("keyword") keyword: String,
+        @Query("limit") limit: Int
+    ): Call<RecipeDTO.APIResponseRecipeList>
+
+    @GET("/recipes")
+    fun getRandomRecipesInSearchFragment(
+        //@Header("X-AUTH-TOKEN")
+        @Query("queryType") queryType: String,
+        @Query("stepStart") stepStart: Int? = null,
+        @Query("stepEnd") stepEnd: Int? = null,
+        @Query("limit") limit: Int
+    ): Call<RecipeDTO.APIResponseRecipeList>
+
+    @GET("/recipes")
+    fun getResultRecipesLatest(
+        //@Header("X-AUTH-TOKEN")
+        @Query("queryType") queryType: String,
+        @Query("stepStart") stepStart: Int? = null,
+        @Query("stepEnd") stepEnd: Int? = null,
+        @Query("time") time: Int? = null,
+        @Query("startDate") startDate: String? = null,
+        @Query("endDate") endDate: String? = null,
+        @Query("order") order: String? = null,
+        @Query("keyword") keyword: String? = null,
+        @Query("limit") limit: String? = null,
+        @Query("offset") offset: String? = null
+        ): Call<RecipeDTO.APIResponseRecipeList>
 
     @GET("/recipes/{recipeId}")
     fun getRecipeById(
         @Path("recipeId") recipeId: Int
-    ): Call<RecipeDTO.APIResponseData>
+    ): Call<RecipeDTO.APIResponseRecipeData>
+
+    @GET("recipes/{recipeId}/comments")
+    fun getCommentsById(
+        @Path("recipeId") recipeId: Int
+    ): Call<RecipeDTO.APIResponseCommentList>
 
     @FormUrlEncoded
     @POST("/posts")

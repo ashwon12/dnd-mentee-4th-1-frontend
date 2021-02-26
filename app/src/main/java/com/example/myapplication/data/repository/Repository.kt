@@ -10,10 +10,53 @@ class Repository {
     private val remoteMovieDataSourceImpl = RemoteDataSource()
 
     fun getRandomRecipes(
-        success: (RecipeDTO.APIResponseList) -> Unit,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
         fail: (Throwable) -> Unit
     ) {
-        remoteMovieDataSourceImpl.getRandomRecipes(
+        remoteMovieDataSourceImpl.getRandomRecipesInFeed(
+            success,
+            fail
+        )
+    }
+
+    fun getRandomRecipesInSearchFragment(
+        randomCut: Int,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getRandomRecipesInSearchFragment(
+            randomCut,
+            success,
+            fail
+        )
+    }
+
+
+    fun getResultRecipes(
+        queryType: String,
+        stepStart: Int?,
+        stepEnd: Int?,
+        time: Int?,
+        startDate: String?,
+        endDate: String?,
+        order: String?,
+        keyword: String?,
+        limit: String?,
+        offset: String?,
+        success: (RecipeDTO.APIResponseRecipeList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getResultRecipesLatest(
+            queryType,
+            stepStart,
+            stepEnd,
+            time,
+            startDate,
+            endDate,
+            order,
+            keyword,
+            limit,
+            offset,
             success,
             fail
         )
@@ -21,10 +64,22 @@ class Repository {
 
     fun getRecipeById(
         recipeId: Int,
-        success: (RecipeDTO.APIResponseData) -> Unit,
+        success: (RecipeDTO.APIResponseRecipeData) -> Unit,
         fail: (Throwable) -> Unit
     ) {
         remoteMovieDataSourceImpl.getRecipeById(
+            recipeId,
+            success,
+            fail
+        )
+    }
+
+    fun getCommentsById(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseCommentList) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.getCommentsById(
             recipeId,
             success,
             fail
