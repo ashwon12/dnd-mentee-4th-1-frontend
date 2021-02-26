@@ -26,7 +26,7 @@ class HomeMultiViewAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var view : View
+    lateinit var view: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -67,12 +67,12 @@ class HomeMultiViewAdapter(
             }
 
             2 -> {
-                for (i in 0..4) {
-                    Glide.with(App.instance)
-                        .load(ItemsList[i].thumbnail)
-                        .placeholder(R.drawable.ic_no_image)
-                        .into((holder as GridViewHolder).popularImage)
-                }
+
+                Glide.with(App.instance)
+                    .load(ItemsList[position].thumbnail)
+                    .placeholder(R.drawable.ic_no_image)
+                    .into((holder as GridViewHolder).popularImage)
+                
             }
 
             3 -> {
@@ -91,7 +91,8 @@ class HomeMultiViewAdapter(
 
                 val themeList = ItemsList[position].themes
                 val themesAdapter = ThemesAdapter(themeList)
-                holder.rv_theme.layoutManager = LinearLayoutManager(App.instance, RecyclerView.HORIZONTAL, false)
+                holder.rv_theme.layoutManager =
+                    LinearLayoutManager(App.instance, RecyclerView.HORIZONTAL, false)
                 holder.rv_theme.adapter = themesAdapter
             }
         }
@@ -108,13 +109,18 @@ class HomeMultiViewAdapter(
             val detailFragment: Fragment = DetailFragment()
 
             val args = Bundle()// 클릭된 Recipe의 id 전달
-            args.putInt("recipeId",ItemsList[position].id)
+            args.putInt("recipeId", ItemsList[position].id)
 
             detailFragment.arguments = args
 
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                .setCustomAnimations(
+                    R.anim.slide_in,
+                    R.anim.fade_out,
+                    R.anim.fade_in,
+                    R.anim.slide_out
+                )
                 .setReorderingAllowed(true)
                 .replace(R.id.fl_container, detailFragment)
                 .addToBackStack(null)
@@ -134,7 +140,7 @@ class HomeMultiViewAdapter(
         val recentImage: ImageView = itemView.findViewById(R.id.iv_recent_item)
         val recentTitle: TextView = itemView.findViewById(R.id.tv_home_title)
         val recentContent: TextView = itemView.findViewById(R.id.tv_home_content)
-        val rv_theme : RecyclerView = itemView.findViewById(R.id.rv_theme)
+        val rv_theme: RecyclerView = itemView.findViewById(R.id.rv_theme)
     }
 }
 
