@@ -309,13 +309,13 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.UploadImage>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
                     // Log.d("image upload success!!1", response?.body().toString())
                     response.body()?.let {
                         success(it)
                     }
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("image upload fail....", response.message())
                     fail
                 }
@@ -339,12 +339,12 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.UploadRecipe>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "레시피 업로드 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "레시피 업로드 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("recipe upload fail....", response.message())
                     fail
                 }
@@ -369,7 +369,7 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.RequestPostLogin>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "로그인 전송 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "로그인 전송 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
@@ -397,13 +397,13 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.RequestJoin>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
 
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("join fail....", response.message())
                     fail
                 }
