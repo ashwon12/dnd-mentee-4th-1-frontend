@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.App
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
@@ -97,6 +98,7 @@ class UploadActivity4 : AppCompatActivity() {
         )
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                 val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("cancel", 1)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             })
@@ -144,7 +146,6 @@ class UploadActivity4 : AppCompatActivity() {
         recipeResult.title = recipeTitle.toString()
         recipeResult.description = subTitle.toString()
         recipeResult.thumbnail = thumbnail.toString()
-        recipeResult.writerId = 1
         recipeResult.time = timeString
         recipeResult.viewCount = select_cut
 
@@ -163,6 +164,13 @@ class UploadActivity4 : AppCompatActivity() {
         for(i in themes.indices) {
             recipeResult.themeIds?.add(themes[i].id!!)
         }
+
+        if(App.sharedPrefs.getFlag() == "1") {
+            recipeResult.writerId = Integer.parseInt(App.sharedPrefs.getKakaoId())
+        } else {
+            recipeResult.writerId = Integer.parseInt(App.sharedPrefs.getGoogleId())
+        }
+
         recipeResult.pid = 1
 
         recipeUpload()

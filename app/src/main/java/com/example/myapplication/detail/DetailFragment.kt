@@ -1,6 +1,7 @@
 package com.example.myapplication.detail
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
@@ -22,7 +23,9 @@ import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.navigation.quote.QuoteActivity
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 
 class DetailFragment : Fragment() {
@@ -32,8 +35,9 @@ class DetailFragment : Fragment() {
     internal lateinit var viewPagerPics: ViewPager
     internal lateinit var rvSteps: RecyclerView
     internal lateinit var tabLayout: TabLayout
-    internal lateinit var ibRating:ImageView
 
+    internal lateinit var ibRating:ImageView
+  
     private lateinit var picsAdapter: DetailViewPagerPicsAdapter
     private lateinit var StepDescriptionAdapter: DetailStepsAdapter
     private lateinit var commentAdapter: DetailCommentAdapter
@@ -112,9 +116,13 @@ class DetailFragment : Fragment() {
                     val tvStarAverage = v.findViewById<TextView>(R.id.tv_star_rating)
                     val tvViewCount = v.findViewById<TextView>(R.id.tv_viewcount)
                     val tvRating = v.findViewById<TextView>(R.id.tv_star_rating2)
+
                     val tvTime = v.findViewById<TextView>(R.id.tv_time)
 
                     setProfilePic(it.data?.writer?.imageUrl)
+
+                    val btnQuote = v.findViewById<Button>(R.id.btn_quote)
+
 
                     tvNickname.text = it.data?.writer?.name
                     tvTitle.text = it.data?.title
@@ -127,6 +135,13 @@ class DetailFragment : Fragment() {
                     tvStarAverage.text = floatRatingAvgRound.toString()
 
 
+
+                    val num = it.data?.themes?.size
+                    btnQuote.setOnClickListener {
+                        if (num != null) {
+                            clickQuoteButton(num - 1)
+                        }
+                    }
 
                     // 어댑터 설정
                     picsAdapter.recipeImages.add(RecipeDTO.Steps(555, "plzplzplz",thumbnailURL, "plzplzplzplz"))
@@ -190,6 +205,7 @@ class DetailFragment : Fragment() {
     }
 
 
+
     private fun setRatingBar(ratingAverage: Double) {
         val floatRatingAvg = ratingAverage.toFloat()
         val ratingBar2 = v.findViewById(R.id.ratingbar2) as RatingBar
@@ -223,7 +239,7 @@ class DetailFragment : Fragment() {
         StepDescriptionAdapter = DetailStepsAdapter()
 
         rvSteps = v.findViewById<RecyclerView>(R.id.rv_steps)
-        rvSteps.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.VERTICAL,false)
+        rvSteps.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.VERTICAL, false)
         rvSteps.setHasFixedSize(true)
         rvSteps.adapter = StepDescriptionAdapter
 
@@ -244,7 +260,7 @@ class DetailFragment : Fragment() {
         tagAdapter = DetailTagAdapter()
 
         val rvTag = v.findViewById<RecyclerView>(R.id.rv_tag)
-        rvTag.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.HORIZONTAL,false)
+        rvTag.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL, false)
         rvTag.setHasFixedSize(true)
         rvTag.adapter = tagAdapter
     }
@@ -269,7 +285,7 @@ class DetailFragment : Fragment() {
             rating.setStepSize(1f)// 한칸당 1 점으로 할당
 
             val starsInRatingDialogue = rating.progressDrawable as LayerDrawable
-            starsInRatingDialogue.getDrawable(2).setTint(Color.rgb(255,217,81))
+            starsInRatingDialogue.getDrawable(2).setTint(Color.rgb(255, 217, 81))
 
             btn_ok.setOnClickListener {
                 dialog.dismiss()
@@ -299,6 +315,14 @@ class DetailFragment : Fragment() {
         viewPagerPics.adapter = picsAdapter
 
         tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
-        sharedElementEnterTransition = TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
+    }
+
+    private fun clickQuoteButton(number: Int?) {
+        val intent = Intent(App.instance, QuoteActivity::class.java)
+        intent.putExtra("recipeId", recipeId)
+        intent.putExtra("number", number)
+        startActivity(intent)
     }
 }

@@ -8,12 +8,9 @@ import android.widget.Toast
 import com.example.myapplication.App
 import com.example.myapplication.data.datasource.remote.api.RecipeApi
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
-import com.google.gson.JsonObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -253,7 +250,6 @@ class RemoteDataSource {
         })
     }
 
-
     fun postRecipeUpload(
         recipeInfo: RecipeDTO.UploadRecipe,
         success: (RecipeDTO.UploadRecipe) -> Unit,
@@ -279,6 +275,65 @@ class RemoteDataSource {
 
             override fun onFailure(call: Call<RecipeDTO.UploadRecipe>, t: Throwable) {
                 Log.d("recipe upload fail!!", t.message.toString())
+            }
+        })
+    }
+
+    fun postLoginInfo(
+        token: String,
+        email: RecipeDTO.RequestPostLogin,
+        success: (RecipeDTO.RequestPostLogin) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        val callPostLoginInfo = recipeApi.postLoginInfo(token, email)
+        callPostLoginInfo.enqueue(object : Callback<RecipeDTO.RequestPostLogin>{
+            override fun onResponse(
+                call: Call<RecipeDTO.RequestPostLogin>,
+                response: Response<RecipeDTO.RequestPostLogin>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "로그인 전송 성공!", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+                } else {
+                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    fail
+                }
+            }
+
+            override fun onFailure(call: Call<RecipeDTO.RequestPostLogin>, t: Throwable) {
+            }
+        })
+    }
+
+    fun postJoinInfo(
+        token: String,
+        joinInfo: RecipeDTO.RequestJoin,
+        success: (RecipeDTO.RequestJoin) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val callPostJoingInfo = recipeApi.postJoinInfo(token, joinInfo)
+        callPostJoingInfo.enqueue(object: Callback<RecipeDTO.RequestJoin> {
+            override fun onResponse(
+                call: Call<RecipeDTO.RequestJoin>,
+                response: Response<RecipeDTO.RequestJoin>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+
+                } else {
+                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    Log.d("join fail....", response.message())
+                    fail
+                }
+            }
+
+            override fun onFailure(call: Call<RecipeDTO.RequestJoin>, t: Throwable) {
+
             }
         })
     }
