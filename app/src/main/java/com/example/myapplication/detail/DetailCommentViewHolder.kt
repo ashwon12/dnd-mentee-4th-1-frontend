@@ -17,16 +17,18 @@ class DetailCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private val tvComment = itemView.findViewById<TextView>(R.id.tv_comment)
 
     fun bindItem(data: RecipeDTO.Comment) {
+
+        ivProfilePic.clipToOutline = true// 확인 필요
         data.imageUrl?.let {
             if (it.isNotEmpty()) {
                 Glide.with(App.instance)
                     .load(data.imageUrl)
                     .placeholder(R.drawable.ic_face)
-                    .into(ivProfilePic);
+                    .into(ivProfilePic)
             }
         }
-        tvNickname.text = data.user?.name
-        tvDate.text = data.createDate
+        tvNickname.text = data.writer?.name
+        tvDate.text = data.createdDate
         tvComment.text = data.content
     }
 }

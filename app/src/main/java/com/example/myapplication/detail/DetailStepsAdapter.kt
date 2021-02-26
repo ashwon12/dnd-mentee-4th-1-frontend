@@ -28,7 +28,7 @@ class DetailStepsAdapter : RecyclerView.Adapter<DetailStepsAdapter.StepsViewHold
     }
 
     override fun onBindViewHolder(holder: StepsViewHolder, position: Int) {
-        holder.bind(stepDescriptions.get(position), position)
+        holder.bind(stepDescriptions[position], position)
     }
 
     override fun getItemCount(): Int {

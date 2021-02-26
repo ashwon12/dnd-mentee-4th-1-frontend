@@ -1,5 +1,6 @@
 package com.example.myapplication.result
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,9 @@ import com.example.myapplication.detail.DetailFragment
 
 class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
 
-    var resultRecipes = ArrayList<RecipeDTO.tempResultRecipes>()
+    var resultRecipes = ArrayList<RecipeDTO.RecipeFinal>()
+
+    var keyword: String = ""
 
     private lateinit var view: View
 
@@ -40,9 +43,15 @@ class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
             val itemImageView = view.findViewById<ImageView>(R.id.iv_result_image)
             ViewCompat.setTransitionName(itemImageView, "@string/transition_random_to_detail")
 
-            val activity = view.context as AppCompatActivity
-            val detailFragment: Fragment = DetailFragment()
+            val args = Bundle()// 클릭된 Recipe의 id 전달
+            args.putInt("recipeId", data.id)
+            args.putString("thumbnail", data.thumbnail)
+            args.putString("history", keyword)
 
+            val detailFragment: Fragment = DetailFragment()
+            detailFragment.arguments = args
+
+            val activity = view.context as AppCompatActivity
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
@@ -58,7 +67,8 @@ class ResultAdapter : RecyclerView.Adapter<ResultViewHolder>() {
         return resultRecipes.size
     }
 
-    fun addSampleResult(data: RecipeDTO.tempResultRecipes) {
-        resultRecipes.add(data)
+    fun updateResultRecipes(data: ArrayList<RecipeDTO.RecipeFinal>) {
+        resultRecipes.clear()
+        resultRecipes.addAll(data)
     }
 }

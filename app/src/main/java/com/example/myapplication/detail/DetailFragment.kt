@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
@@ -34,13 +35,20 @@ class DetailFragment : Fragment() {
     internal lateinit var viewPagerPics: ViewPager
     internal lateinit var rvSteps: RecyclerView
     internal lateinit var tabLayout: TabLayout
-    internal lateinit var ibRating: ImageButton
-    internal lateinit var llStarRating: LinearLayout
+
+    internal lateinit var ibRating:ImageView
+  
     private lateinit var picsAdapter: DetailViewPagerPicsAdapter
     private lateinit var StepDescriptionAdapter: DetailStepsAdapter
     private lateinit var commentAdapter: DetailCommentAdapter
     private lateinit var tagAdapter: DetailTagAdapter
+    private lateinit var mainIngredientAdapter: DetailMainIngredientAdapter
+    private lateinit var subIngredientAdapter: DetailSubIngredientAdapter
+
     private var recipeId: Int = 0
+    private var thumbnailURL: String = ""
+    private var historyWord: String? = ""
+    private var floatRatingAvgRound: Float = 0f
 
     private val repository = Repository()
 
@@ -54,23 +62,47 @@ class DetailFragment : Fragment() {
 
 
         getRecipeIdFromBeforeFragment()
-        requestRecipeById(recipeId)
 
-        setTitle()
         setViewPagerPics()
         setStarRatingButton()
         setTagRecyclerView()
+        setMainIngredients()
+        setSubIngredients()
         setCommentRecyclerView()
         setViewPagerSteps()
+
+        requestRecipeById(recipeId)
+        requestCommentById(recipeId)
 
         return v
     }
 
+   /* override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val bundle = Bundle()
+                bundle.putString("input_search", historyWord)
 
-    private fun setTitle() {
+                val activity = v.context as AppCompatActivity
+                val transaction = activity.supportFragmentManager.beginTransaction()
+                val resultFragment: Fragment = ResultFragement()
+                resultFragment.arguments = bundle
 
-
-    }
+                transaction.replace(R.id.fl_container, resultFragment)
+                transaction.setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right
+                )
+                transaction.addToBackStack(null)
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                transaction.commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }*/
 
     /**  API Reciep Data 요청(id로) **/
     private fun requestRecipeById(recipeId: Int) {
@@ -78,22 +110,31 @@ class DetailFragment : Fragment() {
             recipeId,
             success = {
                 it.run {
-
                     val tvNickname = v.findViewById<TextView>(R.id.tv_uploader_name)
                     val tvTitle = v.findViewById<TextView>(R.id.tv_detail_title)
-                    val tvSubtitle = v.findViewById<TextView>(R.id.tv_introduction)
+                    val tvDescription = v.findViewById<TextView>(R.id.tv_introduction)
                     val tvStarAverage = v.findViewById<TextView>(R.id.tv_star_rating)
                     val tvViewCount = v.findViewById<TextView>(R.id.tv_viewcount)
                     val tvRating = v.findViewById<TextView>(R.id.tv_star_rating2)
+
+                    val tvTime = v.findViewById<TextView>(R.id.tv_time)
+
+                    setProfilePic(it.data?.writer?.imageUrl)
+
                     val btnQuote = v.findViewById<Button>(R.id.btn_quote)
+
 
                     tvNickname.text = it.data?.writer?.name
                     tvTitle.text = it.data?.title
-                    //tvSubtitle.text = it.data?.subtitle
-                    tvStarAverage.text = it.data?.starCount.toString()
+                    tvDescription.text = it.data?.description
                     tvViewCount.text = it.data?.viewCount
-                    tvRating.text = "이 레시피는 ${it.data?.starCount}점 이에요!"
-                    //it.data?.starCount?.let { it1 -> setRatingBar(it1) }
+                    tvTime.text = it.data?.time
+
+                    setRatingBar(it.data?.starCount!!)
+                    tvRating.text = "이 레시피는 ${floatRatingAvgRound}점 이에요!"
+                    tvStarAverage.text = floatRatingAvgRound.toString()
+
+
 
                     val num = it.data?.themes?.size
                     btnQuote.setOnClickListener {
@@ -103,40 +144,98 @@ class DetailFragment : Fragment() {
                     }
 
                     // 어댑터 설정
-                    picsAdapter.updateRecipeImage(it.data?.steps!!)
+                    picsAdapter.recipeImages.add(RecipeDTO.Steps(555, "plzplzplz",thumbnailURL, "plzplzplzplz"))
+                    picsAdapter.recipeImages.addAll(it.data?.steps!!)
                     StepDescriptionAdapter.updateDescription(it.data?.steps!!)
-
-                    tagAdapter.updateMainIngredients(it.data?.mainIngredients)
-                    tagAdapter.updateSubIngredients(it.data?.subIngredients)
                     tagAdapter.updateThemes(it.data?.themes)
+                    mainIngredientAdapter.updateMainIngredients(it.data?.mainIngredients)
+                    subIngredientAdapter.updateSubIngredients(it.data?.subIngredients)
 
-                    StepDescriptionAdapter.notifyDataSetChanged()
                     picsAdapter.notifyDataSetChanged()
+                    StepDescriptionAdapter.notifyDataSetChanged()
                     tagAdapter.notifyDataSetChanged()
+                    mainIngredientAdapter.notifyDataSetChanged()
+                    subIngredientAdapter.notifyDataSetChanged()
                 }
             },
             fail = {
-                Log.d("fail", "fail fail fail")
+                Log.e("getRecipeById", "DetailFragment")
             }
         )
+    }
+
+    private fun requestCommentById(recipeId: Int) {
+        repository.getCommentsById(
+            recipeId,
+            success = {
+                it.run {
+                    commentAdapter.updateComments(it.list!!)
+
+                    commentAdapter.notifyDataSetChanged()
+                }
+            },
+            fail = {
+                Log.e("getCommentById", "DetailFragment")
+            }
+
+        )
+    }
+
+    private fun setProfilePic(imageUrl: String?) {
+        val profilePic = v.findViewById<ImageView>(R.id.iv_uploader_profile)
+        Glide.with(App.instance)
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_face)
+            .into(profilePic)
+    }
+
+    private fun setCommentProfilePic() {//TODO - 추후에 User API 배포 후 댓글 프로필 사진 설정
+        val commentProfilePic = v.findViewById<ImageView>(R.id.iv_comment_profile)
+        Glide.with(App.instance)
+            .load(this)
+            .placeholder(R.drawable.ic_face)
+            .into(commentProfilePic)
     }
 
     /**  이전 Fragment에서 클릭된 Recipe Id 가져옴**/
     private fun getRecipeIdFromBeforeFragment() {
         recipeId = arguments!!.getInt("recipeId") // 전달한 key 값
+        thumbnailURL = arguments!!.getString("thumbnail")!!
+        historyWord = arguments!!.getString("history")
     }
 
 
-    private fun setRatingBar(ratingAverage: Float) {
-        val ratingBar = v.findViewById(R.id.ratingbar) as RatingBar
-        val stars = ratingBar.progressDrawable as LayerDrawable
-        stars.getDrawable(2).setTint(Color.rgb(255, 217, 81))
-        ratingBar.rating = ratingAverage
+
+    private fun setRatingBar(ratingAverage: Double) {
+        val floatRatingAvg = ratingAverage.toFloat()
+        val ratingBar2 = v.findViewById(R.id.ratingbar2) as RatingBar
+        val stars = ratingBar2.progressDrawable as LayerDrawable
+        stars.getDrawable(2).setTint(Color.rgb(255,217,81))
+        floatRatingAvgRound = Math.round(floatRatingAvg*10)/10f
+        ratingBar2.rating= floatRatingAvgRound
+    }
+
+    /**  매인 재료 RecyclerView  **/
+    private fun setMainIngredients() {
+        mainIngredientAdapter = DetailMainIngredientAdapter()
+
+        val rvMainIngredient = v.findViewById<RecyclerView>(R.id.rv_main_ingredient)
+        rvMainIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL,false)
+        rvMainIngredient.setHasFixedSize(true)
+        rvMainIngredient.adapter = mainIngredientAdapter
+    }
+
+    private fun setSubIngredients() {
+        subIngredientAdapter = DetailSubIngredientAdapter()
+
+        val rvSubIngredient = v.findViewById<RecyclerView>(R.id.rv_sub_ingredient)
+        rvSubIngredient.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL, false)
+        rvSubIngredient.setHasFixedSize(true)
+        rvSubIngredient.adapter = subIngredientAdapter
     }
 
     /**  RecyclerView : 요리순서  **/
     private fun setViewPagerSteps() {
-
         StepDescriptionAdapter = DetailStepsAdapter()
 
         rvSteps = v.findViewById<RecyclerView>(R.id.rv_steps)
@@ -148,24 +247,10 @@ class DetailFragment : Fragment() {
 
     /**  RecyclerView : 댓글  **/
     private fun setCommentRecyclerView() {
-        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
         commentAdapter = DetailCommentAdapter()
-        commentAdapter.addComment(
-            RecipeDTO.Comment(
-                17,
-                1,
-                "존맛개노존맛개노맛존맛개노맛존맛개노맛존맛개노맛",
-                "R.drawable.ic_home",
-                "2020.02.22",
-                "2020.02.22",
-                null
-            )
-        )
-        rvComment.layoutManager = LinearLayoutManager(
-            v.context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+
+        val rvComment = v.findViewById<RecyclerView>(R.id.rv_comment)
+        rvComment.layoutManager = LinearLayoutManager(v.context,LinearLayoutManager.VERTICAL,false)
         rvComment.setHasFixedSize(true)
         rvComment.adapter = commentAdapter
     }
@@ -173,6 +258,7 @@ class DetailFragment : Fragment() {
     /**  RecyclerView : 태그 버튼  **/
     private fun setTagRecyclerView() {
         tagAdapter = DetailTagAdapter()
+
         val rvTag = v.findViewById<RecyclerView>(R.id.rv_tag)
         rvTag.layoutManager = LinearLayoutManager(v.context, LinearLayoutManager.HORIZONTAL, false)
         rvTag.setHasFixedSize(true)
@@ -181,7 +267,7 @@ class DetailFragment : Fragment() {
 
 
     private fun setStarRatingButton() {
-        ibRating = v.findViewById<ImageButton>(R.id.iv_like)
+        ibRating = v.findViewById<ImageView>(R.id.iv_like)
         ibRating.setOnClickListener {//평점주기 버튼 클릭 리스너
 
             val dialog = Dialog(v.context);
@@ -190,9 +276,9 @@ class DetailFragment : Fragment() {
             dialog.setContentView(R.layout.dialogue_star_rating)
             dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
-            val rating: RatingBar = dialog.findViewById(R.id.ratingbar);
-            val btn_ok: Button = dialog.findViewById(R.id.btn_ok);
-            val btn_cancel: Button = dialog.findViewById(R.id.btn_cancel)
+            val rating : RatingBar = dialog.findViewById(R.id.ratingbar_dialogue);
+            val btn_ok : Button = dialog.findViewById(R.id.btn_ok);
+            val btn_cancel : Button = dialog.findViewById(R.id.btn_cancel)
 
             rating.setRating(3f) // 레이팅 바에 기본값 채우기
             rating.setIsIndicator(false)// 사용자가 임의로 별점을 바꿀수 있도록 허가하는 메서드
@@ -203,7 +289,7 @@ class DetailFragment : Fragment() {
 
             btn_ok.setOnClickListener {
                 dialog.dismiss()
-                ibRating.setBackgroundResource(R.drawable.ic_home);
+                ibRating.setBackgroundResource(R.drawable.rating_star_clicked);
                 //TODO : 서버 요청
             }
             btn_cancel.setOnClickListener {

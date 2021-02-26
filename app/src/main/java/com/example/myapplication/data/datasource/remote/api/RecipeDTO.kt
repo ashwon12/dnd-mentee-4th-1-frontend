@@ -107,7 +107,7 @@ class RecipeDTO {
         var timeName: String
     ) : Serializable
 
-    // -------------- 2020. 2. 21 추가 -------------
+
     data class APIResponseList(
         val timestamp: String,
         val status: String,
@@ -126,6 +126,29 @@ class RecipeDTO {
         val data: RecipeFinal? = null
     )
 
+
+    /**    2. 24.(수) 이후 수정   **/
+
+    // Recipe List로 받을 때
+    data class APIResponseRecipeList(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<RecipeFinal>? = null
+    )
+
+    //Recipe 하나만 받을 때
+    data class APIResponseRecipeData(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val data: RecipeFinal? = null
+    )
+
     data class UserResponse(
         val timestamp: String,
         val status: String,
@@ -133,6 +156,16 @@ class RecipeDTO {
         val message: String,
         val path: String,
         val list: ArrayList<User>? = null
+    )
+
+    // Comment List로 받을 때
+    data class APIResponseCommentList(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<Comment>? = null
     )
 
     data class RecipeFinal(
@@ -145,17 +178,17 @@ class RecipeDTO {
         var themes: ArrayList<Themes>,
         var steps: ArrayList<Steps>,
         var time: String? = null,
-        var starCount: String? = null,// String -> Float 수정 필요
+        var starCount: Double? = null,// String -> Float 수정 필요
         var wishCount: String? = null,
         var viewCount: String? = null,
         var writer: Writer? = null
     )
 
-
     data class Writer(
         var name: String? = null,
         var id: Int,
-        var email: String? = null
+        var email: String? = null,
+        val imageUrl: String? = null
     )
 
     data class Steps(
@@ -200,13 +233,13 @@ class RecipeDTO {
 
     // 댓글
     data class Comment(
+        val createdDate: String? = null,
+        val modifiedDate: String? = null,
         val id: Int,
-        val recipeId: Int?,
         val content: String? = null,
         val imageUrl: String? = null,
-        val createDate: String? = null,
-        val modifiedDate: String? = null,
-        val user: User?
+        val writer: Writer?,
+        val pid: Int?
     )
 
     data class User(
