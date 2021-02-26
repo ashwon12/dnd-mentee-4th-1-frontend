@@ -229,4 +229,13 @@ class Repository {
     ){
         remoteMovieDataSourceImpl.deleteRecipe(recipeId,success,fail)
     }
+
+    fun postComment(
+        token: String,
+        commentInfo: RecipeDTO.RequestComment,
+        success: (RecipeDTO.RequestComment) -> Unit,
+        fail: (Throwable) -> Unit
+    ) {
+        remoteMovieDataSourceImpl.postComment(token, commentInfo, success, fail)
+    }
 }

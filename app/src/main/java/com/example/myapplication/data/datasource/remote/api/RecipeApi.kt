@@ -138,6 +138,14 @@ interface RecipeApi {
         @Path("followingId") followingId : Int
     )
 
+    //댓글 입력
+    @POST("/comment")
+    fun postComment(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body data: RecipeDTO.RequestComment
+    ): Call<RecipeDTO.RequestComment>
+
+
     companion object {
         private const val BASE_URL = "http://13.209.68.130:8080"
 

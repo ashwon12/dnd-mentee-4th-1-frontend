@@ -84,7 +84,7 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="bottom|center_horizontal"
                     android:background="@android:color/transparent"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabIndicatorFullWidth="true"
@@ -379,12 +379,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:background="#F6F6F6"
-            android:elevation="10dp"
             android:orientation="horizontal"
-            android:paddingBottom="22dp">
+            android:paddingBottom="24dp">
 
             <ImageView
                 android:id="@+id/iv_comment_profile"
@@ -395,21 +394,21 @@
 
             <EditText
                 android:id="@+id/edt_comment"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_marginLeft="4dp"
-                android:layout_weight="5"
+                android:layout_weight="6"
                 android:backgroundTint="@color/orange"
                 android:gravity="center_vertical"
                 android:hint="댓글 내용을 입력해주세요."
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="16dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_comment_confirm"
-                android:layout_width="0dp"
+                android:layout_width="28dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="올리기"

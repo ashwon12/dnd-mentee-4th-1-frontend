@@ -4,11 +4,12 @@
     android:layout_height="24dp"
     android:layout_marginRight="4dp">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/btn_tag_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tag_button"
+        android:padding="4dp"
         android:textColor="#FF7051"
         android:textSize="12dp"
         android:textStyle="bold" />

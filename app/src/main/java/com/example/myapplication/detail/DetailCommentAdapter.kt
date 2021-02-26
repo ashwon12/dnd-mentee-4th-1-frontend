@@ -35,7 +35,11 @@ class DetailCommentAdapter: RecyclerView.Adapter<DetailCommentViewHolder>() {
     }
 
     fun updateComments(arrComments: ArrayList<RecipeDTO.Comment>) {
-        comments.clear()
-        comments.addAll(arrComments)
+        this.comments.clear()
+        this.comments.addAll(arrComments)
+    }
+
+    fun addComment(comment : RecipeDTO.Comment) {
+        this.comments.add(comment)
     }
 }

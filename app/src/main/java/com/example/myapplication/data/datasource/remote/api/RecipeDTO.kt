@@ -3,6 +3,7 @@
  */
 package com.example.myapplication.data.datasource.remote.api
 
+import retrofit2.http.Path
 import java.io.Serializable
 
 class RecipeDTO {
@@ -250,6 +251,15 @@ class RecipeDTO {
         val imageUrl: String? = null,
         val writer: Writer?,
         val pid: Int?
+    )
+
+    //댓글 등록
+    data class RequestComment(
+        val userId : Int? = null,
+        val recipeId : Int,
+        var content : String? = null,
+        val imageUrl : String? = null,
+        val pid : Int? = null
     )
 
     data class User(

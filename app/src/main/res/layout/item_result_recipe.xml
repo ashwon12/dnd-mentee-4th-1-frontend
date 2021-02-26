@@ -96,8 +96,8 @@
 
                 <ImageButton
                     android:id="@+id/iv_like_result"
-                    android:layout_width="32dp"
-                    android:layout_height="28dp"
+                    android:layout_width="20dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:background="@null"
                     android:src="@drawable/rating_star_default" />
@@ -116,8 +116,8 @@
 
                     <ImageButton
                         android:id="@+id/iv_subscribe"
-                        android:layout_width="24dp"
-                        android:layout_height="20dp"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
                         android:background="@null"
                         android:scaleType="fitXY"
@@ -161,8 +161,8 @@
 
                     <ImageButton
                         android:id="@+id/iv_calendar"
-                        android:layout_width="24dp"
-                        android:layout_height="20dp"
+                        android:layout_width="20dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
                         android:background="@null"
                         android:scaleType="fitXY"
