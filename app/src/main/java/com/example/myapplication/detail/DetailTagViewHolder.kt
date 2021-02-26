@@ -11,6 +11,7 @@ class DetailTagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val tvTag = itemView.findViewById<TextView>(R.id.btn_tag_button)
 
+
     fun bind(tagText: RecipeDTO.Themes) {
         tvTag.text = tagText.name
     }

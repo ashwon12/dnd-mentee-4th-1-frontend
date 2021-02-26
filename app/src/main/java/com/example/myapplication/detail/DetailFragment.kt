@@ -27,6 +27,10 @@ import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
 import com.example.myapplication.navigation.quote.QuoteActivity
 import com.google.android.material.tabs.TabLayout
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.fragment_mypage_follower.*
+
 
 
 class DetailFragment : Fragment() {
@@ -35,7 +39,7 @@ class DetailFragment : Fragment() {
 
     internal lateinit var viewPagerPics: ViewPager
     internal lateinit var rvSteps: RecyclerView
-    internal lateinit var tabLayout: TabLayout
+    internal lateinit var tabLayout: WormDotsIndicator
 
     internal lateinit var ibRating:ImageView
   
@@ -301,12 +305,13 @@ class DetailFragment : Fragment() {
         viewPagerPics = v.findViewById<ViewPager>(R.id.vp_recipes)
         ViewCompat.setTransitionName(viewPagerPics, "@string/transition_random_to_detail")
 
-        tabLayout = v.findViewById<TabLayout>(R.id.tab_layout)
+        tabLayout = v.findViewById<WormDotsIndicator>(R.id.tab_layout)
 
         picsAdapter = DetailViewPagerPicsAdapter(v.context)
         viewPagerPics.adapter = picsAdapter
 
-        tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
+        tabLayout.setViewPager(viewPagerPics)
+        // tabLayout.setupWithViewPager(viewPagerPics)//Circle Indicator 추가
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
     }

@@ -339,8 +339,6 @@ class ResultFragement : Fragment() {
                 println("")
             }
         }
-
-
     }
 
 

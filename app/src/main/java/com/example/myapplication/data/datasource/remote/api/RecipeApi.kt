@@ -124,7 +124,7 @@ interface RecipeApi {
     @DELETE("/recipes/{recipeId}")
     fun deleteRecipe(
         @Path("recipeId") recipeId: Int
-    )
+    ): Call<RecipeDTO.APIResponseData>
 
     @POST("/follow/{followingId}")
     fun userFollow(
@@ -136,7 +136,7 @@ interface RecipeApi {
     fun userUnFollow(
         @Header("X-AUTH-TOKEN") token: String,
         @Path("followingId") followingId : Int
-    )
+    ):Call<RecipeDTO.userFollow>
 
     //댓글 입력
     @POST("/comment")

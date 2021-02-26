@@ -269,32 +269,32 @@ class RemoteDataSource {
         })
     }
 
-//    fun userUnFollow(
-//        token: String,
-//        followingId : Int,
-//        success: (RecipeDTO.userFollow) -> Unit,
-//        fail : (Throwable) -> Unit
-//    ){
-//        val postUnFollow = recipeApi.userUnFollow(token,followingId)
-//        postUnFollow.enqueue(object : Callback<RecipeDTO.userFollow> {
-//            override fun onResponse(
-//                call: Call<RecipeDTO.userFollow>,
-//                response: Response<RecipeDTO.userFollow>
-//            ) {
-//                if (response?.isSuccessful) {
-//                    Toast.makeText(App.instance, "${followingId} 유저를 팔로우 성공!", Toast.LENGTH_SHORT).show()
-//                    response.body()?.let {
-//                        success(it)
-//                    }
-//                } else {
-//                    Toast.makeText(App.instance, "유저 팔로우 실패...", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//            override fun onFailure(call: Call<RecipeDTO.userFollow>, t: Throwable) {
-//                Log.d("user follow fail!!", t.message.toString())
-//            }
-//        })
-//    }
+    fun userUnFollow(
+        token: String,
+        followingId : Int,
+        success: (RecipeDTO.userFollow) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val deleteUnFollow = recipeApi.userUnFollow(token,followingId)
+        deleteUnFollow.enqueue(object : Callback<RecipeDTO.userFollow> {
+            override fun onResponse(
+                call: Call<RecipeDTO.userFollow>,
+                response: Response<RecipeDTO.userFollow>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "${followingId} 유저를 언팔로우 성공!", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+                } else {
+                    Toast.makeText(App.instance, "유저 언팔로우 실패...", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.userFollow>, t: Throwable) {
+                Log.d("user unfollow fail!!", t.message.toString())
+            }
+        })
+    }
 
     fun postImageUpload(
         imagePath: String,
@@ -328,13 +328,13 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.UploadImage>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "이미지 업로드 성공!", Toast.LENGTH_SHORT).show()
                     // Log.d("image upload success!!1", response?.body().toString())
                     response.body()?.let {
                         success(it)
                     }
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("image upload fail....", response.message())
                     fail
                 }
@@ -358,12 +358,12 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.UploadRecipe>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "레시피 업로드 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "레시피 업로드 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("recipe upload fail....", response.message())
                     fail
                 }
@@ -388,7 +388,7 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.RequestPostLogin>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "로그인 전송 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "로그인 전송 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
@@ -416,13 +416,13 @@ class RemoteDataSource {
                 response: Response<RecipeDTO.RequestJoin>
             ) {
                 if (response?.isSuccessful) {
-                    Toast.makeText(App.instance, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     response.body()?.let {
                         success(it)
                     }
 
                 } else {
-                    Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(App.instance, "실패...", Toast.LENGTH_SHORT).show()
                     Log.d("join fail....", response.message())
                     fail
                 }
@@ -525,8 +525,24 @@ class RemoteDataSource {
         recipeId: Int,
         success: (RecipeDTO.APIResponseData) -> Unit,
         fail: (Throwable) -> Unit
-    ) {
-        val calldeleteRecipes = recipeApi.deleteRecipe(recipeId)
+    ){
+        val deleteRecipes = recipeApi.deleteRecipe(recipeId)
+        deleteRecipes.enqueue(object : Callback<RecipeDTO.APIResponseData> {
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseData>,
+                response: Response<RecipeDTO.APIResponseData>
+            ) {
+                if (response?.isSuccessful) {
+                    response.body()?.let {
+                        success(it)
+                    }
+                } else {
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseData>, t: Throwable) {
+                Log.d("user unfollow fail!!", t.message.toString())
+            }
+        })
 
     }
 
