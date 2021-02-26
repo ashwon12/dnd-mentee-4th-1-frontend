@@ -196,6 +196,7 @@ class RecipeDTO {
 
     data class Writer(
         var id: Int,
+        var name: String? = null,
         var email: String? = null,
         val imageUrl: String? = null
     )
