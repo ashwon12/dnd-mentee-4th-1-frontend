@@ -1,16 +1,16 @@
-/**
- *  받아온 데이터를 구현한 UI의 View에 넣어주는 클래스
- */
 package com.example.myapplication.navigation.feed
 
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
+import com.example.myapplication.navigation.home.ThemesAdapter
 import me.relex.circleindicator.CircleIndicator3
 
 class FeedRecyclerViewHolder(
@@ -28,8 +28,9 @@ class FeedRecyclerViewHolder(
     private val title = v.findViewById<TextView>(R.id.tv_feed_title)
     private val contentsText = v.findViewById<TextView>(R.id.tv_feed_contents)
     private val starCount = v.findViewById<TextView>(R.id.tv_feed_star_count)
-    private val starView = v.findViewById<TextView>(R.id.tv_feed_views_count)
+    private val viewCount = v.findViewById<TextView>(R.id.tv_feed_views_count)
     private val writeDate = v.findViewById<TextView>(R.id.tv_feed_date)
+    private val rv_feed_theme = itemView.findViewById<RecyclerView>(R.id.rv_feed_theme)
 
     private val vpItem = v.findViewById<ViewPager2>(R.id.vp_feed)
     private val feedIndicator = v.findViewById<CircleIndicator3>(R.id.indicator_feed)
@@ -42,12 +43,15 @@ class FeedRecyclerViewHolder(
         this.myInterface = recyclerInterface
     }
 
-    fun bind(data: RecipeDTO.tempRandomRecipes) {
+    fun bind(data: RecipeDTO.RecipeFinal) {
         title.text = data.title
         starCount.text = data.starCount.toString()
+        userName.text = SharedPreferenceUtil(App.instance).getName().toString()
+        contentsText.text = data.description
+        viewCount.text = data.viewCount
 
         Glide.with(App.instance)
-            .load(data.thunmbnail)
+            .load(data.thumbnail)
             .placeholder(R.drawable.ic_no_image)
             .circleCrop()
             .into(profile)
@@ -76,13 +80,21 @@ class FeedRecyclerViewHolder(
             ).show()
         }
 
-        //TODO:: step 사진을 전달해서 viewPager에 뿌려주기
-        setViewPager()
+        setViewPager(data)
+        setThemes(data)
     }
 
-    private fun setViewPager() {
-        //vpItem.adapter = FeedViewPagerAdapter()
+    private fun setThemes(data: RecipeDTO.RecipeFinal) {
+        val themeList = data.themes
+        val themesAdapter = ThemesAdapter(themeList)
+        rv_feed_theme.layoutManager = LinearLayoutManager(App.instance, RecyclerView.HORIZONTAL, false)
+        rv_feed_theme.adapter = themesAdapter
+    }
+
+    private fun setViewPager(data: RecipeDTO.RecipeFinal) {
+        val stepList = data.steps
         vpItem.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        vpItem.adapter = FeedViewPagerAdapter(stepList)
         feedIndicator.setViewPager(vpItem)
     }
 

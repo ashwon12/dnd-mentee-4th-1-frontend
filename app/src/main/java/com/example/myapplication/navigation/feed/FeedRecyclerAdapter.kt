@@ -15,7 +15,7 @@ class FeedRecyclerAdapter(myInterface: FeedRecyclerInterface) :
     RecyclerView.Adapter<FeedRecyclerViewHolder>() {
 
     private var myInterface: FeedRecyclerInterface? = null
-    private var items = ArrayList<RecipeDTO.tempRandomRecipes>()
+    private var items = ArrayList<RecipeDTO.RecipeFinal>()
 
     //생성자
     init {
@@ -36,14 +36,9 @@ class FeedRecyclerAdapter(myInterface: FeedRecyclerInterface) :
         val data = items.get(position)
         holder.bind(data)
 
-        Log.d("리싸이클러 어댑터", items.toString())
     }
 
-    /**
-     *  TimelineRecyclerAdapter 안에 보여지는 Timeline들 update
-     * */
-    fun feedUpdateList(feedItem: List<RecipeDTO.tempRandomRecipes>) {
+    fun feedUpdateList(feedItem: List<RecipeDTO.RecipeFinal>) {
         this.items.addAll(feedItem)
-        Log.d("feedUpdateList", items.toString())
     }
 }

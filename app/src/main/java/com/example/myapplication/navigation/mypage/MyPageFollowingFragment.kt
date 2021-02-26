@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.App
 import com.example.myapplication.R
+import com.example.myapplication.SharedPreferenceUtil
 import com.example.myapplication.data.datasource.remote.api.RecipeDTO
 import com.example.myapplication.data.repository.Repository
+import com.example.myapplication.navigation.mypage.FollowAdapter
 import com.example.myapplication.navigation.mypage.MyMultiViewAdapter
 import kotlinx.android.synthetic.main.fragment_mypage_follower.*
 
@@ -17,7 +19,7 @@ class MyPageFollowingFragment : Fragment() {
 
     private lateinit var v : View
 
-    private var followingList = ArrayList<RecipeDTO.RecipeFinal>()
+    private var followingList = ArrayList<RecipeDTO.User>()
     private lateinit var rv_my_following : RecyclerView
 
     private val repository = Repository()
@@ -29,23 +31,23 @@ class MyPageFollowingFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_mypage_following, container, false)
 
-        setFollower()
+        setFollowing()
 
         return v
     }
 
-    private fun setFollower() {
+    private fun setFollowing() {
         followingList.clear()
 
         rv_my_following = v.findViewById(R.id.rv_my_following)
         rv_my_following.layoutManager = LinearLayoutManager(App.instance, RecyclerView.VERTICAL, false)
 
-        repository.getHomeRecipes(
+        repository.getFollowing(
             success = {
                 it.run {
                     val data = it.list
                     followingList.addAll(data!!)
-                    rv_my_following.adapter = MyMultiViewAdapter(2,followingList)
+                    rv_my_following.adapter = FollowAdapter(followingList)
 
                     tv_my_follower_count.text = "전체 ${data.size}개"
                 }
@@ -53,8 +55,7 @@ class MyPageFollowingFragment : Fragment() {
             fail = {
                 Log.d("fail", "fail fail fail")
             },
-            queryType = "search",
-            order = "latest"
+            token = SharedPreferenceUtil(App.instance).getToken().toString()
         )
     }
 }

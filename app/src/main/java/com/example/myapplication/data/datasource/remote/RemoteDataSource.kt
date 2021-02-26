@@ -114,6 +114,28 @@ class RemoteDataSource {
         })
     }
 
+    fun getMyRecipes(
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail: (Throwable) -> Unit,
+        queryType: String,
+        token : String
+    ) {
+        val callMyRecipes = recipeApi.getMyRecipes(queryType,token)
+        callMyRecipes.enqueue(object : retrofit2.Callback<RecipeDTO.APIResponseList>{
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseList>,
+                response: Response<RecipeDTO.APIResponseList>
+            ) {
+                response.body()?.let {
+                    success(it)
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseList>, t: Throwable) {
+                Log.e("queryType=viewTop", "홈 데이터 가져오기 실패 : " + t)
+            }
+        })
+    }
+
 //    fun postTimeline(
 //        postInfo: ArrayList<RecipeDTO.PostItem>,
 //        success: (RecipeDTO.TimelineResponse) -> Unit,
@@ -259,4 +281,99 @@ class RemoteDataSource {
             }
         })
     }
+
+    fun getFollower(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val callFollowerList = recipeApi.getFollowerList(token)
+        callFollowerList.enqueue(object: Callback<RecipeDTO.UserResponse> {
+            override fun onResponse(
+                call: Call<RecipeDTO.UserResponse>,
+                response: Response<RecipeDTO.UserResponse>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "팔로워 리스트 가져오기", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+
+                } else {
+                    Log.d("팔로워 가져오기 실패", response.message())
+                    fail
+                }
+            }
+
+            override fun onFailure(call: Call<RecipeDTO.UserResponse>, t: Throwable) {
+
+            }
+        })
+    }
+
+    fun getFollowing(
+        token : String,
+        success: (RecipeDTO.UserResponse) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val callFollowingList = recipeApi.getFollowingList(token)
+        callFollowingList.enqueue(object: Callback<RecipeDTO.UserResponse> {
+            override fun onResponse(
+                call: Call<RecipeDTO.UserResponse>,
+                response: Response<RecipeDTO.UserResponse>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "팔로잉 리스트 가져오기", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+
+                } else {
+                    Log.d("팔로잉 리스트 가져오기 실패", response.message())
+                    fail
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.UserResponse>, t: Throwable) {
+
+            }
+        })
+    }
+
+    fun getFollowingFeeds(
+        token : String,
+        success: (RecipeDTO.APIResponseList) -> Unit,
+        fail : (Throwable) -> Unit
+    ){
+        val callfollowingFeedsList = recipeApi.getfollowingFeeds(token)
+        callfollowingFeedsList.enqueue(object: Callback<RecipeDTO.APIResponseList> {
+            override fun onResponse(
+                call: Call<RecipeDTO.APIResponseList>,
+                response: Response<RecipeDTO.APIResponseList>
+            ) {
+                if (response?.isSuccessful) {
+                    Toast.makeText(App.instance, "피드 리스트 가져오기", Toast.LENGTH_SHORT).show()
+                    response.body()?.let {
+                        success(it)
+                    }
+
+                } else {
+                    Log.d("피드 리스트 가져오기 실패", response.message())
+                    fail
+                }
+            }
+            override fun onFailure(call: Call<RecipeDTO.APIResponseList>, t: Throwable) {
+
+            }
+        })
+    }
+
+    fun deleteRecipe(
+        recipeId: Int,
+        success: (RecipeDTO.APIResponseData) -> Unit,
+        fail: (Throwable) -> Unit
+    ){
+        val calldeleteRecipes = recipeApi.deleteRecipe(recipeId)
+
+    }
+
 }

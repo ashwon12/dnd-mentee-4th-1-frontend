@@ -19,7 +19,7 @@ import com.example.myapplication.detail.DetailFragment
 
 class MyMultiViewAdapter(
     private var type: Int,
-    private var ItemsList: ArrayList<RecipeDTO.RecipeFinal>
+    private var myRecipeList: ArrayList<RecipeDTO.RecipeFinal>
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -32,37 +32,32 @@ class MyMultiViewAdapter(
                     .inflate(R.layout.mypage_recipie_item, parent, false)
                 GridViewHolder(view)
             }
-            2 -> {
-                view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.mypage_follow_item, parent, false)
-                UserViewHolder(view)
-            }
             else -> throw RuntimeException("알 수 없는 뷰 타입 에러")
         }
     }
 
     override fun getItemCount(): Int {
-        return ItemsList.size
+        return myRecipeList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (type) {
             1 -> {
                 Glide.with(App.instance)
-                    .load(ItemsList[position].thumbnail)
+                    .load(myRecipeList.get(position).thumbnail)
                     .placeholder(R.drawable.ic_no_image)
                     .into((holder as MyMultiViewAdapter.GridViewHolder).myThumbnail)
 
-                holder.myTitle.text = ItemsList[position].title
-                holder.myStarCount.text = ItemsList[position].starCount
-                holder.myViewCount.text = ItemsList[position].viewCount
-                holder.myTime.text = "${ItemsList[position].time}분"
+                holder.myTitle.text = myRecipeList[position].title
+                holder.myStarCount.text = myRecipeList[position].starCount
+                holder.myViewCount.text = myRecipeList[position].viewCount
+                holder.myTime.text = "${myRecipeList[position].time}분"
 
                 holder.itemView.setOnClickListener {
                     Toast.makeText(
                         App.instance,
-                        "ID : ${this.ItemsList[position].id} " +
-                                "Title : ${this.ItemsList[position].title}",
+                        "ID : ${this.myRecipeList[position].id} " +
+                                "Title : ${this.myRecipeList[position].title}",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -70,7 +65,7 @@ class MyMultiViewAdapter(
                     val detailFragment: Fragment = DetailFragment()
 
                     val args = Bundle()// 클릭된 Recipe의 id 전달
-                    args.putInt("recipeId",ItemsList[position].id)
+                    args.putInt("recipeId", myRecipeList[position].id)
 
                     detailFragment.arguments = args
 
@@ -83,16 +78,6 @@ class MyMultiViewAdapter(
                         .commit()
                 }
             }
-
-            2 -> {
-                Glide.with(App.instance)
-                    .load(ItemsList[position].thumbnail)
-                    .placeholder(R.drawable.ic_no_image)
-                    .circleCrop()
-                    .into((holder as MyMultiViewAdapter.UserViewHolder).followProfile)
-
-                holder.followName.text = ItemsList[position].writer!!.name
-            }
         }
     }
 
@@ -104,8 +89,4 @@ class MyMultiViewAdapter(
         val myTime = itemView.findViewById<TextView>(R.id.tv_my_time)
     }
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val followProfile = itemView.findViewById<ImageView>(R.id.iv_follow_profile)
-        val followName = itemView.findViewById<TextView>(R.id.tv_follow_name)
-    }
 }

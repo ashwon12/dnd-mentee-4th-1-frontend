@@ -126,6 +126,15 @@ class RecipeDTO {
         val data: RecipeFinal? = null
     )
 
+    data class UserResponse(
+        val timestamp: String,
+        val status: String,
+        val error: String,
+        val message: String,
+        val path: String,
+        val list: ArrayList<User>? = null
+    )
+
     data class RecipeFinal(
         var id: Int,
         var title: String? = null,
@@ -201,9 +210,10 @@ class RecipeDTO {
     )
 
     data class User(
+        val email: String,
         val id: Int,
-        val name: String,
-        val email: String
+        val imgUrl : String,
+        val name: String
     )
 }
 
