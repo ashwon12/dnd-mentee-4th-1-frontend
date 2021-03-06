@@ -2,13 +2,13 @@
  *  각각의 item을 recyclerview로 연결 시켜주는 adapter class
  */
 
-package com.example.yorijori.navigation.feed
+package com.googleplay.yorijori.navigation.feed
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class FeedRecyclerAdapter(myInterface: FeedRecyclerInterface) :
     RecyclerView.Adapter<FeedRecyclerViewHolder>() {

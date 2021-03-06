@@ -1,7 +1,7 @@
 /**
  *  데이터 초기화 클래스
  */
-package com.example.yorijori.data.datasource.remote.api
+package com.googleplay.yorijori.data.datasource.remote.api
 
 import java.io.Serializable
 

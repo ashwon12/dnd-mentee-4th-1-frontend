@@ -1,13 +1,13 @@
-package com.example.yorijori.detail
+package com.googleplay.yorijori.detail
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class DetailCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

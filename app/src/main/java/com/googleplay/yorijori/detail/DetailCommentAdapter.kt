@@ -1,11 +1,11 @@
-package com.example.yorijori.detail
+package com.googleplay.yorijori.detail
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class DetailCommentAdapter: RecyclerView.Adapter<DetailCommentViewHolder>() {
 

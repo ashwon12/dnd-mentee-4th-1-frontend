@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.upload
+package com.googleplay.yorijori.navigation.upload
 
 import android.graphics.Color
 import android.text.Editable
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class UploadCommentAdapter(
     val commentList: ArrayList<RecipeDTO.Recipe>

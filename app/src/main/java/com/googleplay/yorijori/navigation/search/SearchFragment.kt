@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.search
+package com.googleplay.yorijori.navigation.search
 
 import android.content.Context
 import android.graphics.Color
@@ -23,9 +23,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arasthel.spannedgridlayoutmanager.SpanSize
 import com.arasthel.spannedgridlayoutmanager.SpannedGridLayoutManager
-import com.example.yorijori.R
-import com.example.yorijori.data.repository.Repository
-import com.example.yorijori.result.ResultFragement
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.repository.Repository
+import com.googleplay.yorijori.result.ResultFragement
 import java.util.*
 import kotlin.collections.ArrayList
 

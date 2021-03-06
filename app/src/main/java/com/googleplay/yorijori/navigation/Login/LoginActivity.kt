@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.Login
+package com.googleplay.yorijori.navigation.Login
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -10,11 +10,11 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.example.yorijori.App
-import com.example.yorijori.MainActivity
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.data.repository.Repository
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.MainActivity
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.mypage
+package com.googleplay.yorijori.navigation.mypage
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.SharedPreferenceUtil
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.data.repository.Repository
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.SharedPreferenceUtil
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
 
 class FollowAdapter(
     private var userList: ArrayList<RecipeDTO.User>

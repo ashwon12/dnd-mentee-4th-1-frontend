@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.quote
+package com.googleplay.yorijori.navigation.quote
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class QuoteImageAdapter(
     val recipeList: ArrayList<RecipeDTO.Recipe>,

@@ -1,8 +1,8 @@
-package com.example.yorijori.data.repository
+package com.googleplay.yorijori.data.repository
 
-import com.example.yorijori.data.datasource.local.LocalDataSource
-import com.example.yorijori.data.datasource.remote.RemoteDataSource
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.datasource.local.LocalDataSource
+import com.googleplay.yorijori.data.datasource.remote.RemoteDataSource
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class Repository {
 

@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.upload
+package com.googleplay.yorijori.navigation.upload
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class UploadTimeAdapter(
     val timeList: ArrayList<RecipeDTO.Time>,

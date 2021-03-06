@@ -1,6 +1,6 @@
-package com.example.yorijori.detail
+package com.googleplay.yorijori.detail
 
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 class ExpandableCountryModel {
 

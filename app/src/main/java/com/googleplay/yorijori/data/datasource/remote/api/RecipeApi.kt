@@ -1,4 +1,4 @@
-package com.example.yorijori.data.datasource.remote.api
+package com.googleplay.yorijori.data.datasource.remote.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

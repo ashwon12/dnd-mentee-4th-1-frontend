@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.mypage
+package com.googleplay.yorijori.navigation.mypage
 
 import MyPageFollowerFragment
 import MyPageFollowingFragment

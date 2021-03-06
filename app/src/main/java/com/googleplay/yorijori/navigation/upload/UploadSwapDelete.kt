@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.upload
+package com.googleplay.yorijori.navigation.upload
 
 import android.R
 import android.content.Context
@@ -7,7 +7,7 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.App
+import com.googleplay.yorijori.App
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 

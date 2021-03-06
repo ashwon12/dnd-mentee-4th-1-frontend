@@ -4,7 +4,7 @@
  *  게시글을 서버에서 받아서 리싸이클러뷰에 뿌려준다.
  */
 
-package com.example.yorijori.navigation.feed
+package com.googleplay.yorijori.navigation.feed
 
 import android.os.Bundle
 import android.util.Log
@@ -16,12 +16,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.SharedPreferenceUtil
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.data.repository.Repository
-import com.example.yorijori.detail.DetailFragment
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.SharedPreferenceUtil
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
+import com.googleplay.yorijori.detail.DetailFragment
 
 class FeedFragment : Fragment(), FeedRecyclerInterface {
 

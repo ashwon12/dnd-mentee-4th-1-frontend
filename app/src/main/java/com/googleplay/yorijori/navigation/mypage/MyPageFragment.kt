@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.mypage
+package com.googleplay.yorijori.navigation.mypage
 
 import MyPageFollowerFragment
 import MyPageFollowingFragment
@@ -11,10 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.R
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
 import kotlinx.android.synthetic.main.fragment_mypage.*
-import com.example.yorijori.SharedPreferenceUtil as SharedPreferenceUtil1
+import com.googleplay.yorijori.SharedPreferenceUtil as SharedPreferenceUtil1
 
 
 class MyPageFragment : Fragment() {

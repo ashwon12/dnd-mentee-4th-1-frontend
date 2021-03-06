@@ -1,12 +1,12 @@
-package com.example.yorijori.navigation.mypage
+package com.googleplay.yorijori.navigation.mypage
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.navigation.Login.LoginActivity
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.navigation.Login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_setting.*
 

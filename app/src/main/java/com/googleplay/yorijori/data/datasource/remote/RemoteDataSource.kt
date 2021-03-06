@@ -1,13 +1,13 @@
-package com.example.yorijori.data.datasource.remote
+package com.googleplay.yorijori.data.datasource.remote
 
 import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.Toast
-import com.example.yorijori.App
-import com.example.yorijori.data.datasource.remote.api.RecipeApi
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeApi
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

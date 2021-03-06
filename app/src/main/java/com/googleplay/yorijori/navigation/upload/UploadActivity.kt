@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.upload
+package com.googleplay.yorijori.navigation.upload
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,9 +14,9 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.yorijori.MainActivity
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.MainActivity
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import kotlinx.android.synthetic.main.activity_upload.*
 
 class UploadActivity : AppCompatActivity() {

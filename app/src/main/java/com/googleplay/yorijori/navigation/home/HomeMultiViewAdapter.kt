@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.home
+package com.googleplay.yorijori.navigation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +12,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.detail.DetailFragment
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.detail.DetailFragment
 
 class HomeMultiViewAdapter(
 

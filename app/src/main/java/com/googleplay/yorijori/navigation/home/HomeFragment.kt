@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.home
+package com.googleplay.yorijori.navigation.home
 
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.data.repository.Repository
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
 import me.relex.circleindicator.CircleIndicator3
 
 class HomeFragment : Fragment() {

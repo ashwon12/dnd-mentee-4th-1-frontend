@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.search
+package com.googleplay.yorijori.navigation.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.detail.DetailFragment
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.detail.DetailFragment
 
 
 class SearchAdapter : RecyclerView.Adapter<SearchViewHolder>() {

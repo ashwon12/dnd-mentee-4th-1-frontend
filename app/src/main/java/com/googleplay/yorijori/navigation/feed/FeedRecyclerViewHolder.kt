@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.feed
+package com.googleplay.yorijori.navigation.feed
 
 import android.view.View
 import android.widget.*
@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.navigation.home.ThemesAdapter
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.navigation.home.ThemesAdapter
 import me.relex.circleindicator.CircleIndicator3
 
 class FeedRecyclerViewHolder(

@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.feed
+package com.googleplay.yorijori.navigation.feed
 
 interface FeedRecyclerInterface {
 

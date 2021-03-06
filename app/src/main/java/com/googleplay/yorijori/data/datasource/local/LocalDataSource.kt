@@ -1,6 +1,6 @@
-package com.example.yorijori.data.datasource.local
+package com.googleplay.yorijori.data.datasource.local
 
-import com.example.yorijori.App
+import com.googleplay.yorijori.App
 import org.json.JSONArray
 import org.json.JSONException
 

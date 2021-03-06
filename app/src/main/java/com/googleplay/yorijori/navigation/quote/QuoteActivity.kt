@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.quote
+package com.googleplay.yorijori.navigation.quote
 
 import android.Manifest
 import android.app.AlertDialog
@@ -22,12 +22,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.yorijori.App
-import com.example.yorijori.MainActivity
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
-import com.example.yorijori.data.repository.Repository
-import com.example.yorijori.navigation.upload.UploadSwapDelete
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.MainActivity
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
+import com.googleplay.yorijori.navigation.upload.UploadSwapDelete
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine

@@ -1,4 +1,4 @@
-package com.example.yorijori.navigation.quote
+package com.googleplay.yorijori.navigation.quote
 
 import android.graphics.Color
 import android.text.*
@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 
 
 class QuoteCommentAdapter(

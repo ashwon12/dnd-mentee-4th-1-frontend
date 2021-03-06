@@ -1,4 +1,4 @@
-package com.example.yorijori.result
+package com.googleplay.yorijori.result
 
 import android.graphics.Color
 import android.os.Bundle
@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.yorijori.R
-import com.example.yorijori.data.repository.Repository
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.data.repository.Repository
 
 
 class ResultFragement : Fragment() {
