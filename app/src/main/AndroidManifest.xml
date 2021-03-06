@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.googleplay.yorijori">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name=".App"
+        android:name="com.googleplay.yorijori.App"
+        android:debuggable="false"
         android:allowBackup="true"
         android:largeHeap="true"
         android:icon="@mipmap/ic_yorijori"
@@ -20,14 +21,14 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.googleplay.yorijori.MainActivity"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".navigation.quote.QuoteActivity"
+        <activity android:name="com.googleplay.yorijori.navigation.quote.QuoteActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".navigation.Login.LoginActivity"
+        <activity android:name="com.googleplay.yorijori.navigation.Login.LoginActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,24 +42,24 @@
 
         </activity>
         <activity
-            android:name=".navigation.upload.UploadActivity"
+            android:name="com.googleplay.yorijori.navigation.upload.UploadActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".navigation.upload.UploadActivity2"
+            android:name="com.googleplay.yorijori.navigation.upload.UploadActivity2"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".navigation.upload.UploadActivity3"
+            android:name="com.googleplay.yorijori.navigation.upload.UploadActivity3"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".navigation.upload.UploadActivity4"
+            android:name="com.googleplay.yorijori.navigation.upload.UploadActivity4"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".navigation.mypage.SettingActivity"/>
+        <activity android:name="com.googleplay.yorijori.navigation.mypage.SettingActivity"/>
 
         <!-- 카카오 리다이렉트 URI 가져오기 -->
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">

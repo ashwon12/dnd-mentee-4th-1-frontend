@@ -35,7 +35,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/detail_tag_button"
                 android:elevation="16dp"
-                android:text="15분 이내"
+                android:text="30분 이내"
                 android:textColor="#FFFFFF"
                 android:translationZ="16dp" />
             <LinearLayout
