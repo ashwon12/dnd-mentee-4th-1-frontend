@@ -15,6 +15,7 @@ class App: Application() {
         lateinit var instance : App
             private set
         lateinit var sharedPrefs: SharedPreferenceUtil
+        lateinit var statusBar : StatusBarUtil
     }
 
     override fun onCreate() {

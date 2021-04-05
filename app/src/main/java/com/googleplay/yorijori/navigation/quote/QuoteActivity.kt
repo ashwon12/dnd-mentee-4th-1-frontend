@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.googleplay.yorijori.App
 import com.googleplay.yorijori.MainActivity
 import com.googleplay.yorijori.R
+import com.googleplay.yorijori.base.BaseActivity
 import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import com.googleplay.yorijori.data.repository.Repository
 import com.googleplay.yorijori.navigation.upload.UploadSwapDelete
@@ -36,7 +37,7 @@ import kotlinx.android.synthetic.main.activity_quote.*
 import kotlinx.android.synthetic.main.activity_quote.iv_upload_cancel
 import java.lang.Exception
 
-class QuoteActivity : AppCompatActivity() {
+class QuoteActivity : BaseActivity(R.layout.activity_quote) {
     companion object {
         private const val REQUEST_GALLERY_CODE = 100
         private const val REQUEST_GET_IMAGE = 105
@@ -66,14 +67,12 @@ class QuoteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quote)
-
-        setStatusBarTransparent()
 
         getItems()
         requestRecipeById(recipeId)
         itemTouch()
     }
+
     private fun getResponse(recipe : RecipeDTO.APIResponseRecipeData) {
         parentRecipe = recipe
     }
@@ -294,30 +293,6 @@ class QuoteActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
 
     private fun makeSteps(commentList:ArrayList<RecipeDTO.Recipe>, recipeList:ArrayList<RecipeDTO.Recipe>, steps: ArrayList<RecipeDTO.Recipe>, recipeResult : RecipeDTO.UploadRecipe) {
         steps.clear()

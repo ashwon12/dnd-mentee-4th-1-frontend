@@ -41,6 +41,7 @@
         android:background="@drawable/no_select_border_layout"
         android:gravity="center"
         android:hint="닉네임을 입력해주세요."
+        android:imeOptions="actionDone"
         android:maxLength="8"
         android:maxLines="1"
         android:textColor="@color/black"

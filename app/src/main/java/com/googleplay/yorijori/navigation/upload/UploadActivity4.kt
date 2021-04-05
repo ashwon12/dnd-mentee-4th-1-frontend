@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.googleplay.yorijori.App
 import com.googleplay.yorijori.MainActivity
 import com.googleplay.yorijori.R
+import com.googleplay.yorijori.base.BaseActivity
 import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import com.googleplay.yorijori.data.repository.Repository
 import com.googleplay.yorijori.navigation.quote.QuoteActivity
 import kotlinx.android.synthetic.main.activity_upload4.*
 
-class UploadActivity4 : AppCompatActivity() {
+class UploadActivity4 : BaseActivity(R.layout.activity_upload4) {
     private var themes = ArrayList<RecipeDTO.Themes>()
     private var select_cut: String? = null
     private var recipeTitle: String? = null
@@ -39,9 +40,6 @@ class UploadActivity4 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upload4)
-
-        setStatusBarTransparent()
 
         getItems()
 
@@ -188,32 +186,6 @@ class UploadActivity4 : AppCompatActivity() {
         rv_recipe_list.setHasFixedSize(true)
     }
 
-    /**  StatusBar 투명하게 만들기(1)  **/
-    fun setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    /**  StatusBar 투명하게 만들기(2)  **/
-    fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
 
     private fun recipeUpload() {
         repository.postRecipeUpload(recipeResult,

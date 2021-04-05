@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.googleplay.yorijori.base.BaseActivity
 import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import com.googleplay.yorijori.data.repository.Repository
 import com.googleplay.yorijori.navigation.feed.FeedFragment
@@ -29,7 +30,7 @@ import com.googleplay.yorijori.navigation.upload.UploadActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private val homeFragment by lazy { HomeFragment() }
     private val feedFragment by lazy { FeedFragment() }
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
         getItems()
 
         Log.d("cancel", cancel + "here")
@@ -56,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        setStatusBarTransparent()
         initBottomNavigation()
     }
 
@@ -140,30 +140,6 @@ class MainActivity : AppCompatActivity() {
                     Log.d("join fail!!!!!!!!!", "fail")
                 })
         }
-    }
-    fun setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
     }
 
     /**

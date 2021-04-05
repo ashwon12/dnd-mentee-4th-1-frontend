@@ -29,6 +29,7 @@
         android:hint="이 단계에서 해야하는 것을 적어주세요."
         android:inputType="textMultiLine"
         android:maxLength="100"
+        android:imeOptions="actionDone"
         android:maxLines="7"
         android:ems="14"
         app:layout_constraintStart_toEndOf="@id/tv_upload_number"

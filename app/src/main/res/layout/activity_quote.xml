@@ -149,6 +149,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="22dp"
             android:hint="나만의 레시피에 이름을 붙여주세요."
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_quote_textView2" />

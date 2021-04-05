@@ -2,32 +2,29 @@ package com.googleplay.yorijori.navigation.Login
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.googleplay.yorijori.App
-import com.googleplay.yorijori.MainActivity
-import com.googleplay.yorijori.R
-import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
-import com.googleplay.yorijori.data.repository.Repository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.googleplay.yorijori.App
+import com.googleplay.yorijori.MainActivity
+import com.googleplay.yorijori.R
+import com.googleplay.yorijori.base.BaseActivity
+import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
+import com.googleplay.yorijori.data.repository.Repository
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login_main.*
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity(R.layout.activity_login_main) {
     private val RC_SIGN_IN = 0
     lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -41,9 +38,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_main)
-
-        setStatusBarTransparent()
 
         val gso: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -207,7 +201,7 @@ class LoginActivity : AppCompatActivity() {
                         App.sharedPrefs.saveToken(data.toString())
                         Log.d("data", it.data.toString())
                         val intent = Intent(App.instance, MainActivity::class.java)
-                        intent.putExtra("join",0)
+                        intent.putExtra("join", 0)
                         startActivity(intent)
                     }
                 }, fail = {
@@ -280,28 +274,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
 }

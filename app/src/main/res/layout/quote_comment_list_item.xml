@@ -28,6 +28,7 @@
         android:layout_weight="1"
         android:ems="14"
         android:hint="이 단계에서 해야하는 것을 적어주세요."
+        android:imeOptions="actionDone"
         android:inputType="textMultiLine"
         android:maxLength="200"
         android:maxLines="7"

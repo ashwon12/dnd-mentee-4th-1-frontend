@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import com.googleplay.yorijori.App
 import com.googleplay.yorijori.R
+import com.googleplay.yorijori.base.BaseActivity
 import com.googleplay.yorijori.navigation.Login.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : BaseActivity(R.layout.activity_setting) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting)
 
         ib_setting_back.setOnClickListener {
             finish()

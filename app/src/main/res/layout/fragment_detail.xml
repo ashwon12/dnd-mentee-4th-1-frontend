@@ -446,6 +446,7 @@
                 android:backgroundTint="@color/orange"
                 android:gravity="center_vertical"
                 android:hint="댓글 내용을 입력해주세요."
+                android:imeOptions="actionDone"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="16dp" />
 

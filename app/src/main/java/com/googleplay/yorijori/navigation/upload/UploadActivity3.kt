@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.googleplay.yorijori.App
 import com.googleplay.yorijori.MainActivity
 import com.googleplay.yorijori.R
+import com.googleplay.yorijori.base.BaseActivity
 import com.googleplay.yorijori.data.datasource.remote.api.RecipeDTO
 import com.googleplay.yorijori.data.repository.Repository
 import com.zhihu.matisse.Matisse
@@ -28,7 +29,7 @@ import com.zhihu.matisse.engine.impl.GlideEngine
 import com.zhihu.matisse.internal.utils.PathUtils
 import kotlinx.android.synthetic.main.activity_upload3.*
 
-class UploadActivity3 : AppCompatActivity() {
+class UploadActivity3 : BaseActivity(R.layout.activity_upload3) {
 
     companion object {
         private const val REQUEST_GET_IMAGE = 105
@@ -59,9 +60,6 @@ class UploadActivity3 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upload3)
-
-        setStatusBarTransparent()
 
         callRecycler()
 
@@ -471,30 +469,4 @@ class UploadActivity3 : AppCompatActivity() {
         return true
     }
 
-    /**  StatusBar 투명하게 만들기(1)  **/
-    fun setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    /**  StatusBar 투명하게 만들기(2)  **/
-    fun setWindowFlag(bits: Int, on: Boolean) {
-        val win = window
-        val winParams = win.attributes
-        if (on) {
-            winParams.flags = winParams.flags or bits
-        } else {
-            winParams.flags = winParams.flags and bits.inv()
-        }
-        win.attributes = winParams
-    }
 }
