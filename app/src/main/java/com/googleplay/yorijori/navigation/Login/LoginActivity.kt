@@ -5,7 +5,6 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -49,46 +48,45 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        iv_kakao_login.setOnClickListener {
-            kakaoLoginFunction()
-        }
-
-        iv_google_login.setOnClickListener {
-            googleLoginFunction()
-        }
+        setKakaoLoginBtn()
+        setGoogleLoginBtn()
     }
 
-    private fun kakaoLoginFunction() {
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if (error != null) {
-                Log.e("kakao", "로그인 실패", error)
-            } else if (token != null) {
-                Log.i("kakao", "로그인 성공 ${token.accessToken}")
+    private fun setKakaoLoginBtn() {
+        iv_kakao_login.setOnClickListener {
 
-                // 로그인
-                userToken = token.accessToken
-                App.sharedPrefs.saveToken(userToken)
-                updateKaKaoLoginUi()
-            }
-        }
+            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+                if (error != null) {
+                    Log.e("kakao", "카카오 로그인 실패", error)
+                } else if (token != null) {
+                    Log.i("kakao", "카카오 로그인 성공 ${token.accessToken}")
 
-        if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
-            LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
-        } else {
-            LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
-        }
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Log.d("tag", "토큰 정보 보기 실패", error)
-            } else if (tokenInfo != null) {
-                Log.d("tag", "${tokenInfo.id}" + "${tokenInfo.expiresIn} 초")
+                    // 로그인
+                    userToken = token.accessToken
+                    App.sharedPrefs.saveToken(userToken)
+                    updateKaKaoLoginUi()
+                }
             }
-        }
 
-        mGoogleSignInClient.revokeAccess()
-            .addOnCompleteListener(this) {
-                Log.d("google", "google logout")
+
+            if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
+                LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
+            } else {
+                LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                if (error != null) {
+                    Log.d("tag", "토큰 정보 보기 실패", error)
+                } else if (tokenInfo != null) {
+                    Log.d("tag", "${tokenInfo.id}" + "${tokenInfo.expiresIn} 초")
+                }
+            }
+
+            mGoogleSignInClient.revokeAccess()
+                .addOnCompleteListener(this) {
+                    Log.d("google", "google logout")
+                }
+        }
     }
 
     private fun updateKaKaoLoginUi() {
@@ -96,14 +94,14 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
             if (error != null) {
                 Log.e("kakao", "사용자 정보 요청 실패", error)
             } else if (user != null) {
-//                Log.i(
-//                    "kakao", "사용자 정보 요청 성공" +
-//                            "\n회원번호: ${user.id}" +
-//                            "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-//                            "\n프로필사진: ${user.kakaoAccount?.profile?.profileImageUrl}" +
-//                            "\n이메일동의: ${user.kakaoAccount?.isEmailVerified}" +
-//                            "\n이메일: ${user.kakaoAccount?.email.toString()}"
-//                )
+                Log.i(
+                    "kakao", "사용자 정보 요청 성공" +
+                            "\n회원번호: ${user.id}" +
+                            "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                            "\n프로필사진: ${user.kakaoAccount?.profile?.profileImageUrl}" +
+                            "\n이메일동의: ${user.kakaoAccount?.isEmailVerified}" +
+                            "\n이메일: ${user.kakaoAccount?.email.toString()}"
+                )
 
                 //userEmail = user.id.toString() + "@kakao"
                 userEmail = "test@kakao"
@@ -117,15 +115,17 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
         }
     }
 
-    private fun googleLoginFunction() {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+    private fun setGoogleLoginBtn() {
+        iv_google_login.setOnClickListener {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
 
-        UserApiClient.instance.unlink { error ->
-            if (error != null) {
-                Log.e("kakao", "연결 끊기 실패", error)
-            } else {
-                Log.i("kakao", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+            UserApiClient.instance.unlink { error ->
+                if (error != null) {
+                    Log.e("kakao", "연결 끊기 실패", error)
+                } else {
+                    Log.i("kakao", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                }
             }
         }
     }
@@ -218,7 +218,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
-                Log.d("login fail!!!!", "fail")
+                Log.d("LoginActivity", "postKakaoLoginInfo")
             } else {
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 0)
@@ -260,7 +260,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
                 App.sharedPrefs.saveFlag("2")
                 startActivity(intent)
                 finish()
-                Log.d("login fail!!!!", "fail")
+                Log.e("LoginActivity", "postGoogleLoginInfo")
             } else {
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 0)

@@ -137,7 +137,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
                     Log.d("success", "success")
                 }, fail = {
-                    Log.d("join fail!!!!!!!!!", "fail")
+                    Log.e("MainActivty", "postJoinInfo")
                 })
         }
     }
