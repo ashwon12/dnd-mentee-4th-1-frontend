@@ -38,16 +38,6 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val gso: GoogleSignInOptions =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestId()
-                .requestEmail()
-                .requestProfile()
-                .requestIdToken(getString(R.string.client_id))
-                .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         setKakaoLoginBtn()
         setGoogleLoginBtn()
     }
@@ -76,9 +66,9 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
             }
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
-                    Log.d("tag", "토큰 정보 보기 실패", error)
+                    Log.d("setKakaoLoginBtn()", "토큰 정보 보기 실패", error)
                 } else if (tokenInfo != null) {
-                    Log.d("tag", "${tokenInfo.id}" + "${tokenInfo.expiresIn} 초")
+                    Log.d("setKakaoLoginBtn()", "${tokenInfo.id}" + "${tokenInfo.expiresIn} 초")
                 }
             }
 
@@ -99,14 +89,20 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
                             "\n회원번호: ${user.id}" +
                             "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                             "\n프로필사진: ${user.kakaoAccount?.profile?.profileImageUrl}" +
-                            "\n이메일동의: ${user.kakaoAccount?.isEmailVerified}" +
                             "\n이메일: ${user.kakaoAccount?.email.toString()}"
                 )
+                /*
+                  회원번호: 1642841812
+                  닉네임: 함도영
+                  프로필사진: https://k.kakaocdn.net/dn/dIf8Px/btq17a7W4Vj/FJiZYfnB1U6TRveYK6jQU1/img_640x640.jpg
+                  이메일: hamdoyoung@naver.com
+                */
 
-                //userEmail = user.id.toString() + "@kakao"
-                userEmail = "test@kakao"
+                //userEmail = user.id.toString() + "@kakao" // userEmail : 1642841812@kakao <- 왜 쓰는지 이해안감
+                //userEmail = "test@kakao"
                 userName = user.kakaoAccount?.profile?.nickname.toString()
                 userImage = user.kakaoAccount?.profile?.profileImageUrl.toString()
+                userEmail = user.kakaoAccount?.email.toString()
 
                 App.sharedPrefs.saveInfo(userEmail, userImage)
                 Log.d("userEmail", App.sharedPrefs.getEmail().toString())
@@ -116,6 +112,16 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
     }
 
     private fun setGoogleLoginBtn() {
+        val gso: GoogleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestId()
+                .requestEmail()
+                .requestProfile()
+                .requestIdToken(getString(R.string.client_id))
+                .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
         iv_google_login.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -193,19 +199,22 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
             userInfo.email = App.sharedPrefs.getEmail()
             App.sharedPrefs.saveFlag("1")
             Log.d("userInfo email", userInfo.email.toString())
-            repository.postLoginInfo(userToken, userInfo,
+            repository.postLoginInfo(
+                userToken,
+                userInfo,
                 success = {
                     it.run {
                         val data = it.data
                         // App.sharedPrefs.saveKakaoId(data.toString())
-                        App.sharedPrefs.saveToken(data.toString())
+                        App.sharedPrefs.saveToken(data.toString()) // 왜 또 Token을 Save 해주는거야...
                         Log.d("data", it.data.toString())
+
                         val intent = Intent(App.instance, MainActivity::class.java)
                         intent.putExtra("join", 0)
                         startActivity(intent)
                     }
                 }, fail = {
-                    // App.sharedPrefs.saveKakaoId(null)
+                    Log.e("postKakaoLoginInfo() 실패", "${it}")
                 })
             Log.d("get token", App.sharedPrefs.getToken().toString())
             Log.d("kakao data1", App.sharedPrefs.getEmail().toString())
