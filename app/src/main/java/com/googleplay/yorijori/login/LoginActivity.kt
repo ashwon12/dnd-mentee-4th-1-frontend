@@ -1,4 +1,4 @@
-package com.googleplay.yorijori.navigation.Login
+package com.googleplay.yorijori.login
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -229,6 +229,7 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
                 finish()
                 Log.d("LoginActivity", "postKakaoLoginInfo")
             } else {
+                //카카오 로그인 성공
                 val intent = Intent(App.instance, MainActivity::class.java)
                 intent.putExtra("join", 0)
                 App.sharedPrefs.saveFlag("1")

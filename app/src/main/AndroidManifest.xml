@@ -28,7 +28,7 @@
         <activity android:name="com.googleplay.yorijori.navigation.quote.QuoteActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.googleplay.yorijori.navigation.Login.LoginActivity"
+        <activity android:name="com.googleplay.yorijori.login.LoginActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

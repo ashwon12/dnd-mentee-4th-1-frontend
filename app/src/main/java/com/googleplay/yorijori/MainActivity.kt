@@ -5,12 +5,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -39,7 +38,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     private var cancel = "0"
     private val repository = Repository()
     private var token = App.sharedPrefs.getToken()
-    private var name = ""
     private var isFirst = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +45,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         getLoginInfo()
 
-        Log.d("cancel", cancel + "here")
         if(flag == 1 && cancel.equals("0") || isFirst) {
             isFirst = false
-            showDialog()
+            showNicknameDialog()
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
@@ -68,7 +65,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         }
     }
 
-    fun showDialog() {
+    fun showNicknameDialog() {
         if( cancel.equals("10001")) {
             Toast.makeText(this, "레시피가 등록되었습니다!", Toast.LENGTH_SHORT).show()
         } else {
@@ -80,14 +77,13 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             dialog.setCancelable(false)
             val edialog = LayoutInflater.from(this)
             val mView = edialog.inflate(R.layout.dialog_nickname, null)
-            val dialogText1 = mView.findViewById<TextView>(R.id.tv_nickname_title)
-            val dialogText2 = mView.findViewById<TextView>(R.id.tv_nickname_subtitle)
-            val nickname = mView.findViewById<EditText>(R.id.et_user_nickname)
-            val dialogText3 = mView.findViewById<TextView>(R.id.tv_nickname_warning)
+            val edtUserNickname = mView.findViewById<EditText>(R.id.et_user_nickname)
             val submitButton = mView.findViewById<TextView>(R.id.btn_user_nickname_submit)
+            var name: String = ""
 
             dialog.setContentView(mView)
             submitButton.setOnClickListener {
+                name = edtUserNickname.text.toString()
                 if(name.length >= 1) {
                     App.sharedPrefs.saveName(name)
                     postJoinInfo()
@@ -97,16 +93,13 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
                     Toast.makeText(App.instance, "한 글자 이상 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
-            nickname.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            edtUserNickname.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    App.sharedPrefs.saveName(name)
+                    postJoinInfo()
+                    dialog.cancel()
                 }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                    name = s.toString()
-                }
+                true// false?
             })
 
             dialog.create()

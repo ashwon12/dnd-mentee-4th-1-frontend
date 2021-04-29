@@ -63,7 +63,7 @@ class ResultFragement : Fragment() {
 
         spinnerData1 = mutableListOf<String>("최신순", "별점순", "조회순", "찜순")
         spinnerData2 = mutableListOf<String>("3컷", "6컷", "9컷", "10컷+", "컷수", "컷수")
-        spinnerData3 = mutableListOf<String>("15분 이내", "30분 이내", "45분 이내", "60분 이내", "60분 이상", "시간","시간")
+        spinnerData3 = mutableListOf<String>("15분 이내", "30분 이내", "45분 이내", "60분 이내", "60분 이상", "시간", "시간")
 
         setButtonSearch()
         setAutoCompleteTextView()
@@ -133,7 +133,7 @@ class ResultFragement : Fragment() {
         btnSearch.visibility = View.INVISIBLE// 초기 검색화면 Setting : [검색] 버튼 비활성화
 
         tvResultCount = v.findViewById(R.id.tv_result_count)
-            tvResultCount.text = searchedCount + "개"
+        tvResultCount.text = searchedCount + "개"
 
         autoTextview.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
