@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "735971810844",
+    "project_id": "yorijori-99c7a",
+    "storage_bucket": "yorijori-99c7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735971810844:android:e12da1ddb081950ffa49d9",
+        "android_client_info": {
+          "package_name": "com.googleplay.yorijori"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735971810844-rl1d65mddoi2hu5rs6c3gt4ndi1f6rso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.googleplay.yorijori",
+            "certificate_hash": "1ffc7be8370ccc442514a052d1d1e0eb50d08fe2"
+          }
+        },
+        {
+          "client_id": "735971810844-6vvubb0i40q4dmvf1dletbh8vdlab56a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx6cEDsapkpXRVsKK7kpnepdW63ihPNvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735971810844-6vvubb0i40q4dmvf1dletbh8vdlab56a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

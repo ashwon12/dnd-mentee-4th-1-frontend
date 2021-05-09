@@ -114,5 +114,8 @@ dependencies {
 
     //circleIndicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    // Google Analytics (오류 리포팅)
+    implementation 'com.google.android.gms:play-services-analytics:10.2.4'
 }
 

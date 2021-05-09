@@ -11,13 +11,6 @@ import com.kakao.sdk.common.KakaoSdk
 
 class App: Application() {
 
-    companion object {
-        lateinit var instance : App
-            private set
-        lateinit var sharedPrefs: SharedPreferenceUtil
-        lateinit var statusBar : StatusBarUtil
-    }
-
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -25,5 +18,12 @@ class App: Application() {
         sharedPrefs = SharedPreferenceUtil(applicationContext)
 
         KakaoSdk.init(instance, "7c0ae88d49666eca35738b64bba94021")
+    }
+
+    companion object {
+        lateinit var instance : App
+            private set
+        lateinit var sharedPrefs: SharedPreferenceUtil
+        lateinit var statusBar : StatusBarUtil
     }
 }

@@ -27,9 +27,6 @@ class LoginActivity : BaseActivity(R.layout.activity_login_main) {
 
     private var userToken = ""
     private var userEmail = ""
-    private var userName = ""
-    private var userId = ""
-    private var userImage = ""
 
     private val repository = Repository()
 
